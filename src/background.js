@@ -83,7 +83,7 @@ function tryDecrypt(encryptedText, passphrase) {
 function sendNotification(title, message) {
     chrome.notifications.create({
         type: "basic",
-        iconUrl: "icons/icon48.png",
+        iconUrl: "icon.png",
         title: title,
         message: message
     });
