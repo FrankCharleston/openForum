@@ -43,10 +43,13 @@ const redditOverlay = {
             if (encryptedText) {
                 console.log("[DEBUG] Found encrypted text:", encryptedText);
                 logContainer.innerHTML += `<div>[INFO] Found encrypted text: ${encryptedText}</div>`;
+                chrome.runtime.sendMessage({ type: "log", content: `[INFO] Found encrypted text: ${encryptedText}` });
+    
                 this.decryptMessage(encryptedText, (decrypted, success) => {
                     if (success) {
                         console.log("[DEBUG] Decrypted text:", decrypted);
                         logContainer.innerHTML += `<div style='color: lightgreen;'>[SUCCESS] Decrypted: ${decrypted}</div>`;
+                        chrome.runtime.sendMessage({ type: "log", content: `[SUCCESS] Decrypted: ${decrypted}` });
                         element.innerHTML = element.innerHTML.replace(
                             `ENC[${encryptedText}]`,
                             `<span class='decrypted-message' style='color: green;'>${decrypted}</span>`
@@ -54,6 +57,7 @@ const redditOverlay = {
                     } else {
                         console.warn("[WARN] Decryption failed for:", encryptedText, " Reason:", decrypted);
                         logContainer.innerHTML += `<div style='color: red;'>[ERROR] Failed to decrypt: ${decrypted}</div>`;
+                        chrome.runtime.sendMessage({ type: "log", content: `[ERROR] Failed to decrypt: ${decrypted}` });
                     }
                 });
             }
@@ -75,10 +79,22 @@ const redditOverlay = {
                 return;
             }
             console.log("[DEBUG] Using passphrase:", passphrase);
-            
-            const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
+    
+            // Decode from Base64
+            const rawData = CryptoJS.enc.Base64.parse(encryptedText);
+            const cipherParams = { ciphertext: rawData };
+    
+            // Derive key and IV from PBKDF2 (matching OpenSSL's default settings)
+            const salt = CryptoJS.lib.WordArray.random(8);
+            const key = CryptoJS.PBKDF2(passphrase, salt, {
+                keySize: 256 / 32,
+                iterations: 10000,
+            });
+            const iv = CryptoJS.lib.WordArray.random(16);
+    
+            const decrypted = CryptoJS.AES.decrypt(cipherParams, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
             const plainText = decrypted.toString(CryptoJS.enc.Utf8);
-
+    
             if (plainText && plainText.trim() !== "") {
                 console.log("[DEBUG] Successfully decrypted:", plainText);
                 callback(plainText, true);
@@ -90,7 +106,7 @@ const redditOverlay = {
             console.error("[ERROR] Decryption error on input:", encryptedText, "Exception:", e);
             callback("⚠️ Error decrypting message", false);
         }
-    },
+    },   
 
     addOverlayUI: function () {
         console.log("[DEBUG] Adding floating UI overlay...");
