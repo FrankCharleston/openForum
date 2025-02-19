@@ -1,3 +1,15 @@
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log("[DEBUG] Received message:", message);
+
+    if (message.action === "toggleDecryption") {
+        console.log("[DEBUG] Toggling decryption process...");
+        redditOverlay.scanAndDecrypt();
+        sendResponse({ status: "Decryption triggered" });
+    } else {
+        console.warn("[WARN] Unknown message received:", message);
+    }
+});
+
 const redditOverlay = {
     init: function () {
         this.observeComments();

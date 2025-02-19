@@ -1,11 +1,18 @@
 document.getElementById("toggle").addEventListener("click", () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { action: "toggleDecryption" });
-    });
-});
-  
+  console.log("[DEBUG] Toggle button clicked, sending message to content script...");
 
-chrome.storage.local.get("log", (data) => {
-    document.getElementById("log").innerText = data.log || "No logs yet...";
-});
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length === 0) {
+          console.error("[ERROR] No active tab found.");
+          return;
+      }
 
+      chrome.tabs.sendMessage(tabs[0].id, { action: "toggleDecryption" }, (response) => {
+          if (chrome.runtime.lastError) {
+              console.error("[ERROR] Could not send message to content script:", chrome.runtime.lastError.message);
+          } else {
+              console.log("[DEBUG] Message sent successfully. Response:", response);
+          }
+      });
+  });
+});
