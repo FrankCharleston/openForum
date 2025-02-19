@@ -58,7 +58,11 @@ const redditOverlay = {
     decryptMessage: function (encryptedText, callback) {
         try {
             console.log("[DEBUG] Attempting to decrypt:", encryptedText);
-            const passphrase = "mypassword";  // Change this!
+            let passphrase = prompt("Enter decryption passphrase:", "mypassword");
+            if (!passphrase) {
+                passphrase = "mypassword"; // Default passphrase
+            }
+            
             const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
             const plainText = decrypted.toString(CryptoJS.enc.Utf8);
 
