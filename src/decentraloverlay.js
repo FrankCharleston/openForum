@@ -14,6 +14,12 @@ chrome.contextMenus.create({
     id: "decryptSelection",
     title: "Decrypt Selected Text",
     contexts: ["selection"]
+}, () => {
+    if (chrome.runtime.lastError) {
+        console.error("[ERROR] Context menu creation failed:", chrome.runtime.lastError);
+    } else {
+        console.log("[DEBUG] Context menu created successfully.");
+    }
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
@@ -28,6 +34,11 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 function decryptSelectedText(selectedText) {
+    if (!selectedText) {
+        alert("No text selected for decryption.");
+        return;
+    }
+
     let passphrase = prompt("Enter decryption passphrase (or cancel to exit):", "mypassword");
     if (passphrase === null) {
         console.log("[DEBUG] Decryption canceled by user.");
@@ -37,42 +48,40 @@ function decryptSelectedText(selectedText) {
     console.log("[DEBUG] Attempting to decrypt selected text:", selectedText);
 
     try {
-        const rawData = CryptoJS.enc.Base64.parse(selectedText);
-        const rawBytes = rawData.words;
-
-        if (selectedText.startsWith("U2FsdGVk")) {
-            console.log("[DEBUG] OpenSSL format detected.");
-            const salt = CryptoJS.enc.Base64.parse(selectedText.substring(16, 24));
-            const ciphertext = CryptoJS.enc.Base64.parse(selectedText.substring(24));
-
-            const keySize = 256 / 32;
-            const ivSize = 128 / 32;
-            const derivedKey = CryptoJS.PBKDF2(passphrase, salt, {
-                keySize: keySize + ivSize,
-                iterations: 10000,
-                hasher: CryptoJS.algo.SHA256
-            });
-
-            const key = CryptoJS.lib.WordArray.create(derivedKey.words.slice(0, keySize));
-            const iv = CryptoJS.lib.WordArray.create(derivedKey.words.slice(keySize));
-
-            const decrypted = CryptoJS.AES.decrypt({ ciphertext: ciphertext }, key, {
-                iv: iv,
-                mode: CryptoJS.mode.CBC,
-                padding: CryptoJS.pad.Pkcs7
-            });
-
-            const plainText = decrypted.toString(CryptoJS.enc.Utf8);
-            if (plainText && plainText.trim() !== "") {
-                console.log("[DEBUG] Successfully decrypted:", plainText);
-                alert("Decrypted Message: " + plainText);
-            } else {
-                console.warn("[WARN] Decryption failed. Possible incorrect passphrase or corrupted input.");
-                alert("Failed to decrypt: Incorrect passphrase or corrupted input");
-            }
-        } else {
+        if (!selectedText.startsWith("U2FsdGVk")) {
             console.warn("[WARN] Unrecognized encryption format.");
             alert("⚠️ Unrecognized encryption format. Ensure it's OpenSSL AES-256-CBC.");
+            return;
+        }
+
+        const rawData = CryptoJS.enc.Base64.parse(selectedText.substring(8));
+        const salt = rawData.words.slice(0, 2);
+        const ciphertext = CryptoJS.lib.WordArray.create(rawData.words.slice(2));
+
+        const keySize = 256 / 32;
+        const ivSize = 128 / 32;
+        const derivedKey = CryptoJS.PBKDF2(passphrase, salt, {
+            keySize: keySize + ivSize,
+            iterations: 10000,
+            hasher: CryptoJS.algo.SHA256
+        });
+
+        const key = CryptoJS.lib.WordArray.create(derivedKey.words.slice(0, keySize));
+        const iv = CryptoJS.lib.WordArray.create(derivedKey.words.slice(keySize));
+
+        const decrypted = CryptoJS.AES.decrypt({ ciphertext: ciphertext }, key, {
+            iv: iv,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
+
+        const plainText = decrypted.toString(CryptoJS.enc.Utf8);
+        if (plainText && plainText.trim() !== "") {
+            console.log("[DEBUG] Successfully decrypted:", plainText);
+            alert("Decrypted Message: " + plainText);
+        } else {
+            console.warn("[WARN] Decryption failed. Possible incorrect passphrase or corrupted input.");
+            alert("Failed to decrypt: Incorrect passphrase or corrupted input");
         }
     } catch (e) {
         console.error("[ERROR] Decryption error:", e);
@@ -80,4 +89,10 @@ function decryptSelectedText(selectedText) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => redditOverlay.init());
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof redditOverlay !== "undefined" && typeof redditOverlay.init === "function") {
+        redditOverlay.init();
+    } else {
+        console.error("[ERROR] redditOverlay is not defined or missing init function.");
+    }
+});
