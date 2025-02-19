@@ -3,19 +3,17 @@
     "name": "OpenForum",
     "version": "1.0",
     "description": "A decentralized overlay for encrypted messages on public forums.",
-    {
-        "permissions": [
-          "clipboardRead",
-          "clipboardWrite",
-          "storage",
-          "activeTab",
-          "scripting",
-          "clipboardRead",
-          "clipboardWrite",
-          "contextMenus",
-          "notifications"
-        ]
-    }
+    "permissions": [
+        "clipboardRead",
+        "clipboardWrite",
+        "storage",
+        "activeTab",
+        "scripting",
+        "clipboardRead",
+        "clipboardWrite",
+        "contextMenus",
+        "notifications"
+    ]
     "host_permissions": ["<all_urls>"],
     "background": {
         "service_worker": "background.js"
