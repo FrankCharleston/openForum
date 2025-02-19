@@ -58,26 +58,43 @@ const redditOverlay = {
     decryptMessage: function (encryptedText, callback) {
         try {
             console.log("[DEBUG] Attempting to decrypt:", encryptedText);
+    
             let passphrase = prompt("Enter decryption passphrase:", "mypassword");
             if (!passphrase) {
                 passphrase = "mypassword"; // Default passphrase
             }
-            
-            const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
+    
+            // Ensure the encrypted text is properly formatted for decryption
+            if (!encryptedText || encryptedText.trim() === "") {
+                console.warn("[WARN] Empty encrypted text provided.");
+                callback("🔓 Failed to decrypt (empty input)");
+                return;
+            }
+    
+            let decrypted;
+            try {
+                decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
+            } catch (error) {
+                console.error("[ERROR] AES decryption failed:", error);
+                callback("⚠️ Decryption error (AES failure)");
+                return;
+            }
+    
             const plainText = decrypted.toString(CryptoJS.enc.Utf8);
-
-            if (plainText) {
+    
+            if (plainText && plainText.trim() !== "") {
                 console.log("[DEBUG] Successfully decrypted:", plainText);
                 callback(plainText);
             } else {
-                console.warn("[WARN] Decryption failed. Empty output.");
-                callback("🔓 Failed to decrypt");
+                console.warn("[WARN] Decryption failed. Possible incorrect passphrase.");
+                callback("🔓 Failed to decrypt (incorrect passphrase?)");
             }
         } catch (e) {
             console.error("[ERROR] Decryption error:", e);
             callback("⚠️ Error decrypting message");
         }
     }
+    
 };
 
 document.addEventListener("DOMContentLoaded", () => redditOverlay.init());
