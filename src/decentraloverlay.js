@@ -2,6 +2,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "toggleDecryption") {
         scanAndDecrypt();
         sendResponse({ status: "Decryption triggered" });
+    } else if (message.action === "decryptText") {
+        const decryptedText = tryDecrypt(message.text, prompt("Enter decryption passphrase:", "mypassword"));
+        sendResponse({ success: !!decryptedText, decryptedText });
     }
 });
 

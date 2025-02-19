@@ -17,6 +17,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (info.menuItemId === "decryptClipboard") {
         handleClipboardDecryption();
     } else if (info.menuItemId === "decryptSelection") {
+        if (!info.selectionText) {
+            sendNotification("Decryption Failed", "No text selected.");
+            return;
+        }
         decryptText(info.selectionText);
     }
 });
@@ -27,8 +31,13 @@ async function handleClipboardDecryption() {
         const clipboardText = await navigator.clipboard.readText();
         console.log("[DEBUG] Clipboard data:", clipboardText);
 
+        if (!clipboardText || clipboardText.trim() === "") {
+            sendNotification("Clipboard Empty", "There is nothing to decrypt in the clipboard.");
+            return;
+        }
+
         if (!clipboardText.startsWith("ENC[")) {
-            sendNotification("Decryption Failed", "No encrypted message detected in clipboard.");
+            sendNotification("Decryption Failed", "Clipboard does not contain encrypted text.");
             return;
         }
 
@@ -36,6 +45,7 @@ async function handleClipboardDecryption() {
         decryptText(encryptedText);
     } catch (error) {
         console.error("[ERROR] Failed to read clipboard:", error);
+        sendNotification("Error", "Failed to access clipboard.");
     }
 }
 
@@ -43,12 +53,12 @@ async function handleClipboardDecryption() {
 function decryptText(encryptedText) {
     let passphrase = prompt("Enter decryption passphrase:", "mypassword");
     if (!passphrase) {
-        console.log("[DEBUG] Decryption canceled by user.");
+        sendNotification("Decryption Canceled", "You canceled the decryption process.");
         return;
     }
 
     try {
-        console.log("[DEBUG] Attempting to decrypt...");
+        console.log("[DEBUG] Attempting to decrypt:", encryptedText);
         const decryptedMessage = tryDecrypt(encryptedText, passphrase);
 
         if (decryptedMessage) {
@@ -59,10 +69,11 @@ function decryptText(encryptedText) {
         }
     } catch (error) {
         console.error("[ERROR] Decryption failed:", error);
+        sendNotification("Error", "An error occurred during decryption.");
     }
 }
 
-// Generic decryption function
+// Decrypt function
 function tryDecrypt(encryptedText, passphrase) {
     try {
         if (!encryptedText.startsWith("U2FsdGVk")) {
@@ -83,7 +94,7 @@ function tryDecrypt(encryptedText, passphrase) {
 function sendNotification(title, message) {
     chrome.notifications.create({
         type: "basic",
-        iconUrl: "icon.png",
+        iconUrl: "icons/icon48.png",
         title: title,
         message: message
     });
