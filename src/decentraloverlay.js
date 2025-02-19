@@ -27,12 +27,20 @@ const redditOverlay = {
         document.querySelectorAll('.comment').forEach(comment => {
             const encryptedText = this.extractEncryptedText(comment.innerText);
             if (encryptedText) {
+                console.log("[DEBUG] Found encrypted text:", encryptedText);
                 this.decryptMessage(encryptedText, (decrypted) => {
-                    comment.innerHTML = `<div class='decrypted-message'>${decrypted}</div>`;
+                    if (decrypted) {
+                        console.log("[DEBUG] Replacing encrypted text with:", decrypted);
+                        comment.innerHTML = comment.innerHTML.replace(`ENC[${encryptedText}]`, `<span class='decrypted-message' style='color: green;'>${decrypted}</span>`);
+                    } else {
+                        console.log("[ERROR] Decryption returned empty or failed.");
+                    }
                 });
+            } else {
+                console.log("[DEBUG] No encrypted text found in comment.");
             }
         });
-    },
+    },    
 
     extractEncryptedText: function(text) {
         const match = text.match(/ENC\[(.*?)\]/);
@@ -41,20 +49,23 @@ const redditOverlay = {
 
     decryptMessage: function(encryptedText, callback) {
         try {
-          const passphrase = "mypassword"; // Replace with your actual passphrase
-          const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
-          const plainText = decrypted.toString(CryptoJS.enc.Utf8);
-      
-          if (plainText) {
-            callback(plainText);
-          } else {
-            callback("Decryption failed.");
-          }
+            console.log("[DEBUG] Attempting to decrypt:", encryptedText);
+            const passphrase = "mypassword"; // Ensure this matches what you used for encryption
+            const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
+            const plainText = decrypted.toString(CryptoJS.enc.Utf8);
+            
+            if (plainText) {
+                console.log("[DEBUG] Successfully decrypted:", plainText);
+                callback(plainText);
+            } else {
+                console.log("[ERROR] Decryption failed: output is empty.");
+                callback("🔓 Failed to decrypt");
+            }
         } catch (e) {
-          console.error("Decryption error:", e);
-          callback("Error decrypting message.");
+            console.error("[ERROR] Decryption error:", e);
+            callback("⚠️ Error decrypting message");
         }
-    }      
+    }        
 };
 
 document.addEventListener("DOMContentLoaded", () => redditOverlay.init());

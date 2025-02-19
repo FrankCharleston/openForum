@@ -6,16 +6,19 @@
     "permissions": ["storage", "activeTab", "scripting"],
     "host_permissions": ["*://www.reddit.com/*"],
     "web_accessible_resources": [
-    {
-        "resources": ["crypto-js.min.js"],
-        "matches": ["<all_urls>"]
-    }
+        {
+            "resources": ["crypto-js.min.js"],
+            "matches": ["<all_urls>"]
+        }
     ],
+    "background": {
+        "service_worker": "background.js"
+    },
     "content_scripts": [
-    {
-        "matches": ["*://www.reddit.com/*"],
-        "js": ["crypto-js.min.js", "decentraloverlay.js"]
-    }
+        {
+            "matches": ["*://www.reddit.com/*"],
+            "js": ["crypto-js.min.js", "decentraloverlay.js"]
+        }
     ],
     "action": {
         "default_popup": "popup.html",
