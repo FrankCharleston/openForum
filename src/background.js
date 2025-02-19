@@ -1,62 +1,92 @@
-// ✅ Load CryptoJS
-importScripts("crypto-js.min.js");
+// background.js - Handles right-click menu and clipboard actions
 
-// ✅ Background script initialization
-console.log("[DEBUG] Background script loaded.");
-
-// Create context menu options on install
+// Ensure the context menu is set up when the extension installs or updates
 chrome.runtime.onInstalled.addListener(() => {
-    console.log("[DEBUG] Installing context menu items...");
-    chrome.contextMenus.create({ id: "encryptMessage", title: "Encrypt Message", contexts: ["selection"] });
-    chrome.contextMenus.create({ id: "decryptMessage", title: "Decrypt Message", contexts: ["selection"] });
-    chrome.contextMenus.create({ id: "decryptClipboard", title: "Decrypt Clipboard", contexts: ["all"] });
+    chrome.contextMenus.create({
+        id: "encryptMessage",
+        title: "Encrypt Message",
+        contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+        id: "decryptMessage",
+        title: "Decrypt Message",
+        contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+        id: "decryptPage",
+        title: "Decrypt Entire Page",
+        contexts: ["all"]
+    });
+
+    chrome.contextMenus.create({
+        id: "decryptClipboard",
+        title: "Decrypt Clipboard",
+        contexts: ["all"]
+    });
 });
 
 // Handle right-click context menu actions
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     try {
         if (info.menuItemId === "encryptMessage") {
-            handleEncryption(info.selectionText);
+            let encryptedText = await encryptMessage(info.selectionText);
+            await navigator.clipboard.writeText(encryptedText);
+            sendLogToPopup(`✅ Message encrypted and copied to clipboard.`);
         } else if (info.menuItemId === "decryptMessage") {
-            handleDecryption(info.selectionText);
+            let decryptedText = await decryptMessage(info.selectionText);
+            sendLogToPopup(`✅ Decrypted Message: ${decryptedText}`);
+        } else if (info.menuItemId === "decryptPage") {
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                function: decryptAllOnPage
+            });
         } else if (info.menuItemId === "decryptClipboard") {
-            const clipboardText = await navigator.clipboard.readText();
-            if (!clipboardText.startsWith("ENC[")) {
-                alert("No encrypted message detected in clipboard.");
-                return;
-            }
-            handleDecryption(clipboardText.replace(/ENC\[|\]/g, ""));
+            let clipboardText = await navigator.clipboard.readText();
+            let decryptedText = await decryptMessage(clipboardText);
+            sendLogToPopup(`✅ Clipboard Decryption: ${decryptedText}`);
         }
     } catch (error) {
-        console.error("[ERROR] Context menu action failed:", error);
+        sendLogToPopup(`❌ Error: ${error.message}`, "error");
     }
 });
 
-// Encrypt selected text
-function handleEncryption(text) {
-    if (!text) return;
-    let passphrase = prompt("Enter encryption passphrase:", "mypassword");
-    if (!passphrase) return;
-
-    const encryptedText = CryptoJS.AES.encrypt(text, passphrase).toString();
-    navigator.clipboard.writeText(`ENC[${encryptedText}]`).then(() => {
-        console.log("[DEBUG] Encrypted text copied to clipboard.");
-        alert("Encrypted text copied to clipboard.");
-    }).catch(error => console.error("[ERROR] Failed to copy encrypted text:", error));
+// Encrypt a message
+async function encryptMessage(text, passphrase = "defaultpassword") {
+    try {
+        let encrypted = CryptoJS.AES.encrypt(text, passphrase).toString();
+        return `ENC[${encrypted}]`;
+    } catch (error) {
+        sendLogToPopup(`❌ Encryption failed: ${error.message}`, "error");
+        return null;
+    }
 }
 
-// Decrypt selected text
-function handleDecryption(text) {
-    if (!text) return;
-    let passphrase = prompt("Enter decryption passphrase:", "mypassword");
-    if (!passphrase) return;
-
+// Decrypt a message
+async function decryptMessage(encryptedText, passphrase = "defaultpassword") {
     try {
-        const decrypted = CryptoJS.AES.decrypt(text, passphrase).toString(CryptoJS.enc.Utf8);
-        if (!decrypted) throw new Error("Decryption failed");
-        alert(`Decrypted Text: ${decrypted}`);
+        let decrypted = CryptoJS.AES.decrypt(encryptedText.replace("ENC[", "").replace("]", ""), passphrase).toString(CryptoJS.enc.Utf8);
+        if (!decrypted) throw new Error("Invalid passphrase or corrupted data.");
+        return decrypted;
     } catch (error) {
-        console.error("[ERROR] Decryption failed:", error);
-        alert("Decryption failed. Check your passphrase.");
+        sendLogToPopup(`❌ Decryption failed: ${error.message}`, "error");
+        return null;
     }
+}
+
+// Function to send logs to the popup UI
+function sendLogToPopup(message, type = "log") {
+    chrome.runtime.sendMessage({ type, content: message });
+}
+
+// Injected script to scan & decrypt all encrypted messages on a page
+function decryptAllOnPage() {
+    let elements = document.querySelectorAll("*:not(script):not(style)");
+    elements.forEach(el => {
+        if (el.textContent.includes("ENC[")) {
+            let decrypted = decryptMessage(el.textContent);
+            if (decrypted) el.textContent = decrypted;
+        }
+    });
 }

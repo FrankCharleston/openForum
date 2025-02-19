@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenForum Debug</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>OpenForum</title>
+    <script src="crypto-js.min.js"></script>
+    <script src="popup.js"></script>
 </head>
 <body>
-    <h3>OpenForum Debug</h3>
-    <button id="toggleDecryption">Toggle Decryption</button>
-    <input type="text" id="inputText" placeholder="Enter text here">
+    <h2>OpenForum</h2>
+    <label>Passphrase:</label>
+    <input type="text" id="passphrase" placeholder="Optional">
+    
+    <h3>Encrypt a Message</h3>
+    <input type="text" id="encryptInput">
     <button id="encryptBtn">Encrypt</button>
+    
+    <h3>Decrypt a Message</h3>
+    <input type="text" id="decryptInput">
     <button id="decryptBtn">Decrypt</button>
-    <button id="decryptPage">Decrypt Page</button>
-    <div id="logContainer">Logs:<br>No logs yet...</div>
-    <script src="popup.js"></script>
+
+    <h3>Decrypt Page</h3>
+    <button id="decryptPageBtn">Decrypt Page</button>
+    
+    <h3>Output</h3>
+    <div id="output"></div>
 </body>
 </html>
