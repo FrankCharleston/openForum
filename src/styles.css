@@ -1,28 +1,22 @@
-/* ==============================
-   📌 styles.css - Popup UI Styling
-   ============================== */
-
-   body {
+body {
     font-family: Arial, sans-serif;
     padding: 10px;
-    width: 300px;
+    width: 320px;
     background-color: #f9f9f9;
 }
 
 h3 {
-    margin-top: 0;
     color: #333;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
-    cursor: pointer;
+    margin-top: 5px;
     border: none;
+    cursor: pointer;
     background-color: #007bff;
     color: white;
-    font-size: 14px;
     border-radius: 5px;
 }
 
@@ -31,12 +25,19 @@ button:hover {
 }
 
 #logContainer {
-    white-space: pre-wrap;
     font-size: 12px;
     background: #eee;
     padding: 5px;
     border-radius: 5px;
-    max-height: 200px;
+    max-height: 150px;
     overflow-y: auto;
     margin-top: 10px;
+}
+
+.error {
+    color: red;
+}
+
+.info {
+    color: green;
 }
