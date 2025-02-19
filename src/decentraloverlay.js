@@ -34,13 +34,29 @@ const redditOverlay = {
     
     decryptMessage: function(encryptedText, callback) {
         try {
-            const key = CryptoJS.enc.Utf8.parse("your-secret-key"); // Replace with actual key
-            const decrypted = CryptoJS.AES.decrypt(encryptedText, key, { mode: CryptoJS.mode.ECB });
-            callback(decrypted.toString(CryptoJS.enc.Utf8) || "Failed to decrypt");
+            console.log("[DEBUG] Attempting to decrypt:", encryptedText);
+            
+            const passphrase = "your-secret-key"; // 🔑 Change this to your actual encryption key
+            const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
+            const plainText = decrypted.toString(CryptoJS.enc.Utf8);
+            
+            if (plainText) {
+                console.log("[DEBUG] Decrypted successfully:", plainText);
+            } else {
+                console.log("[ERROR] Decryption failed!");
+            }
+    
+            // Store debug logs for UI
+            chrome.storage.local.set({ log: `[DEBUG] Decrypted: ${plainText || "Failed"}` });
+    
+            callback(plainText || "🔓 Failed to decrypt");
         } catch (e) {
-            callback("Error decrypting message");
+            console.error("[ERROR] Decryption error:", e);
+            chrome.storage.local.set({ log: `[ERROR] ${e.message}` });
+            callback("⚠️ Error decrypting message");
         }
     }
+    
     
 };
 

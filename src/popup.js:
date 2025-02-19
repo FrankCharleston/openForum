@@ -1,0 +1,11 @@
+document.getElementById("toggle").addEventListener("click", () => {
+    chrome.storage.local.get("enabled", (data) => {
+        const newState = !data.enabled;
+        chrome.storage.local.set({ enabled: newState });
+        document.getElementById("log").innerText = "Decryption " + (newState ? "Enabled" : "Disabled");
+    });
+});
+
+chrome.storage.local.get("log", (data) => {
+    document.getElementById("log").innerText = data.log || "No logs yet...";
+});
