@@ -41,7 +41,7 @@ const redditOverlay = {
 
     decryptMessage: function(encryptedText, callback) {
         try {
-          const passphrase = "your-secret-key"; // Replace with your actual passphrase
+          const passphrase = "mypassword"; // Replace with your actual passphrase
           const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
           const plainText = decrypted.toString(CryptoJS.enc.Utf8);
       
