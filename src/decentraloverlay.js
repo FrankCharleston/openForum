@@ -103,17 +103,21 @@ const redditOverlay = {
 
                 if (plainText && plainText.trim() !== "") {
                     console.log("[DEBUG] Successfully decrypted:", plainText);
+                    logContainer.innerHTML += `<div style='color: lightgreen;'>[SUCCESS] Decrypted: ${plainText}</div>`;
                     callback(plainText, true);
                 } else {
                     console.warn("[WARN] Decryption failed. Possible incorrect passphrase or corrupted input.");
+                    logContainer.innerHTML += `<div style='color: red;'>[ERROR] Failed to decrypt: Incorrect passphrase or corrupted input</div>`;
                     callback("🔓 Failed to decrypt (incorrect passphrase or corrupted input)", false);
                 }
             } else {
                 console.warn("[WARN] Unrecognized encryption format.");
+                logContainer.innerHTML += `<div style='color: red;'>[ERROR] Unrecognized encryption format. Ensure it's OpenSSL AES-256-CBC.</div>`;
                 callback("⚠️ Unrecognized encryption format. Ensure it's OpenSSL AES-256-CBC.", false);
             }
         } catch (e) {
             console.error("[ERROR] Decryption error on input:", encryptedText, "Exception:", e);
+            logContainer.innerHTML += `<div style='color: red;'>[ERROR] Exception: ${e.message}</div>`;
             callback("⚠️ Error decrypting message", false);
         }
     }
