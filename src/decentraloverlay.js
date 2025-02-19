@@ -34,20 +34,26 @@ const redditOverlay = {
 
     scanAndDecrypt: function () {
         console.log("[DEBUG] Scanning for encrypted messages...");
+        let logContainer = document.getElementById("decryption-log");
+        if (!logContainer) return;
+        
         document.querySelectorAll("*").forEach(element => {
             const encryptedText = this.extractEncryptedText(element.innerText);
             console.log("[DEBUG] Checking element:", element, "Extracted text:", encryptedText);
             if (encryptedText) {
                 console.log("[DEBUG] Found encrypted text:", encryptedText);
+                logContainer.innerHTML += `<div>[INFO] Found encrypted text: ${encryptedText}</div>`;
                 this.decryptMessage(encryptedText, (decrypted, success) => {
                     if (success) {
                         console.log("[DEBUG] Decrypted text:", decrypted);
+                        logContainer.innerHTML += `<div style='color: lightgreen;'>[SUCCESS] Decrypted: ${decrypted}</div>`;
                         element.innerHTML = element.innerHTML.replace(
                             `ENC[${encryptedText}]`,
                             `<span class='decrypted-message' style='color: green;'>${decrypted}</span>`
                         );
                     } else {
                         console.warn("[WARN] Decryption failed for:", encryptedText, " Reason:", decrypted);
+                        logContainer.innerHTML += `<div style='color: red;'>[ERROR] Failed to decrypt: ${decrypted}</div>`;
                     }
                 });
             }
@@ -63,11 +69,12 @@ const redditOverlay = {
     decryptMessage: function (encryptedText, callback) {
         try {
             console.log("[DEBUG] Attempting to decrypt:", encryptedText);
-            let passphrase = prompt("Enter decryption passphrase:", "mypassword");
-            console.log("[DEBUG] Using passphrase:", passphrase);
-            if (!passphrase) {
-                passphrase = "mypassword"; // Default passphrase
+            let passphrase = prompt("Enter decryption passphrase (or cancel to exit):", "mypassword");
+            if (passphrase === null) {
+                console.log("[DEBUG] Decryption canceled by user.");
+                return;
             }
+            console.log("[DEBUG] Using passphrase:", passphrase);
             
             const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
             const plainText = decrypted.toString(CryptoJS.enc.Utf8);
@@ -93,7 +100,7 @@ const redditOverlay = {
             <button id="decrypt-all" style="padding: 5px 10px; background: green; color: white; border: none; cursor: pointer;">Decrypt All</button>
             <button id="clear-logs" style="padding: 5px 10px; background: red; color: white; border: none; cursor: pointer;">Clear Logs</button>
             <button id="close-overlay" style="padding: 5px 10px; background: gray; color: white; border: none; cursor: pointer;">Close</button>
-            <div id="decryption-log" style="margin-top: 10px; max-height: 100px; overflow-y: auto; font-size: 12px;"></div>
+            <div id="decryption-log" style="margin-top: 10px; max-height: 100px; overflow-y: auto; font-size: 12px; background: black; padding: 5px; border-radius: 5px;"></div>
         </div>`;
         document.body.appendChild(overlay);
 
