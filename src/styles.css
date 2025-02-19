@@ -1,8 +1,4 @@
-/* ==============================
-   📌 styles.css - Popup UI Styling
-   ============================== */
-
-   body {
+body {
     font-family: Arial, sans-serif;
     padding: 10px;
     width: 300px;
@@ -40,3 +36,7 @@ button:hover {
     overflow-y: auto;
     margin-top: 10px;
 }
+
+#logContainer div.log { color: #007bff; }
+#logContainer div.warn { color: #e0a800; }
+#logContainer div.error { color: #dc3545; }
