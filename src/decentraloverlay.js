@@ -7,6 +7,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
+const script = document.createElement('script');
+script.src = chrome.runtime.getURL("crypto-js.min.js");
+document.head.appendChild(script);
+
 const redditOverlay = {
     init: function() {
         this.observeComments();

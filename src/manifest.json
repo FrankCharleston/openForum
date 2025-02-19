@@ -5,9 +5,12 @@
     "description": "A decentralized overlay for encrypted messages on public forums.",
     "permissions": ["storage", "activeTab", "scripting"],
     "host_permissions": ["*://www.reddit.com/*"],
-    "background": {
-        "service_worker": "background.js"
-    },
+    "web_accessible_resources": [
+    {
+        "resources": ["crypto-js.min.js"],
+        "matches": ["<all_urls>"]
+    }
+    ],
     "content_scripts": [
         {
             "matches": ["*://www.reddit.com/*"],
