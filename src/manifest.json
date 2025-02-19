@@ -12,10 +12,10 @@
     }
     ],
     "content_scripts": [
-        {
-            "matches": ["*://www.reddit.com/*"],
-            "js": ["crypto-js.min.js", "decentraloverlay.js"]
-        }
+    {
+        "matches": ["*://www.reddit.com/*"],
+        "js": ["crypto-js.min.js", "decentraloverlay.js"]
+    }
     ],
     "action": {
         "default_popup": "popup.html",

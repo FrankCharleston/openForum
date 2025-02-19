@@ -7,10 +7,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-const script = document.createElement('script');
-script.src = chrome.runtime.getURL("crypto-js.min.js");
-document.head.appendChild(script);
-
 const redditOverlay = {
     init: function() {
         this.observeComments();
@@ -45,18 +41,20 @@ const redditOverlay = {
 
     decryptMessage: function(encryptedText, callback) {
         try {
-            console.log("[DEBUG] Attempting to decrypt:", encryptedText);
-            const passphrase = "mypassword";  // Change this to your actual encryption key!
-            const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
-            const plainText = decrypted.toString(CryptoJS.enc.Utf8);
-            console.log("[DEBUG] Decrypted:", plainText || "Failed");
-
-            callback(plainText || "🔓 Failed to decrypt");
+          const passphrase = "your-secret-key"; // Replace with your actual passphrase
+          const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
+          const plainText = decrypted.toString(CryptoJS.enc.Utf8);
+      
+          if (plainText) {
+            callback(plainText);
+          } else {
+            callback("Decryption failed.");
+          }
         } catch (e) {
-            console.error("[ERROR] Decryption error:", e);
-            callback("⚠️ Error decrypting message");
+          console.error("Decryption error:", e);
+          callback("Error decrypting message.");
         }
-    }
+    }      
 };
 
 document.addEventListener("DOMContentLoaded", () => redditOverlay.init());
