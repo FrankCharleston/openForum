@@ -2,9 +2,12 @@
     "manifest_version": 3,
     "name": "OpenForum",
     "version": "0.1",
-    "description": "A decentralized overlay for encrypted messages on public forums.",
-    "permissions": ["storage", "activeTab", "scripting"],
-    "host_permissions": ["*://www.reddit.com/*"],
+    "description": "A decentralized overlay for encrypted messages on any webpage.",
+    "permissions": ["storage", "activeTab", "scripting", "contextMenus"],
+    "host_permissions": ["<all_urls>"],
+    "background": {
+        "service_worker": "background.js"
+    },
     "web_accessible_resources": [
         {
             "resources": ["crypto-js.min.js"],
@@ -13,14 +16,11 @@
     ],
     "content_scripts": [
         {
-            "matches": ["*://www.reddit.com/*"],
+            "matches": ["<all_urls>"],
             "js": ["crypto-js.min.js", "decentraloverlay.js"],
             "run_at": "document_idle"
         }
     ],
-    "background": {
-        "service_worker": "background.js"
-    },
     "action": {
         "default_popup": "popup.html",
         "default_icon": {

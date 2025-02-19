@@ -1,18 +1,28 @@
 chrome.runtime.onInstalled.addListener(() => {
     console.log("[DEBUG] Background script installed");
 
-    // Create a right-click context menu
-    chrome.contextMenus.create({
-        id: "decryptText",
-        title: "Decrypt Message",
-        contexts: ["selection"]
-    });
+    // Create a right-click context menu for decryption
+    chrome.contextMenus.create(
+        {
+            id: "decryptText",
+            title: "Decrypt Message",
+            contexts: ["selection"]
+        },
+        () => {
+            if (chrome.runtime.lastError) {
+                console.error("[ERROR] Context menu creation failed:", chrome.runtime.lastError.message);
+            } else {
+                console.log("[DEBUG] Context menu created successfully.");
+            }
+        }
+    );
 });
 
-// Ensure the onClicked event is properly registered
+// Wait for the menu to be created before attaching the listener
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "decryptText") {
         console.log("[DEBUG] Context menu clicked:", info.selectionText);
+        
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
             function: decryptSelectedText,
