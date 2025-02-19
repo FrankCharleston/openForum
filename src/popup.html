@@ -1,27 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenForum</title>
-    <script src="crypto-js.min.js"></script>
-    <script src="popup.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h2>OpenForum</h2>
-    <label>Passphrase:</label>
-    <input type="text" id="passphrase" placeholder="Optional">
     
-    <h3>Encrypt a Message</h3>
-    <input type="text" id="encryptInput">
-    <button id="encryptBtn">Encrypt</button>
-    
-    <h3>Decrypt a Message</h3>
-    <input type="text" id="decryptInput">
-    <button id="decryptBtn">Decrypt</button>
+    <div class="section">
+        <label>Message:</label>
+        <textarea id="messageInput"></textarea>
+    </div>
 
-    <h3>Decrypt Page</h3>
+    <div class="section">
+        <label>Passphrase:</label>
+        <input type="password" id="passphraseInput">
+    </div>
+
+    <div class="buttons">
+        <button id="encryptBtn">Encrypt</button>
+        <button id="decryptBtn">Decrypt</button>
+    </div>
+
+    <div class="output-section">
+        <label>Output:</label>
+        <textarea id="output" readonly></textarea>
+        <button id="copyBtn">Copy</button>
+    </div>
+
     <button id="decryptPageBtn">Decrypt Page</button>
-    
-    <h3>Output</h3>
-    <div id="output"></div>
+
+    <script src="popup.js"></script>
 </body>
 </html>

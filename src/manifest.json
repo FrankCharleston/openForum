@@ -2,30 +2,32 @@
     "manifest_version": 3,
     "name": "OpenForum",
     "version": "1.0",
-    "description": "Encrypt and decrypt messages on public forums securely.",
-    "permissions": ["storage", "contextMenus", "clipboardRead", "clipboardWrite", "activeTab", "scripting"],
+    "description": "A decentralized encryption tool for public forums.",
+    "permissions": [
+        "storage",
+        "contextMenus",
+        "clipboardRead",
+        "clipboardWrite",
+        "activeTab",
+        "scripting"
+    ],
     "background": {
-      "service_worker": "background.js"
+        "service_worker": "background.js"
     },
+    "host_permissions": [
+        "<all_urls>"
+    ],
     "action": {
-      "default_popup": "popup.html",
-      "default_icon": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "icons": {
         "16": "icons/icon16.png",
         "48": "icons/icon48.png",
         "128": "icons/icon128.png"
-      }
-    },
-    "icons": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
-    },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["decentraloverlay.js"]
-      }
-    ],
-    "host_permissions": ["<all_urls>"]
-  }
-  
+    }
+}

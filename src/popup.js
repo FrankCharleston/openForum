@@ -1,35 +1,44 @@
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("encryptBtn").addEventListener("click", encryptMessage);
-    document.getElementById("decryptBtn").addEventListener("click", decryptMessage);
-    document.getElementById("decryptPageBtn").addEventListener("click", decryptPage);
+document.getElementById("encryptBtn").addEventListener("click", () => {
+    let message = document.getElementById("messageInput").value;
+    let passphrase = document.getElementById("passphraseInput").value || "default";
+
+    if (!message.trim()) {
+        alert("Enter a message to encrypt.");
+        return;
+    }
+
+    let encrypted = CryptoJS.AES.encrypt(message, passphrase).toString();
+    document.getElementById("output").value = `ENC[${encrypted}]`;
 });
 
-function encryptMessage() {
-    let text = document.getElementById("encryptInput").value;
-    let passphrase = document.getElementById("passphrase").value || "defaultpassword";
+document.getElementById("decryptBtn").addEventListener("click", () => {
+    let encryptedMessage = document.getElementById("messageInput").value;
+    let passphrase = document.getElementById("passphraseInput").value || "default";
 
-    try {
-        let encrypted = CryptoJS.AES.encrypt(text, passphrase).toString();
-        document.getElementById("output").innerText = `ENC[${encrypted}]`;
-    } catch (error) {
-        document.getElementById("output").innerText = "❌ Encryption failed.";
+    if (!encryptedMessage.startsWith("ENC[")) {
+        alert("Invalid encrypted message format.");
+        return;
     }
-}
 
-function decryptMessage() {
-    let encryptedText = document.getElementById("decryptInput").value;
-    let passphrase = document.getElementById("passphrase").value || "defaultpassword";
+    let encryptedText = encryptedMessage.replace(/^ENC\[(.+)\]$/, "$1");
+    let bytes = CryptoJS.AES.decrypt(encryptedText, passphrase);
+    let decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
-    try {
-        let decrypted = CryptoJS.AES.decrypt(encryptedText.replace("ENC[", "").replace("]", ""), passphrase).toString(CryptoJS.enc.Utf8);
-        if (!decrypted) throw new Error("Invalid passphrase.");
-        document.getElementById("output").innerText = `✅ Decrypted: ${decrypted}`;
-    } catch (error) {
-        document.getElementById("output").innerText = "❌ Decryption failed.";
+    if (!decrypted) {
+        alert("Failed to decrypt. Check your passphrase.");
+        return;
     }
-}
 
-function decryptPage() {
-    let passphrase = document.getElementById("passphrase").value || "defaultpassword";
-    chrome.runtime.sendMessage({ action: "decryptPage", passphrase });
-}
+    document.getElementById("output").value = decrypted;
+});
+
+document.getElementById("copyBtn").addEventListener("click", () => {
+    let output = document.getElementById("output").value;
+    if (!output.trim()) return;
+    navigator.clipboard.writeText(output);
+    alert("Copied to clipboard!");
+});
+
+document.getElementById("decryptPageBtn").addEventListener("click", () => {
+    chrome.runtime.sendMessage({ action: "decryptPage" });
+});
