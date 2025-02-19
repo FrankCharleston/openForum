@@ -3,7 +3,7 @@
     "name": "OpenForum",
     "version": "0.1",
     "description": "A decentralized overlay for encrypted messages on public forums.",
-    "permissions": ["storage", "activeTab", "scripting", "contextMenus"],
+    "permissions": ["storage", "activeTab", "scripting"],
     "host_permissions": ["*://www.reddit.com/*"],
     "web_accessible_resources": [
         {
@@ -11,15 +11,16 @@
             "matches": ["<all_urls>"]
         }
     ],
-    "background": {
-        "service_worker": "background.js"
-    },
     "content_scripts": [
         {
             "matches": ["*://www.reddit.com/*"],
-            "js": ["crypto-js.min.js", "decentraloverlay.js"]
+            "js": ["crypto-js.min.js", "decentraloverlay.js"],
+            "run_at": "document_idle"
         }
     ],
+    "background": {
+        "service_worker": "background.js"
+    },
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
