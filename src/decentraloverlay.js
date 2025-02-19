@@ -10,6 +10,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
+if (typeof CryptoJS === "undefined") {
+    console.log("[DEBUG] CryptoJS is missing. Loading manually...");
+    let script = document.createElement("script");
+    script.src = chrome.runtime.getURL("src/crypto-js.min.js");
+    script.onload = function () {
+        console.log("[DEBUG] CryptoJS loaded successfully.");
+    };
+    document.head.appendChild(script);
+} else {
+    console.log("[DEBUG] CryptoJS is already loaded.");
+}
+
 const redditOverlay = {
     init: function () {
         console.log("[DEBUG] Initializing overlay...");

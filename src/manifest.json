@@ -9,17 +9,17 @@
         "service_worker": "background.js"
     },
     "web_accessible_resources": [
-        {
-            "resources": ["crypto-js.min.js"],
-            "matches": ["<all_urls>"]
-        }
+    {
+        "resources": ["src/crypto-js.min.js"],
+        "matches": ["<all_urls>"]
+    }
     ],
     "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["crypto-js.min.js", "decentraloverlay.js"],
-            "run_at": "document_idle"
-        }
+    {
+        "matches": ["<all_urls>"],
+        "js": ["src/crypto-js.min.js", "src/decentraloverlay.js"],
+        "run_at": "document_idle"
+    }
     ],
     "action": {
         "default_popup": "popup.html",
