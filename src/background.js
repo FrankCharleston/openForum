@@ -1,4 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
+    console.log("[DEBUG] Background script installed");
+
+    // Create a right-click context menu
     chrome.contextMenus.create({
         id: "decryptText",
         title: "Decrypt Message",
@@ -6,8 +9,10 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 });
 
+// Ensure the onClicked event is properly registered
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "decryptText") {
+        console.log("[DEBUG] Context menu clicked:", info.selectionText);
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
             function: decryptSelectedText,
@@ -16,6 +21,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
 });
 
+// Function to decrypt selected text
 function decryptSelectedText(selectedText) {
     try {
         if (!selectedText.startsWith("ENC[")) {
@@ -24,7 +30,7 @@ function decryptSelectedText(selectedText) {
         }
 
         const encryptedText = selectedText.replace(/ENC\[|\]/g, "");
-        const passphrase = "your-secret-passphrase"; // Change this!
+        const passphrase = "mypassword"; // Change this!
         const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
         const plainText = decrypted.toString(CryptoJS.enc.Utf8);
 
