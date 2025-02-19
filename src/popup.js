@@ -1,42 +1,35 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const logContainer = document.getElementById("log");
+/* ==============================
+   📌 popup.js - Handles UI Actions
+   ============================== */
 
-  // Listen for logs from content script
-  chrome.runtime.onMessage.addListener((message) => {
-      if (message.type === "log") {
-          logContainer.innerHTML += `<div>${message.content}</div>`;
-      }
-  });
+   document.addEventListener("DOMContentLoaded", function () {
+    const logContainer = document.getElementById("logContainer");
+    const toggleButton = document.getElementById("toggleDecryption");
 
-  document.getElementById("toggle").addEventListener("click", function () {
-      console.log("[DEBUG] Toggle button clicked");
+    // Function to log messages to the popup UI
+    function logMessage(message) {
+        const logEntry = document.createElement("div");
+        logEntry.textContent = `[LOG] ${message}`;
+        logContainer.appendChild(logEntry);
+    }
 
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          if (tabs.length === 0) {
-              console.error("[ERROR] No active tab found.");
-              return;
-          }
+    // Toggle decryption when button is clicked
+    toggleButton.addEventListener("click", function () {
+        logMessage("Toggle Decryption button clicked");
 
-          // Check if the content script is running
-          chrome.scripting.executeScript({
-              target: { tabId: tabs[0].id },
-              func: () => typeof redditOverlay !== "undefined"
-          }, (results) => {
-              if (!results || results[0].result !== true) {
-                  console.error("[ERROR] Content script is not active on this tab.");
-                  alert("Error: Content script not loaded. Try reloading the page.");
-                  return;
-              }
+        chrome.runtime.sendMessage({ action: "toggleDecryption" }, function (response) {
+            if (chrome.runtime.lastError) {
+                logMessage("Error: " + chrome.runtime.lastError.message);
+            } else {
+                logMessage("Response: " + JSON.stringify(response));
+            }
+        });
+    });
 
-              console.log("[DEBUG] Sending message to content script...");
-              chrome.tabs.sendMessage(tabs[0].id, { action: "toggleDecryption" }, (response) => {
-                  if (chrome.runtime.lastError) {
-                      console.error("[ERROR] Could not send message to content script:", chrome.runtime.lastError.message);
-                  } else {
-                      console.log("[DEBUG] Message sent successfully. Response:", response);
-                  }
-              });
-          });
-      });
-  });
+    // Listen for logs from content scripts
+    chrome.runtime.onMessage.addListener((message) => {
+        if (message.type === "log") {
+            logMessage(message.content);
+        }
+    });
 });

@@ -35,7 +35,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 function decryptSelectedText(selectedText) {
     if (!selectedText) {
-        alert("No text selected for decryption.");
+        console.warn("[WARN] No text selected for decryption.");
         return;
     }
 
@@ -55,7 +55,7 @@ function decryptSelectedText(selectedText) {
         }
 
         const rawData = CryptoJS.enc.Base64.parse(selectedText.substring(8));
-        const salt = rawData.words.slice(0, 2);
+        const salt = CryptoJS.lib.WordArray.create(rawData.words.slice(0, 2));
         const ciphertext = CryptoJS.lib.WordArray.create(rawData.words.slice(2));
 
         const keySize = 256 / 32;
@@ -79,6 +79,11 @@ function decryptSelectedText(selectedText) {
         if (plainText && plainText.trim() !== "") {
             console.log("[DEBUG] Successfully decrypted:", plainText);
             alert("Decrypted Message: " + plainText);
+            navigator.clipboard.writeText(plainText).then(() => {
+                console.log("[DEBUG] Decrypted text copied to clipboard.");
+            }).catch(err => {
+                console.error("[ERROR] Failed to copy decrypted text to clipboard:", err);
+            });
         } else {
             console.warn("[WARN] Decryption failed. Possible incorrect passphrase or corrupted input.");
             alert("Failed to decrypt: Incorrect passphrase or corrupted input");

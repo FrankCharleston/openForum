@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenForum Debug</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 10px; width: 300px; }
-        #log { white-space: pre-wrap; font-size: 12px; background: #eee; padding: 5px; border-radius: 5px; }
-        button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h3>OpenForum Debug</h3>
-    <button id="toggle">Toggle Decryption</button>
+    <button id="toggleDecryption">Toggle Decryption</button>
     <h4>Logs:</h4>
-    <div id="log">No logs yet...</div>
+    <div id="logContainer">No logs yet...</div>
     <script src="popup.js"></script>
 </body>
 </html>

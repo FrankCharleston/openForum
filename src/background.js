@@ -1,4 +1,15 @@
+/* ==============================
+   📌 background.js - Manages Context Menu & Clipboard
+   ============================== */
+
+// Create a right-click context menu
 chrome.runtime.onInstalled.addListener(() => {
+    chrome.contextMenus.create({
+        id: "decryptSelection",
+        title: "Decrypt Selected Text",
+        contexts: ["selection"]
+    });
+
     chrome.contextMenus.create({
         id: "decryptClipboard",
         title: "Decrypt Clipboard",
@@ -6,78 +17,81 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 });
 
+// Handle context menu clicks
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+    if (info.menuItemId === "decryptSelection" && info.selectionText) {
+        console.log("[DEBUG] Decrypting selected text:", info.selectionText);
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            function: decryptText,
+            args: [info.selectionText]
+        });
+    }
     if (info.menuItemId === "decryptClipboard") {
         try {
             const clipboardText = await navigator.clipboard.readText();
             console.log("[DEBUG] Clipboard data:", clipboardText);
-
-            if (!clipboardText.startsWith("ENC[")) {
-                alert("No encrypted message detected in clipboard.");
-                return;
-            }
-
-            const encryptedText = clipboardText.replace(/ENC\[|\]/g, "");
-            decryptClipboardText(encryptedText);
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                function: decryptText,
+                args: [clipboardText]
+            });
         } catch (error) {
             console.error("[ERROR] Failed to read clipboard:", error);
-            alert("Error accessing clipboard data.");
+            chrome.notifications.create({
+                type: "basic",
+                iconUrl: "icon.png",
+                title: "Clipboard Error",
+                message: "Failed to access clipboard data."
+            });
         }
     }
 });
 
-function decryptClipboardText(encryptedText) {
-    let passphrase = prompt("Enter decryption passphrase:", "mypassword");
-    if (passphrase === null) {
-        console.log("[DEBUG] Decryption canceled by user.");
+// Function to decrypt text
+function decryptText(encryptedText) {
+    if (!encryptedText.startsWith("ENC[")) {
+        chrome.notifications.create({
+            type: "basic",
+            iconUrl: "icon.png",
+            title: "Decryption Error",
+            message: "No encrypted message detected."
+        });
         return;
     }
 
+    let passphrase = prompt("Enter decryption passphrase:", "mypassword");
+    if (!passphrase) return;
+
     try {
-        console.log("[DEBUG] Attempting to decrypt clipboard data...");
-        
-        // Decode from Base64
-        const rawData = CryptoJS.enc.Base64.parse(encryptedText);
-        const rawBytes = rawData.words;
+        console.log("[DEBUG] Attempting decryption...");
+        const encryptedData = encryptedText.replace(/ENC\[|\]/g, "");
+        const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
+        const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
-        if (encryptedText.startsWith("U2FsdGVk")) {  
-            console.log("[DEBUG] OpenSSL format detected.");
-            const salt = CryptoJS.lib.WordArray.create(rawBytes.slice(0, 2));
-            const ciphertext = CryptoJS.lib.WordArray.create(rawBytes.slice(2));
-
-            const keySize = 256 / 32;
-            const ivSize = 128 / 32;
-            const derivedKey = CryptoJS.PBKDF2(passphrase, salt, {
-                keySize: keySize + ivSize,
-                iterations: 10000,
-                hasher: CryptoJS.algo.SHA256
+        if (decryptedText) {
+            chrome.notifications.create({
+                type: "basic",
+                iconUrl: "icon.png",
+                title: "Decryption Successful",
+                message: decryptedText
             });
-
-            const key = CryptoJS.lib.WordArray.create(derivedKey.words.slice(0, keySize));
-            const iv = CryptoJS.lib.WordArray.create(derivedKey.words.slice(keySize));
-
-            console.log("[DEBUG] Derived Key:", key.toString());
-            console.log("[DEBUG] Derived IV:", iv.toString());
-
-            const decrypted = CryptoJS.AES.decrypt({ ciphertext: ciphertext }, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
-            const plainText = decrypted.toString(CryptoJS.enc.Utf8);
-
-            if (plainText && plainText.trim() !== "") {
-                console.log("[DEBUG] Successfully decrypted:", plainText);
-                alert("Decrypted Message: " + plainText);
-                navigator.clipboard.writeText(plainText).then(() => {
-                    console.log("[DEBUG] Decrypted text copied to clipboard.");
-                });
-            } else {
-                console.warn("[WARN] Decryption failed. Possible incorrect passphrase or corrupted input.");
-                alert("🔓 Failed to decrypt (incorrect passphrase or corrupted input)");
-            }
+            navigator.clipboard.writeText(decryptedText);
         } else {
-            console.warn("[WARN] Unrecognized encryption format.");
-            alert("⚠️ Unrecognized encryption format. Ensure it's OpenSSL AES-256-CBC.");
+            chrome.notifications.create({
+                type: "basic",
+                iconUrl: "icon.png",
+                title: "Decryption Failed",
+                message: "Incorrect passphrase or corrupted input."
+            });
         }
-    } catch (e) {
-        console.error("[ERROR] Decryption error:", e);
-        alert("⚠️ Error decrypting message");
+    } catch (error) {
+        console.error("[ERROR] Decryption failed:", error);
+        chrome.notifications.create({
+            type: "basic",
+            iconUrl: "icon.png",
+            title: "Decryption Error",
+            message: "Error decrypting message: " + error.message
+        });
     }
 }
