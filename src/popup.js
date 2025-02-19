@@ -33,3 +33,24 @@
         }
     });
 });
+
+// Function to update the log container in the popup UI
+function updateLogContainer(message, type = "log") {
+    const logContainer = document.getElementById("logContainer");
+    if (!logContainer) return;
+
+    const logEntry = document.createElement("div");
+    logEntry.textContent = `[${type.toUpperCase()}] ${message}`;
+    logEntry.classList.add(type);
+    logContainer.appendChild(logEntry);
+
+    // Auto-scroll to the latest log
+    logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+// Listen for messages from the background script and display logs in the popup
+chrome.runtime.onMessage.addListener((message) => {
+    if (message.type && message.content) {
+        updateLogContainer(message.content, message.type);
+    }
+});

@@ -19,34 +19,33 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Handle context menu clicks
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-    if (info.menuItemId === "decryptSelection" && info.selectionText) {
-        console.log("[DEBUG] Decrypting selected text:", info.selectionText);
-        chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            function: decryptText,
-            args: [info.selectionText]
-        });
-    }
     if (info.menuItemId === "decryptClipboard") {
         try {
+            // Request clipboard permissions before reading clipboard data
+            await navigator.permissions.query({ name: "clipboard-read" });
+
             const clipboardText = await navigator.clipboard.readText();
             console.log("[DEBUG] Clipboard data:", clipboardText);
-            chrome.scripting.executeScript({
-                target: { tabId: tab.id },
-                function: decryptText,
-                args: [clipboardText]
-            });
+
+            if (!clipboardText.startsWith("ENC[")) {
+                console.warn("[WARN] No encrypted message detected in clipboard.");
+                sendLogToPopup("⚠️ No encrypted message detected in clipboard.", "warn");
+                return;
+            }
+
+            const encryptedText = clipboardText.replace(/ENC\[|\]/g, "");
+            decryptClipboardText(encryptedText);
         } catch (error) {
             console.error("[ERROR] Failed to read clipboard:", error);
-            chrome.notifications.create({
-                type: "basic",
-                iconUrl: "icon.png",
-                title: "Clipboard Error",
-                message: "Failed to access clipboard data."
-            });
+            sendLogToPopup("⚠️ Error accessing clipboard data.", "error");
         }
     }
 });
+
+// Function to send logs to the popup
+function sendLogToPopup(message, type = "log") {
+    chrome.runtime.sendMessage({ type, content: message });
+}
 
 // Function to decrypt text
 function decryptText(encryptedText) {
