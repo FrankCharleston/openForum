@@ -11,7 +11,7 @@
     "content_scripts": [
         {
             "matches": ["*://www.reddit.com/*"],
-            "js": ["crypto-js.min.js", "decentraloverlay.js", "content.js"]
+            "js": ["crypto-js.min.js", "decentraloverlay.js"]
         }
     ],
     "action": {
