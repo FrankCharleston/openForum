@@ -7,7 +7,6 @@ document.getElementById("toggle").addEventListener("click", () => {
           return;
       }
 
-      // Ensure the content script is loaded before sending the message
       chrome.scripting.executeScript({
           target: { tabId: tabs[0].id },
           func: () => console.log("[DEBUG] Content script is running.")

@@ -18,7 +18,6 @@ chrome.runtime.onInstalled.addListener(() => {
     );
 });
 
-// Wait for the menu to be created before attaching the listener
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "decryptText") {
         console.log("[DEBUG] Context menu clicked:", info.selectionText);
@@ -31,7 +30,6 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
 });
 
-// Function to decrypt selected text
 function decryptSelectedText(selectedText) {
     try {
         if (!selectedText.startsWith("ENC[")) {
@@ -40,7 +38,9 @@ function decryptSelectedText(selectedText) {
         }
 
         const encryptedText = selectedText.replace(/ENC\[|\]/g, "");
-        const passphrase = "mypassword"; // Change this!
+        let passphrase = prompt("Enter decryption passphrase:", "mypassword");
+        if (!passphrase) passphrase = "mypassword";
+
         const decrypted = CryptoJS.AES.decrypt(encryptedText, passphrase);
         const plainText = decrypted.toString(CryptoJS.enc.Utf8);
 
