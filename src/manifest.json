@@ -20,7 +20,7 @@
             "js": ["crypto-js.min.js", "decentraloverlay.js"],
             "run_at": "document_idle"
         }
-    ]
+    ],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
