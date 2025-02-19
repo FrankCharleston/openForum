@@ -72,7 +72,8 @@ const redditOverlay = {
 
     decryptMessage: function (encryptedText, callback) {
         try {
-            console.log("[DEBUG] Attempting to decrypt:", encryptedText);
+            console.log("[DEBUG] Attempting to decrypt OpenSSL AES-256-CBC text:", encryptedText);
+    
             let passphrase = prompt("Enter decryption passphrase (or cancel to exit):", "mypassword");
             if (passphrase === null) {
                 console.log("[DEBUG] Decryption canceled by user.");
@@ -80,27 +81,45 @@ const redditOverlay = {
             }
             console.log("[DEBUG] Using passphrase:", passphrase);
     
-            // Decode from Base64
+            // Ensure the encrypted text is in a proper OpenSSL Base64 format
             const rawData = CryptoJS.enc.Base64.parse(encryptedText);
-            const cipherParams = { ciphertext: rawData };
+            const rawBytes = rawData.words;
     
-            // Derive key and IV from PBKDF2 (matching OpenSSL's default settings)
-            const salt = CryptoJS.lib.WordArray.random(8);
-            const key = CryptoJS.PBKDF2(passphrase, salt, {
-                keySize: 256 / 32,
-                iterations: 10000,
-            });
-            const iv = CryptoJS.lib.WordArray.random(16);
+            // OpenSSL salt extraction
+            if (encryptedText.startsWith("U2FsdGVk")) {  // "Salted__" in Base64
+                console.log("[DEBUG] OpenSSL format detected.");
+                const salt = CryptoJS.lib.WordArray.create(rawBytes.slice(0, 2)); // Extract salt
+                const ciphertext = CryptoJS.lib.WordArray.create(rawBytes.slice(2));
     
-            const decrypted = CryptoJS.AES.decrypt(cipherParams, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
-            const plainText = decrypted.toString(CryptoJS.enc.Utf8);
+                // Derive key and IV using PBKDF2
+                const keySize = 256 / 32; // AES-256 key size
+                const ivSize = 128 / 32; // AES uses a 128-bit IV
+                const derivedKey = CryptoJS.PBKDF2(passphrase, salt, {
+                    keySize: keySize + ivSize, // Key + IV
+                    iterations: 10000,
+                    hasher: CryptoJS.algo.SHA256
+                });
     
-            if (plainText && plainText.trim() !== "") {
-                console.log("[DEBUG] Successfully decrypted:", plainText);
-                callback(plainText, true);
+                const key = CryptoJS.lib.WordArray.create(derivedKey.words.slice(0, keySize));
+                const iv = CryptoJS.lib.WordArray.create(derivedKey.words.slice(keySize));
+    
+                console.log("[DEBUG] Derived Key:", key.toString());
+                console.log("[DEBUG] Derived IV:", iv.toString());
+    
+                // Perform AES decryption
+                const decrypted = CryptoJS.AES.decrypt({ ciphertext: ciphertext }, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+                const plainText = decrypted.toString(CryptoJS.enc.Utf8);
+    
+                if (plainText && plainText.trim() !== "") {
+                    console.log("[DEBUG] Successfully decrypted:", plainText);
+                    callback(plainText, true);
+                } else {
+                    console.warn("[WARN] Decryption failed. Possible incorrect passphrase or corrupted input.");
+                    callback("🔓 Failed to decrypt (incorrect passphrase or corrupted input)", false);
+                }
             } else {
-                console.warn("[WARN] Decryption failed for input:", encryptedText, "Possible incorrect passphrase or malformed input.");
-                callback("🔓 Failed to decrypt (incorrect passphrase or malformed input)", false);
+                console.warn("[WARN] Unrecognized encryption format.");
+                callback("⚠️ Unrecognized encryption format. Ensure it's OpenSSL AES-256-CBC.", false);
             }
         } catch (e) {
             console.error("[ERROR] Decryption error on input:", encryptedText, "Exception:", e);
