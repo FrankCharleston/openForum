@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 if (typeof CryptoJS === "undefined") {
     console.log("[DEBUG] CryptoJS is missing. Loading manually...");
     let script = document.createElement("script");
-    script.src = chrome.runtime.getURL("src/crypto-js.min.js");
+    script.src = chrome.runtime.getURL("crypto-js.min.js");
     script.onload = function () {
         console.log("[DEBUG] CryptoJS loaded successfully.");
     };
@@ -45,8 +45,17 @@ const redditOverlay = {
     },
 
     scanAndDecrypt: function () {
-        console.log("[DEBUG] Scanning for encrypted messages...");
         let logContainer = document.getElementById("decryption-log");
+        
+        if (!logContainer) {
+            console.warn("[WARN] Log container not found! Creating one.");
+            logContainer = document.createElement("div");
+            logContainer.id = "decryption-log";
+            logContainer.style = "position: fixed; bottom: 10px; right: 10px; width: 300px; height: 150px; overflow-y: auto; background: #222; color: #fff; padding: 10px; font-size: 12px; border-radius: 5px;";
+            document.body.appendChild(logContainer);
+        }
+
+        console.log("[DEBUG] Scanning for encrypted messages...");
         if (!logContainer) return;
         
         document.querySelectorAll("*").forEach(element => {
