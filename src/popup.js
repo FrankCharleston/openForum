@@ -1,50 +1,43 @@
+// ✅ Load CryptoJS
+importScripts("crypto-js.min.js");
+
+// ✅ Ensure the script is loaded
+console.log("[DEBUG] Popup script initialized.");
+
 document.getElementById("encryptBtn").addEventListener("click", () => {
-    const text = document.getElementById("inputText").value;
-    if (!text) return;
+    try {
+        const text = document.getElementById("inputText").value;
+        if (!text) return;
 
-    let passphrase = prompt("Enter encryption passphrase:", "mypassword");
-    if (!passphrase) return;
+        let passphrase = prompt("Enter encryption passphrase:", "mypassword");
+        if (!passphrase) return;
 
-    const encryptedText = CryptoJS.AES.encrypt(text, passphrase).toString();
-    document.getElementById("inputText").value = `ENC[${encryptedText}]`;
-    logMessage("[INFO] ✅ Encrypted message successfully.");
-});
-
-document.getElementById("decryptBtn").addEventListener("click", () => {
-    const text = document.getElementById("inputText").value.replace(/ENC\[|\]/g, "");
-    if (!text) return;
-
-    let passphrase = prompt("Enter decryption passphrase:", "mypassword");
-    if (!passphrase) return;
-
-    const decrypted = CryptoJS.AES.decrypt(text, passphrase).toString(CryptoJS.enc.Utf8);
-    if (!decrypted) {
-        logMessage("[ERROR] ❌ Decryption failed. Check your passphrase.", "error");
-    } else {
-        document.getElementById("inputText").value = decrypted;
-        logMessage("[INFO] ✅ Decryption successful.");
+        const encryptedText = CryptoJS.AES.encrypt(text, passphrase).toString();
+        document.getElementById("inputText").value = `ENC[${encryptedText}]`;
+        logMessage("[INFO] ✅ Encrypted message successfully.");
+    } catch (error) {
+        console.error("[ERROR] Encryption failed:", error);
+        logMessage("[ERROR] ❌ Encryption failed.", "error");
     }
 });
 
-document.getElementById("decryptPage").addEventListener("click", () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs.length === 0) return;
-        chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            func: () => {
-                let passphrase = prompt("Enter decryption passphrase (or cancel to use default):", "mypassword");
-                document.querySelectorAll("*").forEach(el => {
-                    const match = el.innerText.match(/ENC\[(.*?)\]/);
-                    if (match) {
-                        const decrypted = CryptoJS.AES.decrypt(match[1], passphrase).toString(CryptoJS.enc.Utf8);
-                        if (decrypted) {
-                            el.innerText = decrypted;
-                        }
-                    }
-                });
-            }
-        });
-    });
+document.getElementById("decryptBtn").addEventListener("click", () => {
+    try {
+        const text = document.getElementById("inputText").value.replace(/ENC\[|\]/g, "");
+        if (!text) return;
+
+        let passphrase = prompt("Enter decryption passphrase:", "mypassword");
+        if (!passphrase) return;
+
+        const decrypted = CryptoJS.AES.decrypt(text, passphrase).toString(CryptoJS.enc.Utf8);
+        if (!decrypted) throw new Error("Decryption failed");
+
+        document.getElementById("inputText").value = decrypted;
+        logMessage("[INFO] ✅ Decryption successful.");
+    } catch (error) {
+        console.error("[ERROR] Decryption failed:", error);
+        logMessage("[ERROR] ❌ Decryption failed. Check your passphrase.", "error");
+    }
 });
 
 function logMessage(msg, type = "log") {
