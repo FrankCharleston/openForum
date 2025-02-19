@@ -22,5 +22,11 @@
         "128": "icon.png"
       }
     }
+    "content_scripts": [
+        {
+            "matches": ["*://*.reddit.com/*"],
+            "js": ["crypto-js.min.js", "decentraloverlay.js"]
+        }
+    ]
   }
   

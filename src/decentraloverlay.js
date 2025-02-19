@@ -33,11 +33,15 @@ const redditOverlay = {
     },
     
     decryptMessage: function(encryptedText, callback) {
-        // Placeholder decryption (will replace with real cryptographic method)
-        setTimeout(() => {
-            callback(`Decrypted: ${encryptedText}`);
-        }, 500);
+        try {
+            const key = CryptoJS.enc.Utf8.parse("your-secret-key"); // Replace with actual key
+            const decrypted = CryptoJS.AES.decrypt(encryptedText, key, { mode: CryptoJS.mode.ECB });
+            callback(decrypted.toString(CryptoJS.enc.Utf8) || "Failed to decrypt");
+        } catch (e) {
+            callback("Error decrypting message");
+        }
     }
+    
 };
 
 document.addEventListener("DOMContentLoaded", () => redditOverlay.init());
