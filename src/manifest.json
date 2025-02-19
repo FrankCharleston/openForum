@@ -10,14 +10,14 @@
     },
     "web_accessible_resources": [
     {
-        "resources": ["src/crypto-js.min.js"],
+        "resources": ["crypto-js.min.js"],
         "matches": ["<all_urls>"]
     }
     ],
     "content_scripts": [
     {
         "matches": ["<all_urls>"],
-        "js": ["src/crypto-js.min.js", "src/decentraloverlay.js"],
+        "js": ["crypto-js.min.js", "decentraloverlay.js"],
         "run_at": "document_idle"
     }
     ],
