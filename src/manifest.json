@@ -7,10 +7,10 @@
   "background": {
     "service_worker": "background.js"
   },
-  "host_permissions": ["*://*"],
+  "host_permissions": ["*://*/*"],
   "content_scripts": [
     {
-      "matches": ["*://*"],
+      "matches": ["*://*/*"],
       "js": ["crypto-js.min.js", "decentraloverlay.js"],
       "run_at": "document_end"
     }
