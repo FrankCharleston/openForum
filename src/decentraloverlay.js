@@ -10,18 +10,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-if (typeof CryptoJS === "undefined") {
-    console.log("[DEBUG] CryptoJS is missing. Loading manually...");
-    let script = document.createElement("script");
-    script.src = chrome.runtime.getURL("crypto-js.min.js");
-    script.onload = function () {
-        console.log("[DEBUG] CryptoJS loaded successfully.");
-    };
-    document.head.appendChild(script);
-} else {
-    console.log("[DEBUG] CryptoJS is already loaded.");
-}
-
 const redditOverlay = {
     init: function () {
         console.log("[DEBUG] Initializing overlay...");
@@ -45,17 +33,8 @@ const redditOverlay = {
     },
 
     scanAndDecrypt: function () {
-        let logContainer = document.getElementById("decryption-log");
-
-        if (!logContainer) {
-            console.warn("[WARN] Log container not found! Creating one.");
-            logContainer = document.createElement("div");
-            logContainer.id = "decryption-log";
-            logContainer.style = "position: fixed; bottom: 10px; right: 10px; width: 300px; height: 150px; overflow-y: auto; background: #222; color: #fff; padding: 10px; font-size: 12px; border-radius: 5px;";
-            document.body.appendChild(logContainer);
-        }
-
         console.log("[DEBUG] Scanning for encrypted messages...");
+        let logContainer = document.getElementById("decryption-log");
         if (!logContainer) return;
         
         document.querySelectorAll("*").forEach(element => {
@@ -96,25 +75,26 @@ const redditOverlay = {
             logContainer.style = "position: fixed; bottom: 10px; right: 10px; width: 300px; height: 150px; overflow-y: auto; background: #222; color: #fff; padding: 10px; font-size: 12px; border-radius: 5px;";
             document.body.appendChild(logContainer);
         }
-    
+
         try {
             console.log("[DEBUG] Attempting to decrypt OpenSSL AES-256-CBC text:", encryptedText);
             let passphrase = prompt("Enter decryption passphrase (or cancel to exit):", "mypassword");
-            if (passphrase === null) {
+            
+            if (!passphrase) {
                 console.log("[DEBUG] Decryption canceled by user.");
                 logContainer.innerHTML += `<div style='color: orange;'>[INFO] Decryption canceled by user.</div>`;
-                return;
+                return; // EXIT GRACEFULLY
             }
+            
             console.log("[DEBUG] Using passphrase:", passphrase);
-    
             const rawData = CryptoJS.enc.Base64.parse(encryptedText);
             const rawBytes = rawData.words;
-    
+
             if (encryptedText.startsWith("U2FsdGVk")) {  
                 console.log("[DEBUG] OpenSSL format detected.");
                 const salt = CryptoJS.lib.WordArray.create(rawBytes.slice(0, 2));
                 const ciphertext = CryptoJS.lib.WordArray.create(rawBytes.slice(2));
-    
+
                 const keySize = 256 / 32;
                 const ivSize = 128 / 32;
                 const derivedKey = CryptoJS.PBKDF2(passphrase, salt, {
@@ -122,16 +102,16 @@ const redditOverlay = {
                     iterations: 10000,
                     hasher: CryptoJS.algo.SHA256
                 });
-    
+
                 const key = CryptoJS.lib.WordArray.create(derivedKey.words.slice(0, keySize));
                 const iv = CryptoJS.lib.WordArray.create(derivedKey.words.slice(keySize));
-    
+
                 console.log("[DEBUG] Derived Key:", key.toString());
                 console.log("[DEBUG] Derived IV:", iv.toString());
-    
+
                 const decrypted = CryptoJS.AES.decrypt({ ciphertext: ciphertext }, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
                 const plainText = decrypted.toString(CryptoJS.enc.Utf8);
-    
+
                 if (plainText && plainText.trim() !== "") {
                     console.log("[DEBUG] Successfully decrypted:", plainText);
                     logContainer.innerHTML += `<div style='color: lightgreen;'>[SUCCESS] Decrypted: ${plainText}</div>`;
@@ -151,7 +131,7 @@ const redditOverlay = {
             logContainer.innerHTML += `<div style='color: red;'>[ERROR] Exception: ${e.message}</div>`;
             callback("⚠️ Error decrypting message", false);
         }
-    }    
+    }
 };
 
 document.addEventListener("DOMContentLoaded", () => redditOverlay.init());
