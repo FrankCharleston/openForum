@@ -1,0 +1,32 @@
+{
+    "manifest_version": 3,
+    "name": "OpenForum",
+    "version": "0.1",
+    "description": "A decentralized overlay for encrypted messages on any webpage.",
+    "permissions": ["storage", "activeTab", "scripting", "contextMenus"],
+    "host_permissions": ["<all_urls>"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["crypto-js.min.js"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["crypto-js.min.js", "decentraloverlay.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon.png",
+            "48": "icon.png",
+            "128": "icon.png"
+        }
+    }
+}
