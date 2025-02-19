@@ -1,45 +1,53 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const decryptButton = document.getElementById("decryptInput");
-    const toggleButton = document.getElementById("toggle");
-    const inputField = document.getElementById("textInput");
-    const logContainer = document.getElementById("logContainer");
+document.getElementById("encryptBtn").addEventListener("click", () => {
+    const text = document.getElementById("inputText").value;
+    if (!text) return;
 
-    // Toggle decryption on page
-    toggleButton.addEventListener("click", function () {
-        chrome.runtime.sendMessage({ action: "toggleDecryption" }, (response) => {
-            if (chrome.runtime.lastError) {
-                logToPopup(`❌ Error: ${chrome.runtime.lastError.message}`, "error");
-            } else {
-                logToPopup("✅ Decryption toggled successfully.", "log");
-            }
-        });
-    });
+    let passphrase = prompt("Enter encryption passphrase:", "mypassword");
+    if (!passphrase) return;
 
-    // Decrypt manually entered text
-    decryptButton.addEventListener("click", function () {
-        const text = inputField.value.trim();
-        if (!text) {
-            logToPopup("⚠️ No input text provided.", "warn");
-            return;
-        }
+    const encryptedText = CryptoJS.AES.encrypt(text, passphrase).toString();
+    document.getElementById("inputText").value = `ENC[${encryptedText}]`;
+    logMessage("[INFO] ✅ Encrypted message successfully.");
+});
 
-        chrome.runtime.sendMessage({ action: "decryptText", text: text }, (response) => {
-            if (response && response.success) {
-                inputField.value = response.decryptedText;
-                logToPopup("✅ Decryption successful!", "log");
-            } else {
-                logToPopup("❌ Decryption failed. Check your passphrase.", "error");
+document.getElementById("decryptBtn").addEventListener("click", () => {
+    const text = document.getElementById("inputText").value.replace(/ENC\[|\]/g, "");
+    if (!text) return;
+
+    let passphrase = prompt("Enter decryption passphrase:", "mypassword");
+    if (!passphrase) return;
+
+    const decrypted = CryptoJS.AES.decrypt(text, passphrase).toString(CryptoJS.enc.Utf8);
+    if (!decrypted) {
+        logMessage("[ERROR] ❌ Decryption failed. Check your passphrase.", "error");
+    } else {
+        document.getElementById("inputText").value = decrypted;
+        logMessage("[INFO] ✅ Decryption successful.");
+    }
+});
+
+document.getElementById("decryptPage").addEventListener("click", () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length === 0) return;
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            func: () => {
+                let passphrase = prompt("Enter decryption passphrase (or cancel to use default):", "mypassword");
+                document.querySelectorAll("*").forEach(el => {
+                    const match = el.innerText.match(/ENC\[(.*?)\]/);
+                    if (match) {
+                        const decrypted = CryptoJS.AES.decrypt(match[1], passphrase).toString(CryptoJS.enc.Utf8);
+                        if (decrypted) {
+                            el.innerText = decrypted;
+                        }
+                    }
+                });
             }
         });
     });
 });
 
-function logToPopup(message, type = "log") {
+function logMessage(msg, type = "log") {
     const logContainer = document.getElementById("logContainer");
-    if (!logContainer) return;
-
-    const logEntry = document.createElement("div");
-    logEntry.classList.add(type);
-    logEntry.innerText = `[${type.toUpperCase()}] ${message}`;
-    logContainer.appendChild(logEntry);
+    logContainer.innerHTML += `<div class="${type}">${msg}</div>`;
 }
