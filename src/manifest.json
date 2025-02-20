@@ -3,7 +3,7 @@
   "name": "OpenForum",
   "version": "1.0",
   "description": "A decentralized encryption tool for forums.",
-  "permissions": ["contextMenus", "storage", "scripting", "clipboardWrite", "clipboardRead", "activeTab"],
+  "permissions": ["contextMenus", "storage", "scripting", "clipboardWrite", "clipboardRead", "activeTab", "notifications"],
   "background": {
     "service_worker": "background.js"
   },
