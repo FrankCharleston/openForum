@@ -11,16 +11,16 @@
       "clipboardRead",
       "activeTab"
   ],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": ["*://*/*"],
   "background": {
-      "service_worker": "background.js"
+    "service_worker": "background.js"
   },
   "content_scripts": [
-      {
-          "matches": ["<all_urls>"],
-          "js": ["crypto-js.min.js", "decentraloverlay.js", "content_script.js"],
-          "run_at": "document_end"
-      }
+    {
+      "matches": ["<all_urls>"],
+      "js": ["crypto-utils.js", "decentraloverlay.js", "content_script.js", "content.js", "crypto-utils.js"],
+      "run_at": "document_end"
+    }
   ],
   "action": {
       "default_popup": "popup.html",
