@@ -1,9 +1,3 @@
-importScripts("./crypto-js.min.js");
-
-// Ensure the service worker starts
-console.log("[INFO] OpenForum background service worker started.");
-
-// Wait for the extension to install or update
 chrome.runtime.onInstalled.addListener(() => {
     console.log("[INFO] OpenForum installed, setting up context menus.");
     
@@ -25,7 +19,6 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 });
 
-// Ensure onClicked listener is set **AFTER** menu creation
 chrome.runtime.onStartup.addListener(() => {
     console.log("[INFO] Service worker active.");
 });
@@ -42,9 +35,14 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
                 let passphrase = prompt("Enter passphrase:");
                 if (!passphrase) return;
 
-                let encrypted = CryptoJS.AES.encrypt(selectedText, passphrase).toString();
-                navigator.clipboard.writeText(`ENC[${encrypted}]`);
-                alert("Encrypted text copied to clipboard.");
+                fetch(chrome.runtime.getURL("crypto-utils.js"))  // ✅ Load CryptoJS dynamically
+                    .then(res => res.text())
+                    .then(script => {
+                        eval(script);  // ✅ Inject CryptoJS into this context
+                        let encrypted = CryptoJS.AES.encrypt(selectedText, passphrase).toString();
+                        navigator.clipboard.writeText(`ENC[${encrypted}]`);
+                        alert("Encrypted text copied to clipboard.");
+                    });
             },
             args: [info.selectionText]
         });
@@ -57,18 +55,23 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
                 let passphrase = prompt("Enter passphrase:");
                 if (!passphrase) return;
 
-                try {
-                    let encryptedData = selectedText.replace("ENC[", "").replace("]", "");
-                    let decryptedBytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
-                    let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+                fetch(chrome.runtime.getURL("crypto-utils.js"))  // ✅ Load CryptoJS dynamically
+                    .then(res => res.text())
+                    .then(script => {
+                        eval(script);  // ✅ Inject CryptoJS into this context
+                        try {
+                            let encryptedData = selectedText.replace("ENC[", "").replace("]", "");
+                            let decryptedBytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
+                            let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
-                    if (!decryptedText) throw new Error("Invalid decryption.");
+                            if (!decryptedText) throw new Error("Invalid decryption.");
 
-                    navigator.clipboard.writeText(decryptedText);
-                    alert("Decrypted text copied to clipboard.");
-                } catch (error) {
-                    alert("Decryption failed.");
-                }
+                            navigator.clipboard.writeText(decryptedText);
+                            alert("Decrypted text copied to clipboard.");
+                        } catch (error) {
+                            alert("Decryption failed.");
+                        }
+                    });
             },
             args: [info.selectionText]
         });
