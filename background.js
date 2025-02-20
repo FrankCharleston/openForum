@@ -1,79 +1,35 @@
 chrome.runtime.onInstalled.addListener(() => {
-    console.log("[INFO] OpenForum installed, setting up context menus.");
-    
-    chrome.contextMenus.removeAll(() => {  // Clear existing menu items before adding new ones
-        // Create context menu items
-        chrome.contextMenus.create({
-            id: "encryptSelectedText",
-            title: "Encrypt Selected Text",
-            contexts: ["selection"]
-        });
-
-        chrome.contextMenus.create({
-            id: "decryptSelectedText",
-            title: "Decrypt Selected Text",
-            contexts: ["selection"]
-        });
-
-        console.log("[INFO] Context menus created.");
+    chrome.contextMenus.create({
+        id: "decryptText",
+        title: "Decrypt Selected Text",
+        contexts: ["selection"]
     });
 });
 
-chrome.runtime.onStartup.addListener(() => {
-    console.log("[INFO] Service worker active.");
-});
-
-// Handle context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    if (!info.selectionText) return;
-    console.log("[DEBUG] Context menu clicked:", info.menuItemId, "Text:", info.selectionText);
+    if (info.menuItemId === "decryptText") {
+        console.log("Decrypting text:", info.selectionText);
 
-    if (info.menuItemId === "encryptSelectedText") {
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            func: (selectedText) => {
-                let passphrase = prompt("Enter passphrase:");
-                if (!passphrase) return;
-
-                fetch(chrome.runtime.getURL("crypto-utils.js"))  // ✅ Load CryptoJS dynamically
-                    .then(res => res.text())
-                    .then(script => {
-                        eval(script);  // ✅ Inject CryptoJS into this context
-                        let encrypted = CryptoJS.AES.encrypt(selectedText, passphrase).toString();
-                        navigator.clipboard.writeText(`ENC[${encrypted}]`);
-                        alert("Encrypted text copied to clipboard.");
-                    });
-            },
-            args: [info.selectionText]
-        });
-    }
-
-    if (info.menuItemId === "decryptSelectedText") {
-        chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            func: (selectedText) => {
-                let passphrase = prompt("Enter passphrase:");
-                if (!passphrase) return;
-
-                fetch(chrome.runtime.getURL("crypto-utils.js"))  // ✅ Load CryptoJS dynamically
-                    .then(res => res.text())
-                    .then(script => {
-                        eval(script);  // ✅ Inject CryptoJS into this context
-                        try {
-                            let encryptedData = selectedText.replace("ENC[", "").replace("]", "");
-                            let decryptedBytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
-                            let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
-
-                            if (!decryptedText) throw new Error("Invalid decryption.");
-
-                            navigator.clipboard.writeText(decryptedText);
-                            alert("Decrypted text copied to clipboard.");
-                        } catch (error) {
-                            alert("Decryption failed.");
-                        }
-                    });
-            },
+            function: decryptSelectedText,
             args: [info.selectionText]
         });
     }
 });
+
+function decryptSelectedText(encryptedText) {
+    let passphrase = prompt("Enter passphrase:", "mypassword");
+    if (!passphrase) return;
+
+    chrome.runtime.sendMessage(
+        { action: "decrypt", text: encryptedText, passphrase },
+        (response) => {
+            if (response && response.decrypted) {
+                alert("Decrypted Text: " + response.decrypted);
+            } else {
+                alert("Decryption failed.");
+            }
+        }
+    );
+}
