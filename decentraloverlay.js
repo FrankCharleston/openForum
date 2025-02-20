@@ -30,23 +30,26 @@ async function loadCryptoUtils() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
-    await loadCryptoUtils();  // ✅ Ensures CryptoJS is loaded before execution
+document.addEventListener("DOMContentLoaded", function () {
+    loadCryptoUtils().then(() => {
+        console.log("[INFO] CryptoJS loaded.");
+    });
 });
 
-
-function scanAndDecrypt() {
+async function scanAndDecrypt() {
     await loadCryptoUtils();  // ✅ Ensures functions are available
+
     document.querySelectorAll("*").forEach(element => {
         const encryptedText = extractEncryptedText(element.innerText);
         if (encryptedText) {
-            let decryptedText = decryptText(encryptedText, passphrase);
-                if (decryptedText) {
-                    element.innerHTML = element.innerHTML.replace(
-                        `ENC[${encryptedText}]`,
-                        `<span class='decrypted-message' style='color: green;'>${decryptedText}</span>`
-                    );
-                }
+            let decryptedText = decryptText(encryptedText, prompt("Enter passphrase:", "mypassword"));
+            if (decryptedText) {
+                element.innerHTML = element.innerHTML.replace(
+                    `ENC[${encryptedText}]`,
+                    `<span class='decrypted-message' style='color: green;'>${decryptedText}</span>`
+                );
+            }
         }
     });
 }
+
