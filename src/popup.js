@@ -86,34 +86,49 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
     // Decrypt entire page function
-    document.getElementById("decryptPageBtn").addEventListener("click", function () {
-        let passphrase = document.getElementById("globalPassphrase").value;
-
-        if (!passphrase.trim()) {
-            showError("Enter a passphrase for full-page decryption.");
+    document.getElementById("decryptBtn").addEventListener("click", function () {
+        let encryptedMessage = document.getElementById("messageInput").value.trim();
+        let passphrase = document.getElementById("passphraseInput").value.trim();
+    
+        if (!encryptedMessage.startsWith("ENC[")) {
+            showError("Invalid encrypted message format.");
             return;
         }
-
-        // Run decryption script across the entire page
-        chrome.scripting.executeScript({
-            target: { allFrames: true },
-            func: (passphrase) => {
-                let elements = document.querySelectorAll("*:not(script):not(style)");
-                elements.forEach(el => {
-                    if (el.textContent.includes("ENC[")) {
-                        try {
-                            let encryptedData = el.textContent.match(/ENC\[(.*?)\]/)[1];
-                            let decryptedBytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
-                            let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
-                            if (decryptedText) el.textContent = decryptedText;
-                        } catch (e) {
-                            console.error("[ERROR] Failed to decrypt element:", el);
-                        }
-                    }
-                });
-            },
-            args: [passphrase]
-        });
+    
+        try {
+            // Extract base64 encoded data, removing "ENC[" and "]"
+            let encryptedData = encryptedMessage.slice(4, -1);
+            let rawCiphertext = CryptoJS.enc.Base64.parse(encryptedData);
+    
+            // OpenSSL uses the first 16 bytes as the IV
+            let iv = CryptoJS.lib.WordArray.create(rawCiphertext.words.slice(0, 4)); // IV (16 bytes)
+            let actualCiphertext = CryptoJS.lib.WordArray.create(rawCiphertext.words.slice(4)); // Encrypted data
+    
+            // Derive key using PBKDF2 (OpenSSL-like behavior)
+            let key = CryptoJS.PBKDF2(passphrase, CryptoJS.enc.Utf8.parse("salt"), {
+                keySize: 256 / 32, // 256-bit key
+                iterations: 10000, // Standard PBKDF2 iteration count
+            });
+    
+            // Decrypt using extracted IV and derived key
+            let decryptedBytes = CryptoJS.AES.decrypt(
+                { ciphertext: actualCiphertext },
+                key,
+                { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }
+            );
+    
+            let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    
+            if (!decryptedText) {
+                throw new Error("Invalid passphrase or corrupted data.");
+            }
+    
+            document.getElementById("output").value = decryptedText;
+            showSuccess("Message decrypted successfully!");
+        } catch (error) {
+            showError("Decryption failed: Invalid passphrase or corrupted data.");
+            console.error("[ERROR] Decryption error:", error);
+        }
     });
 
     /**
