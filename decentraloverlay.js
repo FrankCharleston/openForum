@@ -21,9 +21,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-import { encryptText, decryptText } from "./crypto-utils.js";
+async function loadCryptoUtils() {
+    if (typeof encryptText === "undefined") {
+        const script = document.createElement("script");
+        script.src = chrome.runtime.getURL("crypto-utils.js");
+        document.head.appendChild(script);
+        await new Promise(resolve => script.onload = resolve);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+    await loadCryptoUtils();  // ✅ Ensures CryptoJS is loaded before execution
+});
+
 
 function scanAndDecrypt() {
+    await loadCryptoUtils();  // ✅ Ensures functions are available
     document.querySelectorAll("*").forEach(element => {
         const encryptedText = extractEncryptedText(element.innerText);
         if (encryptedText) {
