@@ -14,11 +14,19 @@ function decryptText(encryptedText, passphrase) {
 }
 
 // Attach functions to window to make them available in content scripts
-window.encryptText = function(text, passphrase) {
+window.encryptText = function (text, passphrase) {
+    if (typeof CryptoJS === "undefined") {
+        console.error("CryptoJS is not loaded!");
+        return null;
+    }
     return CryptoJS.AES.encrypt(text, passphrase).toString();
 };
 
-window.decryptText = function(encryptedText, passphrase) {
+window.decryptText = function (encryptedText, passphrase) {
+    if (typeof CryptoJS === "undefined") {
+        console.error("CryptoJS is not loaded!");
+        return null;
+    }
     try {
         let bytes = CryptoJS.AES.decrypt(encryptedText, passphrase);
         return bytes.toString(CryptoJS.enc.Utf8);
