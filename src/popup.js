@@ -1,3 +1,16 @@
+document.addEventListener("scroll", function (event) {
+    console.log("[INFO] Scrolling detected");
+}, { passive: true });
+
+document.addEventListener("touchstart", function (event) {
+    console.log("[INFO] Touch detected");
+}, { passive: true });
+
+document.addEventListener("wheel", function (event) {
+    console.log("[INFO] Mouse wheel used");
+}, { passive: true });
+
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("[INFO] OpenForum popup loaded.");
 

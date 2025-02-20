@@ -1,3 +1,16 @@
+document.addEventListener("scroll", function (event) {
+    console.log("[INFO] Scrolling detected");
+}, { passive: true });
+
+document.addEventListener("touchstart", function (event) {
+    console.log("[INFO] Touch detected");
+}, { passive: true });
+
+document.addEventListener("wheel", function (event) {
+    console.log("[INFO] Mouse wheel used");
+}, { passive: true });
+
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "toggleDecryption") {
         scanAndDecrypt();
