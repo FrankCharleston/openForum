@@ -96,21 +96,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     
         try {
-            // Extract base64 encoded data, removing "ENC[" and "]"
-            let encryptedData = encryptedMessage.slice(4, -1);
+            // Extract base64 encoded data, ensuring brackets are removed
+            let extractedData = encryptedMessage.match(/ENC\[(.+)\]/);
+            if (!extractedData || extractedData.length < 2) {
+                throw new Error("Malformed encrypted message format.");
+            }
+            
+            let encryptedData = extractedData[1]; // Extract actual ciphertext
             let rawCiphertext = CryptoJS.enc.Base64.parse(encryptedData);
+            
+            if (!rawCiphertext || rawCiphertext.sigBytes < 16) {
+                throw new Error("Invalid ciphertext. Possibly corrupted or incomplete.");
+            }
     
-            // OpenSSL uses the first 16 bytes as the IV
-            let iv = CryptoJS.lib.WordArray.create(rawCiphertext.words.slice(0, 4)); // IV (16 bytes)
-            let actualCiphertext = CryptoJS.lib.WordArray.create(rawCiphertext.words.slice(4)); // Encrypted data
+            // Extract IV (first 16 bytes)
+            let iv = CryptoJS.lib.WordArray.create(rawCiphertext.words.slice(0, 4));
+            let actualCiphertext = CryptoJS.lib.WordArray.create(rawCiphertext.words.slice(4));
     
-            // Derive key using PBKDF2 (OpenSSL-like behavior)
+            // Log values for debugging
+            console.log("Extracted Encrypted Data:", encryptedData);
+            console.log("Extracted IV:", iv.toString());
+            console.log("Actual Ciphertext:", actualCiphertext.toString());
+    
+            // Generate Key using PBKDF2 (simulating OpenSSL behavior)
             let key = CryptoJS.PBKDF2(passphrase, CryptoJS.enc.Utf8.parse("salt"), {
                 keySize: 256 / 32, // 256-bit key
-                iterations: 10000, // Standard PBKDF2 iteration count
+                iterations: 10000,
             });
     
-            // Decrypt using extracted IV and derived key
+            // Decrypt using the extracted IV and derived key
             let decryptedBytes = CryptoJS.AES.decrypt(
                 { ciphertext: actualCiphertext },
                 key,
@@ -126,10 +140,10 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("output").value = decryptedText;
             showSuccess("Message decrypted successfully!");
         } catch (error) {
-            showError("Decryption failed: Invalid passphrase or corrupted data.");
+            showError("Decryption failed: " + error.message);
             console.error("[ERROR] Decryption error:", error);
         }
-    });
+    });    
 
     /**
      * Show an error message in the UI
