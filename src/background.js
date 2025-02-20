@@ -1,11 +1,3 @@
-chrome.runtime.onInstalled.addListener(() => {
-    chrome.contextMenus.create({
-        id: "decryptClipboard",
-        title: "Decrypt Clipboard",
-        contexts: ["all"]
-    });
-});
-
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "decryptClipboard") {
         chrome.scripting.executeScript({
