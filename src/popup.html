@@ -10,25 +10,21 @@
     <h2>OpenForum</h2>
 
     <label for="messageInput">Message:</label>
-    <textarea id="messageInput" placeholder="Enter message or encrypted text..."></textarea>
+    <textarea id="messageInput" placeholder="Enter your message"></textarea>
 
     <label for="passphraseInput">Passphrase:</label>
-    <input type="password" id="passphraseInput" placeholder="Enter passphrase (or default)">
+    <input type="password" id="passphraseInput" placeholder="Enter passphrase">
 
-    <div class="button-container">
-        <button id="encryptBtn">Encrypt</button>
-        <button id="decryptBtn">Decrypt</button>
-    </div>
+    <button id="encryptBtn">Encrypt</button>
+    <button id="decryptBtn">Decrypt</button>
 
     <label for="output">Output:</label>
-    <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
+    <textarea id="output" readonly></textarea>
 
-    <div class="button-container">
-        <button id="copyBtn">Copy</button>
-        <button id="decryptPageBtn">Decrypt Page</button>
-    </div>
+    <button id="copyBtn">Copy</button>
+    <button id="toggleDecryption">Enable Decryption</button>
 
-    <div id="logBox"></div>
+    <div id="logs"></div>
 
     <script src="crypto-js.min.js"></script>
     <script src="popup.js"></script>

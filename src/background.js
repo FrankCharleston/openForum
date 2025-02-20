@@ -1,64 +1,48 @@
-importScripts("crypto-js.min.js");
-
-// Create context menu for encryption and decryption
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
-        id: "encryptSelectedText",
-        title: "Encrypt Selected Text",
-        contexts: ["selection"]
-    });
-
-    chrome.contextMenus.create({
-        id: "decryptSelectedText",
-        title: "Decrypt Selected Text",
-        contexts: ["selection"]
+        id: "decryptClipboard",
+        title: "Decrypt Clipboard",
+        contexts: ["all"]
     });
 });
 
-// Listen for context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    if (info.menuItemId === "encryptSelectedText") {
-        encryptSelectedText(info.selectionText);
-    } else if (info.menuItemId === "decryptSelectedText") {
-        decryptSelectedText(info.selectionText);
+    if (info.menuItemId === "decryptClipboard") {
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: requestDecryption
+        });
     }
 });
 
-// Encrypt selected text
-function encryptSelectedText(text) {
-    let passphrase = prompt("Enter passphrase to encrypt:");
+function requestDecryption() {
+    let passphrase = prompt("Enter decryption passphrase:");
     if (!passphrase) return;
 
-    try {
-        let encrypted = CryptoJS.AES.encrypt(text, passphrase).toString();
-        let formatted = `ENC[${encrypted}]`;
-        navigator.clipboard.writeText(formatted).then(() => {
-            alert("Encrypted text copied to clipboard.");
-        });
-    } catch (error) {
-        console.error("[ERROR] Encryption failed:", error);
-        alert("Encryption failed.");
-    }
-}
-
-// Decrypt selected text
-function decryptSelectedText(encryptedText) {
-    let passphrase = prompt("Enter passphrase to decrypt:");
-    if (!passphrase) return;
-
-    try {
-        let cleaned = encryptedText.replace(/^ENC\[(.*)\]$/, "$1");
-        let bytes = CryptoJS.AES.decrypt(cleaned, passphrase);
-        let decrypted = bytes.toString(CryptoJS.enc.Utf8);
-
-        if (decrypted) {
-            alert("Decrypted Message: " + decrypted);
-            navigator.clipboard.writeText(decrypted);
-        } else {
-            throw new Error("Incorrect passphrase or corrupted text.");
+    navigator.clipboard.readText().then(text => {
+        if (!text.startsWith("ENC[")) {
+            alert("No encrypted message detected in clipboard.");
+            return;
         }
-    } catch (error) {
-        console.error("[ERROR] Decryption failed:", error);
-        alert("Decryption failed. Check your passphrase.");
-    }
+
+        let encryptedText = text.replace(/ENC\[|\]/g, "");
+        chrome.runtime.sendMessage({ type: "decrypt", encryptedText, passphrase });
+    }).catch(err => console.error("[ERROR] Failed to read clipboard:", err));
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.type === "decrypt") {
+        try {
+            let decryptedBytes = CryptoJS.AES.decrypt(request.encryptedText, request.passphrase);
+            let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+
+            if (!decryptedText) throw new Error("Decryption failed.");
+
+            navigator.clipboard.writeText(decryptedText).then(() => {
+                console.log("[SUCCESS] Decrypted text copied to clipboard.");
+            });
+        } catch (error) {
+            console.error("[ERROR] Decryption failed:", error);
+        }
+    }
+});
