@@ -5,9 +5,10 @@
   "description": "A decentralized encryption tool for forums.",
   "permissions": ["contextMenus", "storage", "scripting", "clipboardWrite", "clipboardRead", "activeTab", "notifications"],
   "background": {
-    "service_worker": "background.js"
+      "service_worker": "background.js",
+      "type": "module"
   },
-  "host_permissions": ["*://*/*"],
+  "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
