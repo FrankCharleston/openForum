@@ -4,15 +4,17 @@ chrome.runtime.onInstalled.addListener(() => {
         title: "Decrypt Selected Text",
         contexts: ["selection"]
     });
+
+    console.log("[INFO] Context menu created.");
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "decryptText") {
-        console.log("Decrypting text:", info.selectionText);
+        console.log("[INFO] Decrypting selected text:", info.selectionText);
 
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            function: decryptSelectedText,
+            func: decryptSelectedText,
             args: [info.selectionText]
         });
     }
