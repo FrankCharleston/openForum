@@ -1,4 +1,4 @@
-import { decryptText } from "./crypto-utils.js";
+import { encryptText, decryptText } from "./crypto-utils.js";
 
 console.log("[DEBUG] Content script loaded");
 

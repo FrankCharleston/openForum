@@ -1,4 +1,4 @@
-import CryptoJS from "./crypto-js.min.js"; // Ensure correct path
+import { encryptText, decryptText } from "./crypto-utils.js";
 
 export function encryptText(text, passphrase) {
     return CryptoJS.AES.encrypt(text, passphrase).toString();

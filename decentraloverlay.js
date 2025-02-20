@@ -1,5 +1,3 @@
-import { encryptText, decryptText } from "./crypto-utils.js";
-
 document.addEventListener("scroll", function (event) {
     console.log("[INFO] Scrolling detected");
 }, { passive: true });
@@ -22,6 +20,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendResponse({ success: !!decryptedText, decryptedText });
     }
 });
+
+import { encryptText, decryptText } from "./crypto-utils.js";
 
 function scanAndDecrypt() {
     document.querySelectorAll("*").forEach(element => {
