@@ -7,26 +7,31 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>OpenForum</h2>
+    <div class="container">
+        <h2>OpenForum</h2>
 
-    <label for="messageInput">Message:</label>
-    <textarea id="messageInput" placeholder="Enter your message"></textarea>
+        <!-- Section: Decrypt Everything (Auto-Scan) -->
+        <div class="section">
+            <h3>Decrypt Page</h3>
+            <input type="password" id="globalPassphrase" placeholder="Enter passphrase for full-page decryption">
+            <button id="decryptPageBtn">Decrypt Everything</button>
+        </div>
 
-    <label for="passphraseInput">Passphrase:</label>
-    <input type="password" id="passphraseInput" placeholder="Enter passphrase">
+        <!-- Section: Manual Encryption/Decryption -->
+        <div class="section">
+            <h3>Encrypt/Decrypt Message</h3>
+            <textarea id="messageInput" placeholder="Enter message..."></textarea>
+            <input type="password" id="passphraseInput" placeholder="Passphrase (Optional)">
+            <button id="encryptBtn">Encrypt</button>
+            <button id="decryptBtn">Decrypt</button>
+            <textarea id="output" placeholder="Output..." readonly></textarea>
+            <button id="copyBtn">Copy & Share</button>
+        </div>
 
-    <button id="encryptBtn">Encrypt</button>
-    <button id="decryptBtn">Decrypt</button>
+        <!-- Logs / Notifications -->
+        <div id="logs"></div>
+    </div>
 
-    <label for="output">Output:</label>
-    <textarea id="output" readonly></textarea>
-
-    <button id="copyBtn">Copy</button>
-    <button id="toggleDecryption">Enable Decryption</button>
-
-    <div id="logs"></div>
-
-    <script src="crypto-js.min.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>
