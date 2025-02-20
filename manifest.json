@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["crypto-utils.js", "crypto-js.min.js", "content.js", "content_scripts.js", "decentraloverlay.js"]
+      "js": ["crypto-utils.js", "crypto-js.min.js", "content.js", "content_script.js", "decentraloverlay.js"]
     }
   ],
   "action": {
