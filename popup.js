@@ -1,4 +1,4 @@
-<script type="module" src="popup.js"></script>
+import { encryptText, decryptText } from "./crypto-utils.js";
 
 // Ensure the popup UI loads correctly
 document.addEventListener("DOMContentLoaded", function () {
