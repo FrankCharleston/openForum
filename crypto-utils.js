@@ -14,5 +14,16 @@ function decryptText(encryptedText, passphrase) {
 }
 
 // Attach functions to window to make them available in content scripts
-window.encryptText = encryptText;
-window.decryptText = decryptText;
+window.encryptText = function(text, passphrase) {
+    return CryptoJS.AES.encrypt(text, passphrase).toString();
+};
+
+window.decryptText = function(encryptedText, passphrase) {
+    try {
+        let bytes = CryptoJS.AES.decrypt(encryptedText, passphrase);
+        return bytes.toString(CryptoJS.enc.Utf8);
+    } catch (error) {
+        console.error("Decryption failed:", error);
+        return null;
+    }
+};
