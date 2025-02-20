@@ -1,3 +1,5 @@
+import { encryptText, decryptText } from "./crypto-utils.js";
+
 (() => {
     console.log("[INFO] OpenForum content script loaded.");
 
@@ -20,8 +22,8 @@
                 chrome.storage.local.get("passphrase", (data) => {
                     let passphrase = data.passphrase || "default";
                     try {
-                        let decryptedBytes = CryptoJS.AES.decrypt(encryptedText, passphrase);
-                        let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+                        let decryptedText = decryptText(encryptedText, passphrase);
+
 
                         if (decryptedText) {
                             element.innerText = decryptedText;
