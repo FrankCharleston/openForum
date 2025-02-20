@@ -84,6 +84,40 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(() => showError("Copy failed."));
     });
     
+        // Ensure the DOM is loaded before adding event listeners
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("[INFO] OpenForum popup loaded.");
+
+        // Handle decryption using OpenSSL-compatible function
+        document.getElementById("decryptBtn").addEventListener("click", function () {
+            let encryptedMessage = document.getElementById("messageInput").value.trim();
+            let passphrase = document.getElementById("passphraseInput").value.trim();
+
+            if (!encryptedMessage.startsWith("ENC[")) {
+                showError("Invalid encrypted message format.");
+                return;
+            }
+
+            try {
+                // Extract encrypted data from "ENC[ ... ]"
+                let encryptedData = encryptedMessage.replace("ENC[", "").replace("]", "");
+
+                // Use the OpenSSL-compatible decryption function
+                let decryptedText = decryptWithOpenSSL(encryptedData, passphrase);
+
+                if (!decryptedText) {
+                    throw new Error("Decryption failed.");
+                }
+
+                document.getElementById("output").value = decryptedText;
+                showSuccess("Message decrypted successfully!");
+
+            } catch (error) {
+                showError("Decryption failed. Check your passphrase or data format.");
+                console.error("[ERROR] Decryption error:", error);
+            }
+        });
+    });
 
     // Decrypt entire page function
     document.getElementById("decryptBtn").addEventListener("click", function () {

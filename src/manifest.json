@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js", "content_script.js", "decentraloverlay.js", "popup.js", "background.js"],
+      "js": ["content.js", "content_script.js", "crypto-utils.js", "decentraloverlay.js", "popup.js", "background.js"],
       "run_at": "document_end"
     }
   ],
