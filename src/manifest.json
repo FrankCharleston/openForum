@@ -1,44 +1,31 @@
 {
-    "manifest_version": 3,
-    "name": "OpenForum",
-    "version": "1.0",
-    "description": "Encrypt and decrypt messages seamlessly in a decentralized way.",
-    "permissions": [
-        "contextMenus",
-        "storage",
-        "activeTab",
-        "scripting",
-        "clipboardRead",
-        "clipboardWrite"
-    ],
-    "host_permissions": ["<all_urls>"],
-    "background": {
-        "service_worker": "background.js"
-    },
-    "action": {
-        "default_popup": "popup.html",
-        "default_icon": {
-            "16": "icon.png",
-            "48": "icon.png",
-            "128": "icon.png"
-        }
-    },
-    "icons": {
-        "16": "icon.png",
-        "48": "icon.png",
-        "128": "icon.png"
-    },
-    "web_accessible_resources": [
-        {
-            "resources": ["crypto-js.min.js"],
-            "matches": ["<all_urls>"]
-        }
-    ],
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["decentraloverlay.js"],
-            "run_at": "document_end"
-        }
-    ]
+  "manifest_version": 3,
+  "name": "OpenForum",
+  "version": "1.0",
+  "description": "A decentralized encryption tool for forums.",
+  "permissions": ["contextMenus", "storage", "scripting", "clipboardWrite", "clipboardRead", "activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["*://*/*"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["crypto-js.min.js", "decentraloverlay.js", "content_script.js", "content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
 }

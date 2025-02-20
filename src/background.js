@@ -1,60 +1,62 @@
-// ✅ Load CryptoJS
 importScripts("crypto-js.min.js");
 
-// ✅ Background script initialization
-console.log("[DEBUG] Background script loaded.");
-
-// Create context menu options on install
+// Create context menu for encryption and decryption
 chrome.runtime.onInstalled.addListener(() => {
-    console.log("[DEBUG] Installing context menu items...");
-    chrome.contextMenus.create({ id: "encryptMessage", title: "Encrypt Message", contexts: ["selection"] });
-    chrome.contextMenus.create({ id: "decryptMessage", title: "Decrypt Message", contexts: ["selection"] });
-    chrome.contextMenus.create({ id: "decryptClipboard", title: "Decrypt Clipboard", contexts: ["all"] });
+    chrome.contextMenus.create({
+        id: "encryptSelectedText",
+        title: "Encrypt Selected Text",
+        contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+        id: "decryptSelectedText",
+        title: "Decrypt Selected Text",
+        contexts: ["selection"]
+    });
 });
 
-// Handle right-click context menu actions
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-    try {
-        if (info.menuItemId === "encryptMessage") {
-            handleEncryption(info.selectionText);
-        } else if (info.menuItemId === "decryptMessage") {
-            handleDecryption(info.selectionText);
-        } else if (info.menuItemId === "decryptClipboard") {
-            const clipboardText = await navigator.clipboard.readText();
-            if (!clipboardText.startsWith("ENC[")) {
-                alert("No encrypted message detected in clipboard.");
-                return;
-            }
-            handleDecryption(clipboardText.replace(/ENC\[|\]/g, ""));
-        }
-    } catch (error) {
-        console.error("[ERROR] Context menu action failed:", error);
+// Listen for context menu clicks
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId === "encryptSelectedText") {
+        encryptSelectedText(info.selectionText);
+    } else if (info.menuItemId === "decryptSelectedText") {
+        decryptSelectedText(info.selectionText);
     }
 });
 
 // Encrypt selected text
-function handleEncryption(text) {
-    if (!text) return;
-    let passphrase = prompt("Enter encryption passphrase:", "mypassword");
-    if (!passphrase) return;
-
-    const encryptedText = CryptoJS.AES.encrypt(text, passphrase).toString();
-    navigator.clipboard.writeText(`ENC[${encryptedText}]`).then(() => {
-        console.log("[DEBUG] Encrypted text copied to clipboard.");
-        alert("Encrypted text copied to clipboard.");
-    }).catch(error => console.error("[ERROR] Failed to copy encrypted text:", error));
-}
-
-// Decrypt selected text
-function handleDecryption(text) {
-    if (!text) return;
-    let passphrase = prompt("Enter decryption passphrase:", "mypassword");
+function encryptSelectedText(text) {
+    let passphrase = prompt("Enter passphrase to encrypt:");
     if (!passphrase) return;
 
     try {
-        const decrypted = CryptoJS.AES.decrypt(text, passphrase).toString(CryptoJS.enc.Utf8);
-        if (!decrypted) throw new Error("Decryption failed");
-        alert(`Decrypted Text: ${decrypted}`);
+        let encrypted = CryptoJS.AES.encrypt(text, passphrase).toString();
+        let formatted = `ENC[${encrypted}]`;
+        navigator.clipboard.writeText(formatted).then(() => {
+            alert("Encrypted text copied to clipboard.");
+        });
+    } catch (error) {
+        console.error("[ERROR] Encryption failed:", error);
+        alert("Encryption failed.");
+    }
+}
+
+// Decrypt selected text
+function decryptSelectedText(encryptedText) {
+    let passphrase = prompt("Enter passphrase to decrypt:");
+    if (!passphrase) return;
+
+    try {
+        let cleaned = encryptedText.replace(/^ENC\[(.*)\]$/, "$1");
+        let bytes = CryptoJS.AES.decrypt(cleaned, passphrase);
+        let decrypted = bytes.toString(CryptoJS.enc.Utf8);
+
+        if (decrypted) {
+            alert("Decrypted Message: " + decrypted);
+            navigator.clipboard.writeText(decrypted);
+        } else {
+            throw new Error("Incorrect passphrase or corrupted text.");
+        }
     } catch (error) {
         console.error("[ERROR] Decryption failed:", error);
         alert("Decryption failed. Check your passphrase.");

@@ -3,17 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenForum Debug</title>
+    <title>OpenForum</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h3>OpenForum Debug</h3>
-    <button id="toggleDecryption">Toggle Decryption</button>
-    <input type="text" id="inputText" placeholder="Enter text here">
-    <button id="encryptBtn">Encrypt</button>
-    <button id="decryptBtn">Decrypt</button>
-    <button id="decryptPage">Decrypt Page</button>
-    <div id="logContainer">Logs:<br>No logs yet...</div>
+    <h2>OpenForum</h2>
+
+    <label for="messageInput">Message:</label>
+    <textarea id="messageInput" placeholder="Enter message or encrypted text..."></textarea>
+
+    <label for="passphraseInput">Passphrase:</label>
+    <input type="password" id="passphraseInput" placeholder="Enter passphrase (or default)">
+
+    <div class="button-container">
+        <button id="encryptBtn">Encrypt</button>
+        <button id="decryptBtn">Decrypt</button>
+    </div>
+
+    <label for="output">Output:</label>
+    <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
+
+    <div class="button-container">
+        <button id="copyBtn">Copy</button>
+        <button id="decryptPageBtn">Decrypt Page</button>
+    </div>
+
+    <div id="logBox"></div>
+
+    <script src="crypto-js.min.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>

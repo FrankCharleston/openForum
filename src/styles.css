@@ -1,43 +1,36 @@
 body {
     font-family: Arial, sans-serif;
+    width: 300px;
     padding: 10px;
-    width: 320px;
-    background-color: #f9f9f9;
 }
 
-h3 {
-    color: #333;
+.section {
+    margin-bottom: 10px;
+}
+
+textarea, input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
 }
 
 button {
-    width: 100%;
     padding: 10px;
-    margin-top: 5px;
-    border: none;
     cursor: pointer;
+    border: none;
     background-color: #007bff;
     color: white;
-    border-radius: 5px;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-#logContainer {
-    font-size: 12px;
-    background: #eee;
-    padding: 5px;
-    border-radius: 5px;
-    max-height: 150px;
-    overflow-y: auto;
+.output-section {
     margin-top: 10px;
-}
-
-.error {
-    color: red;
-}
-
-.info {
-    color: green;
 }
