@@ -1,3 +1,5 @@
+import { encryptText, decryptText } from "./crypto-utils.js";
+
 // Ensure the popup UI loads correctly
 document.addEventListener("DOMContentLoaded", function () {
     console.log("[INFO] OpenForum popup loaded.");
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            let encrypted = CryptoJS.AES.encrypt(message, passphrase).toString();
+            let encrypted = encryptText(message, passphrase);
             document.getElementById("output").value = `ENC[${encrypted}]`;
             showSuccess("Message encrypted successfully!");
         } catch (error) {
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             let encryptedData = encryptedMessage.replace("ENC[", "").replace("]", "");
-            let decryptedText = decryptWithOpenSSL(encryptedData, passphrase);
+            let decryptedText = decryptText(encryptedData, passphrase);
 
             if (!decryptedText) {
                 throw new Error("Decryption failed.");

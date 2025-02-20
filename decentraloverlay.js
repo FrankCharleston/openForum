@@ -1,3 +1,5 @@
+import { encryptText, decryptText } from "./crypto-utils.js";
+
 document.addEventListener("scroll", function (event) {
     console.log("[INFO] Scrolling detected");
 }, { passive: true });
@@ -16,7 +18,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         scanAndDecrypt();
         sendResponse({ status: "Decryption triggered" });
     } else if (message.action === "decryptText") {
-        const decryptedText = tryDecrypt(message.text, prompt("Enter decryption passphrase:", "mypassword"));
+        const decryptedText = decryptText(message.text, prompt("Enter decryption passphrase:", "mypassword"));
         sendResponse({ success: !!decryptedText, decryptedText });
     }
 });
@@ -25,14 +27,13 @@ function scanAndDecrypt() {
     document.querySelectorAll("*").forEach(element => {
         const encryptedText = extractEncryptedText(element.innerText);
         if (encryptedText) {
-            decryptMessage(encryptedText, (decrypted) => {
-                if (decrypted) {
+            let decryptedText = decryptText(encryptedText, passphrase);
+                if (decryptedText) {
                     element.innerHTML = element.innerHTML.replace(
                         `ENC[${encryptedText}]`,
-                        `<span class='decrypted-message' style='color: green;'>${decrypted}</span>`
+                        `<span class='decrypted-message' style='color: green;'>${decryptedText}</span>`
                     );
                 }
-            });
         }
     });
 }
