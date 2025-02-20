@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["crypto-js.min.js", "decentraloverlay.js"],
+      "js": ["crypto-js.min.js", "decentraloverlay.js", "content_scripts", "content.js"],
       "run_at": "document_end"
     }
   ],
