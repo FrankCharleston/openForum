@@ -3,30 +3,27 @@
   "name": "OpenForum",
   "version": "1.0",
   "description": "A decentralized encryption tool for forums.",
-  "permissions": ["contextMenus", "storage", "scripting", "clipboardWrite", "clipboardRead", "activeTab", "notifications"],
-  "background": {
-      "service_worker": "background.js",
-      "type": "module"
-  },
+  "permissions": [
+      "contextMenus",
+      "storage",
+      "scripting",
+      "clipboardWrite",
+      "clipboardRead",
+      "activeTab"
+  ],
   "host_permissions": ["<all_urls>"],
+  "background": {
+      "service_worker": "background.js"
+  },
   "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["crypto-js.min.js", "decentraloverlay.js", "content_script.js", "content.js", "background.js"],
-      "run_at": "document_end"
-    }
+      {
+          "matches": ["<all_urls>"],
+          "js": ["crypto-js.min.js", "decentraloverlay.js", "content_script.js"],
+          "run_at": "document_end"
+      }
   ],
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
-    }
-  },
-  "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+      "default_popup": "popup.html",
+      "default_icon": "icons/icon.png"
   }
 }

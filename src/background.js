@@ -5,22 +5,32 @@ console.log("[INFO] OpenForum background service worker started.");
 chrome.runtime.onInstalled.addListener(() => {
     console.log("[INFO] OpenForum installed, setting up context menus.");
     
-    // Create context menu items
-    chrome.contextMenus.create({
-        id: "encryptSelectedText",
-        title: "Encrypt Selected Text",
-        contexts: ["selection"]
-    });
+    chrome.contextMenus.removeAll(() => {  // Clear existing menu items before adding new ones
+        // Create context menu items
+        chrome.contextMenus.create({
+            id: "encryptSelectedText",
+            title: "Encrypt Selected Text",
+            contexts: ["selection"]
+        });
 
-    chrome.contextMenus.create({
-        id: "decryptSelectedText",
-        title: "Decrypt Selected Text",
-        contexts: ["selection"]
+        chrome.contextMenus.create({
+            id: "decryptSelectedText",
+            title: "Decrypt Selected Text",
+            contexts: ["selection"]
+        });
+
+        console.log("[INFO] Context menus created.");
     });
+});
+
+// Ensure onClicked listener is set **AFTER** menu creation
+chrome.runtime.onStartup.addListener(() => {
+    console.log("[INFO] Service worker active.");
 });
 
 // Handle context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (!info.selectionText) return;
     console.log("[DEBUG] Context menu clicked:", info.menuItemId, "Text:", info.selectionText);
 
     if (info.menuItemId === "encryptSelectedText") {
