@@ -41,43 +41,44 @@ document.addEventListener("DOMContentLoaded", function () {
     // Decrypt button functionality
     document.getElementById("decryptBtn").addEventListener("click", function () {
         let encryptedMessage = document.getElementById("messageInput").value;
-        let passphrase = document.getElementById("passphraseInput").value;
-
+        let passphrase = document.getElementById("passphraseInput").value.trim();
+    
         if (!encryptedMessage.startsWith("ENC[")) {
             showError("Invalid encrypted message format.");
             return;
         }
-
+    
         try {
-            let encryptedData = encryptedMessage.replace("ENC[", "").replace("]", "");
+            let encryptedData = encryptedMessage.slice(4, -1); // Extract inside ENC[...]
             let decryptedBytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
             let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
-
+    
             if (!decryptedText) {
-                throw new Error("Decryption failed.");
+                throw new Error("Decryption failed. Invalid passphrase or corrupted data.");
             }
-
+    
             document.getElementById("output").value = decryptedText;
             showSuccess("Message decrypted successfully!");
         } catch (error) {
-            showError("Decryption failed. Check your passphrase.");
+            showError("Decryption failed: Malformed UTF-8 data.");
             console.error("[ERROR] Decryption error:", error);
         }
-    });
+    });    
 
     // Copy to clipboard with link back to repo
     document.getElementById("copyBtn").addEventListener("click", function () {
         let output = document.getElementById("output").value;
-        if (!output) {
+        if (!output.trim()) {
             showError("Nothing to copy.");
             return;
         }
-
-        let shareText = `${output}\n\n🔒 Encrypted using OpenForum: https://github.com/your-repo/OpenForum`;
+    
+        let shareText = `${output}\n\n🔒 Encrypted using OpenForum: https://github.com/FrankCharleston/openForum`;
         navigator.clipboard.writeText(shareText)
             .then(() => showSuccess("Copied to clipboard!"))
-            .catch(err => showError("Copy failed."));
+            .catch(() => showError("Copy failed."));
     });
+    
 
     // Decrypt entire page function
     document.getElementById("decryptPageBtn").addEventListener("click", function () {
