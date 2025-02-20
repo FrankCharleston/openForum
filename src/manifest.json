@@ -10,8 +10,8 @@
   "host_permissions": ["*://*/*"],
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
-      "js": ["crypto-js.min.js", "decentraloverlay.js", "content_scripts", "content.js"],
+      "matches": ["<all_urls>"],
+      "js": ["crypto-js.min.js", "decentraloverlay.js", "content_script.js", "content.js"],
       "run_at": "document_end"
     }
   ],
