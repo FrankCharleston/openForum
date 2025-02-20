@@ -66,6 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
             showError("Decryption failed: Invalid passphrase or corrupted data.");
             console.error("[ERROR] Decryption error:", error);
         }
+        console.log("Encrypted Data:", encryptedData);
+        console.log("Decryption Key (passphrase):", passphrase);
     });    
 
     // Copy to clipboard with link back to repo
