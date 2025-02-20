@@ -40,27 +40,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Decrypt button functionality
     document.getElementById("decryptBtn").addEventListener("click", function () {
-        let encryptedMessage = document.getElementById("messageInput").value;
+        let encryptedMessage = document.getElementById("messageInput").value.trim();
         let passphrase = document.getElementById("passphraseInput").value.trim();
     
         if (!encryptedMessage.startsWith("ENC[")) {
-            showError("Invalid encrypted message format.");
+            showError("Invalid encrypted message format. Expected ENC[...].");
             return;
         }
     
         try {
-            let encryptedData = encryptedMessage.slice(4, -1); // Extract inside ENC[...]
+            // Extract the actual encrypted text
+            let encryptedData = encryptedMessage.slice(4, -1); // Removes "ENC[" and "]"
+    
+            // Attempt decryption
             let decryptedBytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
             let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
     
             if (!decryptedText) {
-                throw new Error("Decryption failed. Invalid passphrase or corrupted data.");
+                throw new Error("Empty decryption result, likely due to wrong passphrase.");
             }
     
             document.getElementById("output").value = decryptedText;
             showSuccess("Message decrypted successfully!");
         } catch (error) {
-            showError("Decryption failed: Malformed UTF-8 data.");
+            showError("Decryption failed: Invalid passphrase or corrupted data.");
             console.error("[ERROR] Decryption error:", error);
         }
     });    
