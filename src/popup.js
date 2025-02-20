@@ -1,26 +1,38 @@
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("[INFO] OpenForum popup loaded.");
+    // Get elements
+    let messageInput = document.getElementById("messageInput");
+    let passphraseInput = document.getElementById("passphraseInput");
+    let outputField = document.getElementById("output");
+    let encryptBtn = document.getElementById("encryptBtn");
+    let decryptBtn = document.getElementById("decryptBtn");
+    let copyBtn = document.getElementById("copyBtn");
+    let toggleDecryptionBtn = document.getElementById("toggleDecryption");
+    let logs = document.getElementById("logs");
 
-    // Load saved input
+    // Validate elements
+    if (!messageInput || !passphraseInput || !outputField || !encryptBtn || !decryptBtn || !copyBtn || !toggleDecryptionBtn || !logs) {
+        console.error("[ERROR] One or more required elements are missing in popup.html.");
+        return;
+    }
+
+    // Load stored values
     chrome.storage.local.get(["message", "passphrase"], (data) => {
-        document.getElementById("messageInput").value = data.message || "";
-        document.getElementById("passphraseInput").value = data.passphrase || "";
+        messageInput.value = data.message || "";
+        passphraseInput.value = data.passphrase || "";
     });
 
-    // Save message input changes
-    document.getElementById("messageInput").addEventListener("input", (event) => {
-        chrome.storage.local.set({ message: event.target.value });
-    });
+    // Save inputs
+    messageInput.addEventListener("input", (event) => chrome.storage.local.set({ message: event.target.value }));
+    passphraseInput.addEventListener("input", (event) => chrome.storage.local.set({ passphrase: event.target.value }));
 
-    // Save passphrase input changes
-    document.getElementById("passphraseInput").addEventListener("input", (event) => {
-        chrome.storage.local.set({ passphrase: event.target.value });
-    });
-
-    // Handle Encryption
-    document.getElementById("encryptBtn").addEventListener("click", function () {
-        let message = document.getElementById("messageInput").value;
-        let passphrase = document.getElementById("passphraseInput").value || "default";
+    // Encrypt
+    encryptBtn.addEventListener("click", function () {
+        let message = messageInput.value;
+        let passphrase = passphraseInput.value || "default";
 
         if (!message.trim()) {
             showError("Enter a message to encrypt.");
@@ -29,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             let encrypted = CryptoJS.AES.encrypt(message, passphrase).toString();
-            document.getElementById("output").value = `ENC[${encrypted}]`;
+            outputField.value = `ENC[${encrypted}]`;
             chrome.storage.local.set({ message: `ENC[${encrypted}]` });
             showSuccess("Message encrypted successfully!");
         } catch (error) {
@@ -38,10 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Handle Decryption
-    document.getElementById("decryptBtn").addEventListener("click", function () {
-        let encryptedMessage = document.getElementById("messageInput").value;
-        let passphrase = document.getElementById("passphraseInput").value;
+    // Decrypt
+    decryptBtn.addEventListener("click", function () {
+        let encryptedMessage = messageInput.value;
+        let passphrase = passphraseInput.value;
 
         if (!encryptedMessage.startsWith("ENC[")) {
             showError("Invalid encrypted message format.");
@@ -53,11 +65,9 @@ document.addEventListener("DOMContentLoaded", function () {
             let decryptedBytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
             let decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
-            if (!decryptedText) {
-                throw new Error("Decryption failed.");
-            }
+            if (!decryptedText) throw new Error("Decryption failed.");
 
-            document.getElementById("output").value = decryptedText;
+            outputField.value = decryptedText;
             showSuccess("Message decrypted successfully!");
         } catch (error) {
             showError("Decryption failed. Check your passphrase.");
@@ -65,8 +75,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Copy Output
+    copyBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(outputField.value).then(() => {
+            showSuccess("Copied to clipboard!");
+        }).catch(() => {
+            showError("Failed to copy.");
+        });
+    });
+
     // Toggle Decryption Mode
-    document.getElementById("toggleDecryption").addEventListener("click", function () {
+    toggleDecryptionBtn.addEventListener("click", function () {
         chrome.storage.local.get("decryptionEnabled", (data) => {
             let newState = !data.decryptionEnabled;
             chrome.storage.local.set({ decryptionEnabled: newState }, () => {
@@ -76,12 +95,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function showError(message) {
-        let log = document.getElementById("logs");
-        log.innerHTML = `<span style="color:red;">[ERROR] ❌ ${message}</span>`;
+        logs.innerHTML = `<span style="color:red;">[ERROR] ❌ ${message}</span>`;
     }
 
     function showSuccess(message) {
-        let log = document.getElementById("logs");
-        log.innerHTML = `<span style="color:green;">[SUCCESS] ✅ ${message}</span>`;
+        logs.innerHTML = `<span style="color:green;">[SUCCESS] ✅ ${message}</span>`;
     }
 });
