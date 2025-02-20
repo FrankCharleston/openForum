@@ -1,4 +1,4 @@
-import CryptoJS from "./crypto-js.min.js";
+importScripts("./crypto-js.min.js");
 
 // Ensure the service worker starts
 console.log("[INFO] OpenForum background service worker started.");
