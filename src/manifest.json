@@ -4,32 +4,26 @@
   "version": "1.0",
   "description": "A decentralized encryption tool for forums.",
   "permissions": [
-      "contextMenus",
-      "storage",
-      "scripting",
-      "clipboardWrite",
-      "clipboardRead",
-      "activeTab"
-  ],
-  "host_permissions": ["<all_urls>"],
+    "contextMenus",
+    "storage",
+    "scripting",
+    "clipboardWrite",
+    "clipboardRead",
+    "activeTab"
+],
   "background": {
-      "service_worker": "background.js"
+    "service_worker": "background.js"
   },
-  "web_accessible_resources": [
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
     {
-      "resources": ["crypto-js.min.js"],
-      "matches": ["<all_urls>"]
+      "matches": ["<all_urls>"],
+      "js": ["crypto-js.min.js", "decentraloverlay.js", "content_script.js", "background.js", "content.js"],
+      "run_at": "document_end"
     }
   ],
-  "content_scripts": [
-      {
-          "matches": ["<all_urls>"],
-          "js": ["crypto-js.min.js", "decentraloverlay.js", "content_script.js"],
-          "run_at": "document_end"
-      }
-  ],
   "action": {
-      "default_popup": "popup.html",
-      "default_icon": "icons/icon.png"
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon.png"
   }
 }
