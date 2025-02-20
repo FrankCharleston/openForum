@@ -1,3 +1,26 @@
+// ✅ Load CryptoJS
+importScripts("crypto-js.min.js");
+
+// ✅ Ensure the script is loaded
+console.log("[DEBUG] Popup script initialized.");
+
+document.getElementById("encryptBtn").addEventListener("click", () => {
+    try {
+        const text = document.getElementById("inputText").value;
+        if (!text) return;
+
+        let passphrase = prompt("Enter encryption passphrase:", "mypassword");
+        if (!passphrase) return;
+
+        const encryptedText = CryptoJS.AES.encrypt(text, passphrase).toString();
+        document.getElementById("inputText").value = `ENC[${encryptedText}]`;
+        logMessage("[INFO] ✅ Encrypted message successfully.");
+    } catch (error) {
+        console.error("[ERROR] Encryption failed:", error);
+        logMessage("[ERROR] ❌ Encryption failed.", "error");
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("[INFO] OpenForum popup loaded.");
 
@@ -78,6 +101,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function showError(message) {
         let log = document.getElementById("logs");
         log.innerHTML = `<span style="color:red;">[ERROR] ❌ ${message}</span>`;
+    }
+
+    function logMessage(msg, type = "log") {
+        const logContainer = document.getElementById("logContainer");
+        logContainer.innerHTML += `<div class="${type}">${msg}</div>`;
     }
 
     function showSuccess(message) {
