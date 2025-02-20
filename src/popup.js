@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("[INFO] OpenForum popup loaded.");
 
-    // Load saved input on page load
+    /**
+     * Load saved input on popup open
+     * This keeps message & passphrase fields persistent
+     */
     chrome.storage.local.get(["message", "passphrase"], (data) => {
         if (data.message) document.getElementById("messageInput").value = data.message;
         if (data.passphrase) document.getElementById("passphraseInput").value = data.passphrase;
     });
 
-    // Save input field changes
+    // Store input field values persistently
     document.getElementById("messageInput").addEventListener("input", (event) => {
         chrome.storage.local.set({ message: event.target.value });
     });
@@ -15,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         chrome.storage.local.set({ passphrase: event.target.value });
     });
 
-    // Encrypt message
+    // Encrypt button functionality
     document.getElementById("encryptBtn").addEventListener("click", function () {
         let message = document.getElementById("messageInput").value;
         let passphrase = document.getElementById("passphraseInput").value || "default";
@@ -35,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Decrypt message
+    // Decrypt button functionality
     document.getElementById("decryptBtn").addEventListener("click", function () {
         let encryptedMessage = document.getElementById("messageInput").value;
         let passphrase = document.getElementById("passphraseInput").value;
@@ -62,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Copy to clipboard
+    // Copy to clipboard with link back to repo
     document.getElementById("copyBtn").addEventListener("click", function () {
         let output = document.getElementById("output").value;
         if (!output) {
@@ -70,12 +73,13 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        navigator.clipboard.writeText(output)
+        let shareText = `${output}\n\n🔒 Encrypted using OpenForum: https://github.com/your-repo/OpenForum`;
+        navigator.clipboard.writeText(shareText)
             .then(() => showSuccess("Copied to clipboard!"))
             .catch(err => showError("Copy failed."));
     });
 
-    // Decrypt entire page
+    // Decrypt entire page function
     document.getElementById("decryptPageBtn").addEventListener("click", function () {
         let passphrase = document.getElementById("globalPassphrase").value;
 
@@ -84,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // Run decryption script across the entire page
         chrome.scripting.executeScript({
             target: { allFrames: true },
             func: (passphrase) => {
@@ -105,12 +110,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    /**
+     * Show an error message in the UI
+     */
     function showError(message) {
         let log = document.getElementById("logs");
         log.innerHTML = `<span class="error">❌ ${message}</span>`;
         setTimeout(() => log.innerHTML = "", 4000);
     }
 
+    /**
+     * Show a success message in the UI
+     */
     function showSuccess(message) {
         let log = document.getElementById("logs");
         log.innerHTML = `<span class="success">✅ ${message}</span>`;
