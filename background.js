@@ -1,5 +1,4 @@
-// background.js - Manages encryption, decryption, auto-decryption, and UI interactions
-
+// background.js - Enhancing Right Click Context Menu for Encryption and Decryption with Auto Decryption on Page Load
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
         id: "encryptText",
@@ -64,7 +63,16 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         });
     }
     if (info.menuItemId === "viewDecryptionErrors") {
-        chrome.tabs.create({ url: "errors.html" });
+        chrome.storage.local.get("decryptionErrors", (data) => {
+            let errors = data.decryptionErrors || [];
+            if (errors.length === 0) {
+                alert("No decryption errors logged.");
+                return;
+            }
+            let errorLog = errors.map(err => `${err.timestamp}: ${err.error}`).join("\n\n");
+            chrome.tabs.create({ url: "errors.html" });
+            chrome.storage.local.set({ errorLog: errorLog });
+        });
     }
     if (info.menuItemId === "clearDecryptionErrors") {
         chrome.storage.local.set({ decryptionErrors: [] }, () => {

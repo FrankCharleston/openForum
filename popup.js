@@ -3,63 +3,105 @@ document.addEventListener("DOMContentLoaded", function () {
     const decryptBtn = document.getElementById("decryptBtn");
     const copyBtn = document.getElementById("copyBtn");
     const togglePassphraseBtn = document.getElementById("togglePassphrase");
-    const passphraseInput = document.getElementById("passphraseInput");
-    const messageInput = document.getElementById("messageInput");
+    const passphraseInput = document.getElementById("passphrase");
+    const textInput = document.getElementById("textInput");
     const output = document.getElementById("output");
     const statusMessage = document.getElementById("statusMessage");
 
-    togglePassphraseBtn.addEventListener("click", () => {
-        passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
-        togglePassphraseBtn.innerText = passphraseInput.type === "password" ? "👁️ Show" : "👁️ Hide";
-    });
+    // ✅ Check if CryptoJS is Loaded
+    if (typeof CryptoJS === "undefined") {
+        console.error("❌ CryptoJS is not loaded!");
+        showStatus("⚠️ Encryption library missing!", "error");
+        return;
+    }
 
-    encryptBtn.addEventListener("click", function () {
-        let message = messageInput.value.trim();
-        let passphrase = passphraseInput.value.trim();
+    // ✅ Ensure the Passphrase Toggle Works
+    if (togglePassphraseBtn) {
+        togglePassphraseBtn.addEventListener("click", () => {
+            passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
+            togglePassphraseBtn.innerText = passphraseInput.type === "password" ? "👁" : "🙈";
+        });
+    }
 
-        if (!message || !passphrase) {
-            showStatus("⚠️ Enter a message and passphrase!", "error");
-            return;
-        }
+    encryptBtn.addEventListener("click", () => processText("encrypt"));
+    decryptBtn.addEventListener("click", () => processText("decrypt"));
 
-        let encrypted = CryptoJS.AES.encrypt(message, passphrase).toString();
-        let formattedMessage = `ENC[${encrypted}]\n\n🔐 This message is securely encrypted using OpenForum. Join the discussion securely!`;
-
-        output.value = formattedMessage;
-        showStatus("✅ Encrypted successfully!", "success");
-    });
-
-    decryptBtn.addEventListener("click", function () {
-        let encryptedMessage = messageInput.value.trim();
-        let passphrase = passphraseInput.value.trim();
-
-        if (!encryptedMessage.startsWith("ENC[") || !passphrase) {
-            showStatus("⚠️ Invalid encrypted message or missing passphrase.", "error");
-            return;
-        }
-
-        let encryptedData = encryptedMessage.replace("ENC[", "").replace("]", "").trim();
-        let bytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
-        let decrypted = bytes.toString(CryptoJS.enc.Utf8);
-
-        if (decrypted) {
-            output.value = decrypted;
-            showStatus("✅ Decryption successful!", "success");
-        } else {
-            showStatus("❌ Decryption failed. Check passphrase.", "error");
-        }
-    });
-
-    copyBtn.addEventListener("click", function () {
+    copyBtn.addEventListener("click", () => {
+        if (!output.value.trim()) return;
         navigator.clipboard.writeText(output.value).then(() => {
             showStatus("📋 Copied to clipboard!", "success");
         }).catch(() => {
-            showStatus("❌ Copy failed.", "error");
+            showStatus("❌ Failed to copy.", "error");
         });
     });
 
-    function showStatus(message, type) {
-        statusMessage.innerText = message;
-        statusMessage.style.color = type === "success" ? "#4CAF50" : "#FF9800";
+    function processText(mode) {
+        if (!textInput || !passphraseInput) {
+            showStatus("⚠️ Missing input fields!", "error");
+            return;
+        }
+
+        const text = textInput.value.trim();
+        const passphrase = passphraseInput.value.trim();
+
+        if (!text || !passphrase) {
+            showStatus("⚠️ Enter text and passphrase.", "error");
+            return;
+        }
+
+        output.value = mode === "encrypt" ? encryptText(text, passphrase) : decryptText(text, passphrase);
     }
+
+    function encryptText(text, passphrase) {
+        if (typeof CryptoJS === "undefined") {
+            console.error("❌ CryptoJS is not available!");
+            return "⚠️ Encryption error.";
+        }
+        return `ENC[${CryptoJS.AES.encrypt(text, passphrase).toString()}]`;
+    }
+
+    function decryptText(encryptedText, passphrase) {
+        try {
+            let bytes = CryptoJS.AES.decrypt(encryptedText.replace("ENC[", "").replace("]", ""), passphrase);
+            return bytes.toString(CryptoJS.enc.Utf8) || "❌ Incorrect passphrase.";
+        } catch (error) {
+            return "⚠️ Decryption error.";
+        }
+    }
+
+    function showStatus(message, type) {
+        const logList = document.getElementById("logList");
+        const logEntry = document.createElement("li");
+        logEntry.innerText = message;
+    
+        switch (type) {
+            case "success":
+                logEntry.style.color = "green";
+                break;
+            case "error":
+                logEntry.style.color = "red";
+                break;
+            case "warning":
+                logEntry.style.color = "orange";
+                break;
+            default:
+                logEntry.style.color = "black";
+        }
+    
+        logList.appendChild(logEntry);
+    }
+    
+    document.getElementById("openOptions").addEventListener("click", () => {
+        chrome.runtime.openOptionsPage();
+    });
+    
+    document.getElementById("openErrors").addEventListener("click", () => {
+        chrome.tabs.create({ url: "errors.html" });
+    });
+    
+    // Add event listener to clear logs
+    document.getElementById("clearLogBtn").addEventListener("click", () => {
+        document.getElementById("logList").innerHTML = "";
+    });
+    
 });
