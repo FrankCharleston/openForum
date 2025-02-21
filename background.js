@@ -1,4 +1,4 @@
-// background.js - Enhancing Right Click Context Menu for Encryption
+// background.js - Enhancing Right Click Context Menu for Encryption and Decryption
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
         id: "encryptText",
@@ -33,41 +33,40 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 function encryptSelectedText(text) {
-    let passphrase = prompt("Enter passphrase to encrypt:");
-    if (!passphrase || !text.trim()) return;
-
-    try {
-        let encrypted = CryptoJS.AES.encrypt(text.trim(), passphrase).toString();
-        let formattedMessage = `ENC[${encrypted}]\n\n🔐 This message is securely encrypted using OpenForum. Join the discussion securely!`;
-        
-        navigator.clipboard.writeText(formattedMessage).then(() => {
-            alert("✅ Encrypted text copied to clipboard.");
-        }).catch(() => {
-            alert("❌ Failed to copy to clipboard.");
-        });
-
-    } catch (error) {
-        console.error("Encryption error:", error);
-        alert("Encryption failed.");
+    if (!text || text.trim() === "") {
+        alert("No text selected for encryption.");
+        return;
     }
+    let passphrase = prompt("Enter passphrase to encrypt:");
+    if (!passphrase) return;
+    let encrypted = CryptoJS.AES.encrypt(text.trim(), passphrase).toString();
+    let formattedMessage = `ENC[${encrypted}]
+
+🔐 Securely encrypted with OpenForum`;
+    navigator.clipboard.writeText(formattedMessage).then(() => {
+        alert("Encrypted text copied to clipboard.");
+    }).catch(() => {
+        alert("Failed to copy encrypted text.");
+    });
 }
 
 function decryptSelectedText(text) {
+    if (!text || !text.startsWith("ENC[")) {
+        alert("No valid encrypted text selected.");
+        return;
+    }
     let passphrase = prompt("Enter passphrase to decrypt:");
-    if (!passphrase || !text.startsWith("ENC[")) return;
-
+    if (!passphrase) return;
     try {
         let encryptedData = text.replace("ENC[", "").replace("]", "").trim();
         let bytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
         let decrypted = bytes.toString(CryptoJS.enc.Utf8);
-
         if (decrypted) {
-            alert("✅ Decrypted Text: " + decrypted);
+            alert("Decrypted Text: " + decrypted);
         } else {
-            alert("❌ Decryption failed. Incorrect passphrase or corrupted data.");
+            alert("Decryption failed. Incorrect passphrase or corrupted data.");
         }
     } catch (error) {
-        console.error("Decryption error:", error);
-        alert("Decryption failed.");
+        alert("Decryption error. Ensure the text is correctly formatted.");
     }
 }
