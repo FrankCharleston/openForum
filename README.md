@@ -1,7 +1,3 @@
-Here’s a fully documented **README.md** file for your OpenForum extension:
-
----
-
 ### **🔐 OpenForum - Secure & Seamless Message Encryption**
 **Version:** `1.0.0`  
 **Author:** [FrankCharleston](https://github.com/FrankCharleston/openForum)
@@ -146,7 +142,3 @@ If `CryptoJS is not defined`, make sure:
 
 ## **📄 License**
 **MIT License** - Free to modify, distribute, and use.
-
----
-
-This README should now fully document your extension! 🚀 Let me know if you want to add anything else!
