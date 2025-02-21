@@ -47,12 +47,8 @@ OpenForum/
 │── errors.html
 │── errors.js
 │── errors.css
-│── assets/
-│   │── icon.png
-│   │── icon-48.png
-│   │── icon-128.png
-│── lib/
-│   │── crypto-js.min.js
+│── icon.png
+│── crypto-js.min.js
 ```
 
 ---
@@ -60,7 +56,7 @@ OpenForum/
 ## **📜 Installation Guide**
 ### **🔹 Load as an Unpacked Extension**
 1. Open **Google Chrome** (or Edge).  
-2. Go to `chrome://extensions/`  
+2. Go to `edge://extensions/`  
 3. Enable **Developer Mode** (top-right corner).  
 4. Click **"Load Unpacked"** and select the `OpenForum` folder.  
 5. The extension will now appear in the toolbar.  
@@ -114,7 +110,7 @@ If `CryptoJS is not defined`, make sure:
 - `crypto-js.min.js` is **included in `manifest.json`** under `web_accessible_resources`.
 - `popup.html` **loads `crypto-js.min.js` before `popup.js`**:
   ```html
-  <script src="lib/crypto-js.min.js"></script>
+  <script src="crypto-js.min.js"></script>
   <script src="popup.js" defer></script>
   ```
 
