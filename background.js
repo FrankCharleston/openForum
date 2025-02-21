@@ -1,4 +1,4 @@
-// background.js - Enhancing Right Click Context Menu for Encryption and Decryption
+// background.js - Enhancing Right Click Context Menu for Encryption and Decryption with Auto Decryption on Page Load
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
         id: "encryptText",
@@ -70,3 +70,19 @@ function decryptSelectedText(text) {
         alert("Decryption error. Ensure the text is correctly formatted.");
     }
 }
+
+// Auto-attempt to decrypt the page with a default passphrase on load
+document.addEventListener("DOMContentLoaded", function () {
+    let defaultPassphrase = "defaultPassphrase";
+    document.querySelectorAll("p, span, div").forEach(element => {
+        let text = element.innerText;
+        if (text.startsWith("ENC[")) {
+            let encryptedData = text.replace("ENC[", "").replace("]", "").trim();
+            let bytes = CryptoJS.AES.decrypt(encryptedData, defaultPassphrase);
+            let decrypted = bytes.toString(CryptoJS.enc.Utf8);
+            if (decrypted) {
+                element.innerText = decrypted;
+            }
+        }
+    });
+});
