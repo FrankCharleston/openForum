@@ -70,8 +70,38 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showStatus(message, type) {
-        statusMessage.innerText = message;
-        statusMessage.style.color = type === "success" ? "green" : "red";
-        setTimeout(() => statusMessage.innerText = "", 2000);
+        const logList = document.getElementById("logList");
+        const logEntry = document.createElement("li");
+        logEntry.innerText = message;
+    
+        switch (type) {
+            case "success":
+                logEntry.style.color = "green";
+                break;
+            case "error":
+                logEntry.style.color = "red";
+                break;
+            case "warning":
+                logEntry.style.color = "orange";
+                break;
+            default:
+                logEntry.style.color = "black";
+        }
+    
+        logList.appendChild(logEntry);
     }
+    
+    document.getElementById("openOptions").addEventListener("click", () => {
+        chrome.runtime.openOptionsPage();
+    });
+    
+    document.getElementById("openErrors").addEventListener("click", () => {
+        chrome.tabs.create({ url: "errors.html" });
+    });
+    
+    // Add event listener to clear logs
+    document.getElementById("clearLogBtn").addEventListener("click", () => {
+        document.getElementById("logList").innerHTML = "";
+    });
+    
 });
