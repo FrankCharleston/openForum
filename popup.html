@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenForum Encryption</title>
     <link rel="stylesheet" href="popup.css">
-    <script src="popup.js" defer></script>
+    <script src="crypto-js.min.js"></script> <!-- ✅ Ensure CryptoJS Loads First -->
+    <script src="popup.js" defer></script> <!-- ✅ Then Load Your Script -->
 </head>
 <body>
     <div class="container">
@@ -15,7 +16,7 @@
 
         <div class="input-group">
             <input type="password" id="passphrase" placeholder="Enter passphrase">
-            <button id="togglePassphrase">👁</button> <!-- ✅ Added Missing Button -->
+            <button id="togglePassphrase">👁</button>
         </div>
 
         <div class="button-group">
@@ -26,7 +27,7 @@
         <textarea id="output" readonly placeholder="Your result will appear here..."></textarea>
         <button id="copyBtn">📋 Copy</button>
 
-        <p id="statusMessage"></p> <!-- ✅ Added Status Message Display -->
+        <p id="statusMessage"></p>
     </div>
 </body>
 </html>

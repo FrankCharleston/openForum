@@ -8,9 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const output = document.getElementById("output");
     const statusMessage = document.getElementById("statusMessage");
 
-    if (!togglePassphraseBtn) {
-        console.warn("⚠️ togglePassphraseBtn not found in DOM.");
-    } else {
+    // ✅ Check if CryptoJS is Loaded
+    if (typeof CryptoJS === "undefined") {
+        console.error("❌ CryptoJS is not loaded!");
+        showStatus("⚠️ Encryption library missing!", "error");
+        return;
+    }
+
+    // ✅ Ensure the Passphrase Toggle Works
+    if (togglePassphraseBtn) {
         togglePassphraseBtn.addEventListener("click", () => {
             passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
             togglePassphraseBtn.innerText = passphraseInput.type === "password" ? "👁" : "🙈";
@@ -47,6 +53,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function encryptText(text, passphrase) {
+        if (typeof CryptoJS === "undefined") {
+            console.error("❌ CryptoJS is not available!");
+            return "⚠️ Encryption error.";
+        }
         return `ENC[${CryptoJS.AES.encrypt(text, passphrase).toString()}]`;
     }
 
