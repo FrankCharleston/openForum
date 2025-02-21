@@ -71,18 +71,21 @@ function decryptSelectedText(text) {
     }
 }
 
-// Auto-attempt to decrypt the page with a default passphrase on load
-document.addEventListener("DOMContentLoaded", function () {
-    let defaultPassphrase = "defaultPassphrase";
-    document.querySelectorAll("p, span, div").forEach(element => {
-        let text = element.innerText;
-        if (text.startsWith("ENC[")) {
-            let encryptedData = text.replace("ENC[", "").replace("]", "").trim();
-            let bytes = CryptoJS.AES.decrypt(encryptedData, defaultPassphrase);
-            let decrypted = bytes.toString(CryptoJS.enc.Utf8);
-            if (decrypted) {
-                element.innerText = decrypted;
+// Auto-attempt to decrypt the page with the subreddit ID as the passphrase on load
+chrome.scripting.executeScript({
+    target: { allFrames: true },
+    func: () => {
+        let subredditId = window.location.pathname.split("/")[2] || "defaultPassphrase";
+        document.querySelectorAll("p, span, div").forEach(element => {
+            let text = element.innerText;
+            if (text.startsWith("ENC[")) {
+                let encryptedData = text.replace("ENC[", "").replace("]", "").trim();
+                let bytes = CryptoJS.AES.decrypt(encryptedData, subredditId);
+                let decrypted = bytes.toString(CryptoJS.enc.Utf8);
+                if (decrypted) {
+                    element.innerText = decrypted;
+                }
             }
-        }
-    });
+        });
+    }
 });
