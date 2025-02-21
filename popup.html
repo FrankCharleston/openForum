@@ -11,18 +11,23 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔐 OpenForum Secure Messenger</h1>
+        <h1>🔐 OpenForum</h1>
 
-        <textarea id="messageInput" placeholder="Enter message..."></textarea>
-        <input type="password" id="passphraseInput" placeholder="Enter passphrase">
-        <button id="togglePassphrase">👁️ Show</button>
+        <textarea id="messageInput" placeholder="Enter or paste message..."></textarea>
 
-        <button id="encryptBtn">Encrypt</button>
-        <button id="decryptBtn">Decrypt</button>
+        <div class="input-group">
+            <input type="password" id="passphraseInput" placeholder="Passphrase">
+            <button id="togglePassphrase">👁️</button>
+        </div>
 
-        <textarea id="output" readonly placeholder="Your encrypted/decrypted message will appear here..."></textarea>
+        <div class="button-group">
+            <button id="encryptBtn">Encrypt</button>
+            <button id="decryptBtn">Decrypt</button>
+        </div>
+
+        <textarea id="output" readonly placeholder="Your encrypted/decrypted message..."></textarea>
+
         <button id="copyBtn">📋 Copy</button>
-
         <p id="statusMessage"></p>
     </div>
 </body>
