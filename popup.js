@@ -1,114 +1,65 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("[INFO] OpenForum popup loaded.");
+    const encryptBtn = document.getElementById("encryptBtn");
+    const decryptBtn = document.getElementById("decryptBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const togglePassphraseBtn = document.getElementById("togglePassphrase");
+    const passphraseInput = document.getElementById("passphraseInput");
+    const messageInput = document.getElementById("messageInput");
+    const output = document.getElementById("output");
+    const statusMessage = document.getElementById("statusMessage");
 
-    document.getElementById("encryptBtn").addEventListener("click", function () {
-        let message = document.getElementById("messageInput").value;
-        let passphrase = document.getElementById("passphraseInput").value;
+    togglePassphraseBtn.addEventListener("click", () => {
+        passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
+        togglePassphraseBtn.innerText = passphraseInput.type === "password" ? "👁️ Show" : "👁️ Hide";
+    });
 
-        if (!message.trim()) {
-            showError("Enter a message to encrypt.");
+    encryptBtn.addEventListener("click", function () {
+        let message = messageInput.value.trim();
+        let passphrase = passphraseInput.value.trim();
+
+        if (!message || !passphrase) {
+            showStatus("⚠️ Enter a message and passphrase!", "error");
             return;
         }
 
-        try {
-            let encrypted = window.encryptText(message, passphrase);
-            document.getElementById("output").value = `ENC[${encrypted}]`;
-            showSuccess("Message encrypted successfully!");
-        } catch (error) {
-            showError("Encryption failed.");
-            console.error("[ERROR] Encryption error:", error);
-        }
+        let encrypted = CryptoJS.AES.encrypt(message, passphrase).toString();
+        let formattedMessage = `ENC[${encrypted}]\n\n🔐 This message is securely encrypted using OpenForum. Join the discussion securely!`;
+
+        output.value = formattedMessage;
+        showStatus("✅ Encrypted successfully!", "success");
     });
 
-    document.getElementById("decryptBtn").addEventListener("click", function () {
-        let encryptedMessage = document.getElementById("messageInput").value;
-        let passphrase = document.getElementById("passphraseInput").value;
+    decryptBtn.addEventListener("click", function () {
+        let encryptedMessage = messageInput.value.trim();
+        let passphrase = passphraseInput.value.trim();
 
-        if (!encryptedMessage.startsWith("ENC[")) {
-            showError("Invalid encrypted message format.");
+        if (!encryptedMessage.startsWith("ENC[") || !passphrase) {
+            showStatus("⚠️ Invalid encrypted message or missing passphrase.", "error");
             return;
         }
 
-        try {
-            let encryptedData = encryptedMessage.replace("ENC[", "").replace("]", "");
-            let decryptedText = window.decryptText(encryptedData, passphrase);
+        let encryptedData = encryptedMessage.replace("ENC[", "").replace("]", "").trim();
+        let bytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
+        let decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
-            if (!decryptedText) {
-                throw new Error("Decryption failed.");
-            }
-
-            document.getElementById("output").value = decryptedText;
-            showSuccess("Message decrypted successfully!");
-        } catch (error) {
-            showError("Decryption failed. Check your passphrase.");
-            console.error("[ERROR] Decryption error:", error);
+        if (decrypted) {
+            output.value = decrypted;
+            showStatus("✅ Decryption successful!", "success");
+        } else {
+            showStatus("❌ Decryption failed. Check passphrase.", "error");
         }
     });
 
-    function showError(message) {
-        let log = document.getElementById("logs");
-        log.innerHTML = `<span class="error">❌ ${message}</span>`;
-    }
-
-    function showSuccess(message) {
-        let log = document.getElementById("logs");
-        log.innerHTML = `<span class="success">✅ ${message}</span>`;
-    }
-});
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("[INFO] OpenForum popup loaded.");
-
-    document.getElementById("encryptBtn").addEventListener("click", function () {
-        let message = document.getElementById("messageInput").value;
-        let passphrase = document.getElementById("passphraseInput").value;
-
-        if (!message.trim()) {
-            showError("Enter a message to encrypt.");
-            return;
-        }
-
-        try {
-            let encrypted = window.encryptText(message, passphrase);
-            document.getElementById("output").value = `ENC[${encrypted}]`;
-            showSuccess("Message encrypted successfully!");
-        } catch (error) {
-            showError("Encryption failed.");
-            console.error("[ERROR] Encryption error:", error);
-        }
+    copyBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(output.value).then(() => {
+            showStatus("📋 Copied to clipboard!", "success");
+        }).catch(() => {
+            showStatus("❌ Copy failed.", "error");
+        });
     });
 
-    document.getElementById("decryptBtn").addEventListener("click", function () {
-        let encryptedMessage = document.getElementById("messageInput").value;
-        let passphrase = document.getElementById("passphraseInput").value;
-
-        if (!encryptedMessage.startsWith("ENC[")) {
-            showError("Invalid encrypted message format.");
-            return;
-        }
-
-        try {
-            let encryptedData = encryptedMessage.replace("ENC[", "").replace("]", "");
-            let decryptedText = window.decryptText(encryptedData, passphrase);
-
-            if (!decryptedText) {
-                throw new Error("Decryption failed.");
-            }
-
-            document.getElementById("output").value = decryptedText;
-            showSuccess("Message decrypted successfully!");
-        } catch (error) {
-            showError("Decryption failed. Check your passphrase.");
-            console.error("[ERROR] Decryption error:", error);
-        }
-    });
-
-    function showError(message) {
-        let log = document.getElementById("logs");
-        log.innerHTML = `<span class="error">❌ ${message}</span>`;
-    }
-
-    function showSuccess(message) {
-        let log = document.getElementById("logs");
-        log.innerHTML = `<span class="success">✅ ${message}</span>`;
+    function showStatus(message, type) {
+        statusMessage.innerText = message;
+        statusMessage.style.color = type === "success" ? "#4CAF50" : "#FF9800";
     }
 });
