@@ -1,76 +1,152 @@
-# OpenForum
+Here’s a fully documented **README.md** file for your OpenForum extension:
 
-OpenForum is a browser extension that enables seamless encryption and decryption of messages across public forums. It provides a decentralized way to protect and share sensitive information while maintaining accessibility for intended recipients.
+---
 
-## Features
-- **Encrypt a Message**: Securely encrypts text using AES-256 encryption.
-- **Decrypt a Message**: Allows decryption of encrypted messages using a passphrase.
-- **Decrypt Page**: Scans and decrypts all encrypted messages on a page using a supplied passphrase or a default one.
-- **Clipboard Integration**: Encrypt and decrypt messages directly from the clipboard.
-- **Right-Click Context Menu**: Encrypt or decrypt selected text from the browser's right-click menu.
-- **Logging & Error Handling**: Tracks encryption, decryption attempts, and potential issues for better debugging.
+### **🔐 OpenForum - Secure & Seamless Message Encryption**
+**Version:** `1.0.0`  
+**Author:** [FrankCharleston](https://github.com/FrankCharleston/openForum)
 
-## Installation
-1. Download the OpenForum extension package.
-2. Open your browser and navigate to `chrome://extensions/` (or `edge://extensions/` for Edge users).
-3. Enable **Developer Mode** (toggle in the top right corner).
-4. Click **Load unpacked** and select the downloaded OpenForum directory.
-5. The extension should now be visible in your browser toolbar.
+---
 
-## Usage
-### Encrypt a Message
-1. Open the OpenForum popup.
-2. Enter the text you want to encrypt.
-3. Click **Encrypt**.
-4. Copy the encrypted text (formatted as `ENC[...]`) and share it.
+## **📌 Overview**
+OpenForum is a browser extension that allows users to **encrypt and decrypt text** seamlessly within web pages. It provides:
+- **Inline Encryption & Decryption** via the popup UI  
+- **Right-Click Context Menu Actions** for quick access  
+- **Persistent Activity Logs** for better visibility  
+- **Auto-decryption with passphrases**  
+- **Error logging & troubleshooting tools**
 
-### Decrypt a Message
-1. Paste an encrypted message (`ENC[...]`) into the input field.
-2. Click **Decrypt** and enter the passphrase.
-3. The decrypted message will be displayed in the input field.
+---
 
-### Decrypt Page
-1. Open the OpenForum popup.
-2. Click **Decrypt Page**.
-3. All encrypted messages on the current webpage will be decrypted using the passphrase provided.
+## **🚀 Features**
+### **🔹 Inline Encryption & Decryption**
+- Enter a message in the popup and **encrypt** it using a passphrase.  
+- Copy & paste encrypted messages and **decrypt** them back to plaintext.  
 
-### Context Menu
-1. Select any text on a webpage.
-2. Right-click and choose **Encrypt Message** or **Decrypt Message**.
-3. If decrypting, enter the passphrase when prompted.
-4. The result will be copied to the clipboard.
+### **🔹 Context Menu Actions (Right-Click)**
+- **Encrypt Selected Text** → Right-click selected text to encrypt it.  
+- **Decrypt Selected Text** → Right-click encrypted text to decrypt it.
 
-## File Structure
+### **🔹 Persistent Logging & Status Messages**
+- Logs encryption/decryption actions inside the popup UI.
+- **Color-coded logs** for success, warnings, and errors.
+
+### **🔹 Options & Error Pages**
+- **⚙ Open Settings** → Configure auto-decryption preferences.  
+- **🚨 View Errors** → Open a troubleshooting page for decryption failures.
+
+---
+
+## **📁 File Structure**
 ```
 OpenForum/
-│── manifest.json       # Extension manifest file
-│── background.js       # Handles background tasks, context menu, and clipboard actions
-│── popup.html          # UI structure for the extension
-│── popup.js            # Handles UI interactions and encryption/decryption logic
-│── styles.css          # Styles for the extension popup
-│── decentraloverlay.js # Scans and decrypts messages on webpages
-│── crypto-js.min.js    # Library for AES encryption
-│── icons/              # Extension icons
+│── manifest.json
+│── background.js
+│── popup.html
+│── popup.js
+│── popup.css
+│── options.html
+│── options.js
+│── options.css
+│── errors.html
+│── errors.js
+│── errors.css
+│── assets/
+│   │── icon.png
+│   │── icon-48.png
+│   │── icon-128.png
+│── lib/
+│   │── crypto-js.min.js
 ```
 
-## Technologies Used
-- **JavaScript** (ES6+)
-- **CryptoJS** (AES-256 encryption)
-- **Chrome Extensions API**
+---
 
-## License
-This project is licensed under the MIT License. See `LICENSE` for more details.
+## **📜 Installation Guide**
+### **🔹 Load as an Unpacked Extension**
+1. Open **Google Chrome** (or Edge).  
+2. Go to `chrome://extensions/`  
+3. Enable **Developer Mode** (top-right corner).  
+4. Click **"Load Unpacked"** and select the `OpenForum` folder.  
+5. The extension will now appear in the toolbar.  
 
-## Contributing
-1. Fork the repository.
-2. Create a new branch (`feature/your-feature`).
-3. Commit your changes.
-4. Push the branch and create a pull request.
+---
 
-## Known Issues
-- **Failed to read clipboard**: Ensure the browser has granted clipboard permissions.
-- **Decryption failed**: Verify the passphrase and message format.
+## **🛠 Usage**
+### **🔹 Encrypt Text**
+1. Click the OpenForum extension icon.  
+2. Enter your **message** & **passphrase**.  
+3. Click **"Encrypt"** and copy the result.
 
-## Contact
-For support, open an issue or reach out via [GitHub Issues](https://github.com/your-repo/OpenForum/issues).
+### **🔹 Decrypt Text**
+1. Paste **an encrypted message** into the text box.  
+2. Enter the correct **passphrase**.  
+3. Click **"Decrypt"** to reveal the original message.
 
+### **🔹 Using Right-Click Encryption**
+1. Highlight **any text** on a webpage.  
+2. Right-click and select **"Encrypt Selected Text"**.  
+3. The encrypted text is **copied to your clipboard**.
+
+### **🔹 Accessing Settings & Errors**
+- **Settings**: Click the **"⚙ Open Settings"** button in the popup.  
+- **Errors**: Click **"🚨 View Errors"** to see decryption issues.  
+
+---
+
+## **📖 Technical Details**
+### **🔹 Encryption Algorithm**
+- Uses **AES encryption** via **CryptoJS** (`crypto-js.min.js`).  
+- Encrypted messages follow the format:  
+  ```
+  ENC[<encrypted_data>]
+  ```
+
+### **🔹 Manifest Permissions**
+- **Context Menus** → Adds right-click actions.  
+- **Storage** → Saves settings & error logs.  
+- **Scripting** → Injects decryption scripts into webpages.  
+
+### **🔹 Auto-Decryption**
+- The extension can attempt to **decrypt content automatically** using a saved passphrase.  
+- **Toggle Auto-Decryption** via **Options Page**.
+
+---
+
+## **❌ Troubleshooting**
+### **🔹 CryptoJS Not Found Error**
+If `CryptoJS is not defined`, make sure:
+- `crypto-js.min.js` is **included in `manifest.json`** under `web_accessible_resources`.
+- `popup.html` **loads `crypto-js.min.js` before `popup.js`**:
+  ```html
+  <script src="lib/crypto-js.min.js"></script>
+  <script src="popup.js" defer></script>
+  ```
+
+### **🔹 Can't Open Settings/Error Pages in Popup**
+- **Chrome Extensions only allow a single popup UI at a time.**  
+- Use **buttons inside the popup** to open these pages in **a new tab**:
+  ```javascript
+  document.getElementById("openOptions").addEventListener("click", () => {
+      chrome.runtime.openOptionsPage();
+  });
+
+  document.getElementById("openErrors").addEventListener("click", () => {
+      chrome.tabs.create({ url: "errors.html" });
+  });
+  ```
+
+---
+
+## **💡 Future Improvements**
+- **🎨 Better UI/UX for the popup window**.  
+- **🌐 Support for cross-browser compatibility**.  
+- **🔑 Secure key storage for passphrases**.  
+
+---
+
+## **📄 License**
+**MIT License** - Free to modify, distribute, and use.
+
+---
+
+This README should now fully document your extension! 🚀 Let me know if you want to add anything else!
