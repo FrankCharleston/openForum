@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const decryptBtn = document.getElementById("decryptBtn");
     const copyBtn = document.getElementById("copyBtn");
     const togglePassphraseBtn = document.getElementById("togglePassphrase");
-    const passphraseInput = document.getElementById("passphraseInput");
-    const messageInput = document.getElementById("messageInput");
+    const passphraseInput = document.getElementById("passphrase");
+    const textInput = document.getElementById("textInput");
     const output = document.getElementById("output");
     const statusMessage = document.getElementById("statusMessage");
 
@@ -30,12 +30,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function processText(mode) {
-        if (!messageInput || !passphraseInput) {
+        if (!textInput || !passphraseInput) {
             showStatus("⚠️ Missing input fields!", "error");
             return;
         }
 
-        const text = messageInput.value.trim();
+        const text = textInput.value.trim();
         const passphrase = passphraseInput.value.trim();
 
         if (!text || !passphrase) {

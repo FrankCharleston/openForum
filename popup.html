@@ -4,20 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenForum Encryption</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="popup.css">
     <script src="popup.js" defer></script>
 </head>
 <body>
     <div class="container">
         <h1>🔐 OpenForum</h1>
+
         <textarea id="textInput" placeholder="Enter text to encrypt or decrypt..."></textarea>
-        <input type="password" id="passphrase" placeholder="Enter passphrase">
+
         <div class="input-group">
-            <input type="password" id="passphraseInput" placeholder="Enter passphrase">
-            <button id="togglePassphrase">👁</button>
-        </div>        
+            <input type="password" id="passphrase" placeholder="Enter passphrase">
+            <button id="togglePassphrase">👁</button> <!-- ✅ Added Missing Button -->
+        </div>
+
+        <div class="button-group">
+            <button id="encryptBtn">Encrypt</button>
+            <button id="decryptBtn">Decrypt</button>
+        </div>
+
         <textarea id="output" readonly placeholder="Your result will appear here..."></textarea>
         <button id="copyBtn">📋 Copy</button>
+
+        <p id="statusMessage"></p> <!-- ✅ Added Status Message Display -->
     </div>
 </body>
 </html>
