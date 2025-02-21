@@ -8,58 +8,56 @@ document.addEventListener("DOMContentLoaded", function () {
     const output = document.getElementById("output");
     const statusMessage = document.getElementById("statusMessage");
 
-    togglePassphraseBtn.addEventListener("click", () => {
-        passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
-        togglePassphraseBtn.innerText = passphraseInput.type === "password" ? "👁️ Show" : "👁️ Hide";
-    });
+    // Check if togglePassphraseBtn exists before adding an event listener
+    if (togglePassphraseBtn) {
+        togglePassphraseBtn.addEventListener("click", () => {
+            passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
+            togglePassphraseBtn.innerText = passphraseInput.type === "password" ? "👁 Show" : "🙈 Hide";
+        });
+    } else {
+        console.warn("togglePassphraseBtn not found in DOM.");
+    }
 
-    encryptBtn.addEventListener("click", function () {
-        let message = messageInput.value.trim();
-        let passphrase = passphraseInput.value.trim();
+    encryptBtn.addEventListener("click", () => processText("encrypt"));
+    decryptBtn.addEventListener("click", () => processText("decrypt"));
 
-        if (!message || !passphrase) {
-            showStatus("⚠️ Enter a message and passphrase!", "error");
-            return;
-        }
-
-        let encrypted = CryptoJS.AES.encrypt(message, passphrase).toString();
-        let formattedMessage = `ENC[${encrypted}]\n\n🔐 This message is securely encrypted using OpenForum. Join the discussion securely!`;
-
-        output.value = formattedMessage;
-        showStatus("✅ Encrypted successfully!", "success");
-    });
-
-    decryptBtn.addEventListener("click", function () {
-        let encryptedMessage = messageInput.value.trim();
-        let passphrase = passphraseInput.value.trim();
-
-        if (!encryptedMessage.startsWith("ENC[") || !passphrase) {
-            showStatus("⚠️ Invalid encrypted message or missing passphrase.", "error");
-            return;
-        }
-
-        let encryptedData = encryptedMessage.replace("ENC[", "").replace("]", "").trim();
-        let bytes = CryptoJS.AES.decrypt(encryptedData, passphrase);
-        let decrypted = bytes.toString(CryptoJS.enc.Utf8);
-
-        if (decrypted) {
-            output.value = decrypted;
-            showStatus("✅ Decryption successful!", "success");
-        } else {
-            showStatus("❌ Decryption failed. Check passphrase.", "error");
-        }
-    });
-
-    copyBtn.addEventListener("click", function () {
+    copyBtn.addEventListener("click", () => {
+        if (!output.value.trim()) return;
         navigator.clipboard.writeText(output.value).then(() => {
             showStatus("📋 Copied to clipboard!", "success");
         }).catch(() => {
-            showStatus("❌ Copy failed.", "error");
+            showStatus("❌ Failed to copy.", "error");
         });
     });
 
+    function processText(mode) {
+        const text = messageInput.value.trim();
+        const passphrase = passphraseInput.value.trim();
+
+        if (!text || !passphrase) {
+            showStatus("⚠️ Enter text and passphrase.", "error");
+            return;
+        }
+
+        output.value = mode === "encrypt" ? encryptText(text, passphrase) : decryptText(text, passphrase);
+    }
+
+    function encryptText(text, passphrase) {
+        return `ENC[${CryptoJS.AES.encrypt(text, passphrase).toString()}]`;
+    }
+
+    function decryptText(encryptedText, passphrase) {
+        try {
+            let bytes = CryptoJS.AES.decrypt(encryptedText.replace("ENC[", "").replace("]", ""), passphrase);
+            return bytes.toString(CryptoJS.enc.Utf8) || "❌ Incorrect passphrase.";
+        } catch (error) {
+            return "⚠️ Decryption error.";
+        }
+    }
+
     function showStatus(message, type) {
         statusMessage.innerText = message;
-        statusMessage.style.color = type === "success" ? "#4CAF50" : "#FF9800";
+        statusMessage.style.color = type === "success" ? "green" : "red";
+        setTimeout(() => statusMessage.innerText = "", 2000);
     }
 });
