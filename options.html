@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenForum Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="options.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 OpenForum Settings</h1>
+
+        <label>
+            <input type="checkbox" id="autoDecryptToggle">
+            Enable Auto-Decryption
+        </label>
+
+        <label for="customPassphrase">Default Decryption Passphrase:</label>
+        <input type="text" id="customPassphrase" placeholder="Leave empty for subreddit-based passphrase">
+
+        <button id="saveSettings">Save Settings</button>
+        <p id="statusMessage"></p>
+    </div>
+</body>
+</html>

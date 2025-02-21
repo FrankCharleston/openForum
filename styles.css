@@ -21,49 +21,20 @@ h1 {
     margin-bottom: 10px;
 }
 
-textarea, input {
+input, button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    background: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
 }
 
-.input-group {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-
-.input-group input {
-    flex-grow: 1;
-}
-
-.input-group button {
-    padding: 10px;
-    border: none;
-    background: #ddd;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.button-group {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-}
-
 button {
-    flex-grow: 1;
-    padding: 10px;
     background: #007bff;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
-    margin: 5px;
 }
 
 button:hover {
@@ -72,4 +43,6 @@ button:hover {
 
 #statusMessage {
     font-size: 14px;
-    color: #ff9800
+    color: #4CAF50;
+    margin-top: 10px;
+}

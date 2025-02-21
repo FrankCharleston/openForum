@@ -1,17 +1,16 @@
 {
   "manifest_version": 3,
   "name": "OpenForum",
-  "version": "1.0",
-  "permissions": ["storage", "contextMenus", "scripting", "activeTab"],
+  "version": "1.1",
+  "permissions": ["storage", "contextMenus", "scripting", "activeTab", "tabs"],
   "host_permissions": ["<all_urls>"],
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["crypto-js.min.js", "crypto-utils.js", "content.js", "content_script.js", "decentraloverlay.js"]
+      "js": ["crypto-js.min.js", "crypto-utils.js", "content.js", "content_script.js", "decentraloverlay.js", "options.js"]
     }
   ],
   "action": {
@@ -22,9 +21,10 @@
       "128": "icon.png"
     }
   },
+  "options_page": "options.html",
   "web_accessible_resources": [
     {
-      "resources": ["crypto-js.min.js"],
+      "resources": ["icon.png"],
       "matches": ["<all_urls>"]
     }
   ]
