@@ -3,32 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenForum Secure Messenger</title>
+    <title>OpenForum Encryption</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="crypto-js.min.js"></script>
-    <script src="crypto-utils.js"></script>
     <script src="popup.js" defer></script>
 </head>
 <body>
     <div class="container">
         <h1>🔐 OpenForum</h1>
-
-        <textarea id="messageInput" placeholder="Enter or paste message..."></textarea>
-
-        <div class="input-group">
-            <input type="password" id="passphraseInput" placeholder="Passphrase">
-            <button id="togglePassphrase">👁️</button>
-        </div>
-
+        <textarea id="textInput" placeholder="Enter text to encrypt or decrypt..."></textarea>
+        <input type="password" id="passphrase" placeholder="Enter passphrase">
         <div class="button-group">
             <button id="encryptBtn">Encrypt</button>
             <button id="decryptBtn">Decrypt</button>
         </div>
-
-        <textarea id="output" readonly placeholder="Your encrypted/decrypted message..."></textarea>
-
+        <textarea id="output" readonly placeholder="Your result will appear here..."></textarea>
         <button id="copyBtn">📋 Copy</button>
-        <p id="statusMessage"></p>
     </div>
 </body>
 </html>
