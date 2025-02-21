@@ -8,14 +8,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const output = document.getElementById("output");
     const statusMessage = document.getElementById("statusMessage");
 
-    // Check if togglePassphraseBtn exists before adding an event listener
-    if (togglePassphraseBtn) {
+    if (!togglePassphraseBtn) {
+        console.warn("⚠️ togglePassphraseBtn not found in DOM.");
+    } else {
         togglePassphraseBtn.addEventListener("click", () => {
             passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
-            togglePassphraseBtn.innerText = passphraseInput.type === "password" ? "👁 Show" : "🙈 Hide";
+            togglePassphraseBtn.innerText = passphraseInput.type === "password" ? "👁" : "🙈";
         });
-    } else {
-        console.warn("togglePassphraseBtn not found in DOM.");
     }
 
     encryptBtn.addEventListener("click", () => processText("encrypt"));
@@ -31,6 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function processText(mode) {
+        if (!messageInput || !passphraseInput) {
+            showStatus("⚠️ Missing input fields!", "error");
+            return;
+        }
+
         const text = messageInput.value.trim();
         const passphrase = passphraseInput.value.trim();
 
