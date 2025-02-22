@@ -121,6 +121,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("openErrors").addEventListener("click", () => {
       chrome.tabs.create({ url: "errors.html" });
     });
+
+    // E.g., from a button click in popup.js
+    document.getElementById("openErrors").addEventListener("click", () => {
+      chrome.tabs.create({ url: "errors.html" });
+    });
   
     // Clear the activity log
     document.getElementById("clearLogBtn").addEventListener("click", () => {
