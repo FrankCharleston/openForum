@@ -150,6 +150,17 @@ async function loadCryptoJS() {
   }
 }
 
+// Example from background.js or content_script.js
+chrome.storage.local.get("decryptionErrors", (data) => {
+  let errors = data.decryptionErrors || [];
+  errors.push({
+    timestamp: new Date().toISOString(),
+    error: error.message || "Unknown error"
+  });
+  chrome.storage.local.set({ decryptionErrors: errors });
+});
+
+
 /**
  * If you prefer local functions instead of window.*:
  * 
