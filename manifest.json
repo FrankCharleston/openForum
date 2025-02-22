@@ -1,18 +1,37 @@
 {
   "manifest_version": 3,
   "name": "OpenForum",
-  "version": "1.1",
-  "permissions": ["storage", "contextMenus", "scripting", "activeTab", "tabs"],
-  "host_permissions": ["<all_urls>"],
+  "version": "1.2",
+  "description": "A simple forum encryption/decryption extension",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "scripting",
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  // BACKGROUND: Your service worker that creates context menus, etc.
   "background": {
     "service_worker": "background.js"
   },
+
+  // CONTENT SCRIPTS: Only include what's needed for actual web-page injection
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["crypto-js.min.js", "crypto-utils.js", "content.js", "content_script.js", "decentraloverlay.js", "options.js"]
+      "js": [
+        "crypto-js.min.js",      // Only if needed for content script usage
+        "crypto-utils.js",       // Only if used by your content script
+        "content_scripts.js"    // If you need an overlay in all pages
+      ]
     }
   ],
+
+  // POPUP: The main extension page when you click the icon
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -21,7 +40,11 @@
       "128": "icon.png"
     }
   },
+
+  // OPTIONS PAGE: The settings page for your extension
   "options_page": "options.html",
+
+  // RESOURCES THAT EXTERNAL PAGES CAN LOAD
   "web_accessible_resources": [
     {
       "resources": ["icon.png"],

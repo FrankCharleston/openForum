@@ -4,19 +4,21 @@ body {
     text-align: center;
     padding: 20px;
     background: #f9f9f9;
-    width: 320px;
-}
-
-/* Container */
-.container {
+    width: 320px; /* The default width of your extension popup */
+    margin: 0; /* Remove default body margin */
+  }
+  
+  /* Container */
+  .container {
     background: white;
     padding: 15px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Text & Input Fields */
-textarea, input {
+  }
+  
+  /* Text & Input Fields */
+  textarea,
+  input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -24,44 +26,45 @@ textarea, input {
     border-radius: 8px;
     font-size: 14px;
     box-sizing: border-box;
-}
-
-/* Passphrase Input Group */
-.input-group {
+  }
+  
+  /* Passphrase Input Group */
+  .input-group {
     display: flex;
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
-}
-
-.input-group input {
+  }
+  
+  .input-group input {
     flex: 1;
     border: none;
     padding: 10px;
     outline: none;
-}
-
-.input-group button {
+  }
+  
+  .input-group button {
     background: #ddd;
     border: none;
     padding: 10px;
     cursor: pointer;
     transition: background 0.2s;
-}
-
-.input-group button:hover {
+  }
+  
+  .input-group button:hover {
     background: #bbb;
-}
-
-/* Button Group */
-.button-group {
+  }
+  
+  /* Button Group */
+  .button-group {
     display: flex;
     justify-content: space-between;
-}
-
-/* Buttons */
-button {
+    margin-bottom: 10px;
+  }
+  
+  /* Buttons */
+  button {
     flex: 1;
     padding: 12px;
     margin: 5px;
@@ -71,47 +74,82 @@ button {
     font-size: 14px;
     transition: all 0.2s ease-in-out;
     font-weight: bold;
-}
-
-/* Encrypt Button */
-#encryptBtn {
+  }
+  
+  /* Encrypt Button */
+  #encryptBtn {
     background: #007bff;
     color: white;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-}
-
-#encryptBtn:hover {
+  }
+  
+  #encryptBtn:hover {
     background: #0056b3;
     transform: scale(1.05);
-}
-
-/* Decrypt Button */
-#decryptBtn {
+  }
+  
+  /* Decrypt Button */
+  #decryptBtn {
     background: #28a745;
     color: white;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-}
-
-#decryptBtn:hover {
+  }
+  
+  #decryptBtn:hover {
     background: #1e7e34;
     transform: scale(1.05);
-}
-
-/* Copy Button */
-#copyBtn {
+  }
+  
+  /* Copy Button */
+  #copyBtn {
     background: #ffc107;
     color: black;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#copyBtn:hover {
+  }
+  
+  #copyBtn:hover {
     background: #e0a800;
     transform: scale(1.05);
-}
-
-/* Status Message */
-#statusMessage {
+  }
+  
+  /* Status Message */
+  #statusMessage {
     margin-top: 10px;
     font-size: 14px;
     font-weight: bold;
-}
+  }
+  
+  /* Activity Log */
+  #logContainer {
+    margin-top: 10px;
+    text-align: left;
+  }
+  
+  #logContainer h3 {
+    margin-bottom: 5px;
+  }
+  
+  #logList {
+    max-height: 100px;
+    overflow-y: auto;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 5px;
+    background: #fff;
+  }
+  
+  #logList li {
+    margin-bottom: 5px;
+  }
+  
+  #clearLogBtn,
+  #openOptions,
+  #openErrors {
+    width: 32%;
+    margin: 5px 1% 0 1%;
+    font-size: 12px;
+    box-sizing: border-box;
+  }
+  

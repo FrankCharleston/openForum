@@ -2,7 +2,7 @@
   "name": "openforum",
   "version": "1.0.0",
   "description": "OpenForum",
-  "main": "decentraloverlay.js",
+  "main": "content_scripts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
