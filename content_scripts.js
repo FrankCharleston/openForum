@@ -1,95 +1,80 @@
 /*********************************************************
- * content_script.js (Unified)
+ * content_script.js
  * 
- * 1. Checks chrome.storage.local for "decryptionEnabled"
- *    to decide if we should auto-decrypt on page load.
- * 2. Logs certain user interactions (scroll, touch, wheel)
- *    if DEBUG_MODE is enabled (optional).
- * 3. Listens for messages from background/popup:
- *    - toggleDecryption: triggers a manual scan/decrypt
- *    - decryptText: decrypts a single text string
- * 4. Dynamically loads crypto-utils.js if not already loaded.
- * 5. Uses a TreeWalker approach to find all ENC[...] blocks
- *    in text nodes and decrypt them.
+ * 1) Logs user interactions if DEBUG_MODE is on (optional).
+ * 2) On DOM load, checks chrome.storage.local for "decryptionEnabled"
+ *    and decrypts if true.
+ * 3) Listens for messages:
+ *    - "toggleDecryption" => manually trigger page decryption
+ *    - "decryptText" => decrypt a single string
+ * 4) Dynamically loads crypto-utils.js if not already present
+ * 5) Uses a TreeWalker to find all ENC[...] blocks in text nodes
+ *    and replaces them with decrypted text.
  *********************************************************/
 
-// === 1) Optional: Debug Mode for logging user interactions ===
-const DEBUG_MODE = false;
+// === 1) Optional Debug Logging ===
+let DEBUG_MODE = false;
 
-if (DEBUG_MODE) {
-  document.addEventListener("scroll", () => console.log("[INFO] Scrolling detected"), { passive: true });
-  document.addEventListener("touchstart", () => console.log("[INFO] Touch detected"), { passive: true });
-  document.addEventListener("wheel", () => console.log("[INFO] Mouse wheel used"), { passive: true });
-}
+// Load debug setting from storage
+chrome.storage.local.get("debugMode", (data) => {
+  DEBUG_MODE = data.debugMode || false;
 
-// === 2) On DOM load, check if auto-decryption is enabled, then maybe decrypt. ===
+  if (DEBUG_MODE) {
+    // Now attach your scroll/touch/wheel listeners
+    document.addEventListener("scroll", () => console.log("[INFO] Scrolling detected"), { passive: true });
+    document.addEventListener("touchstart", () => console.log("[INFO] Touch detected"), { passive: true });
+    document.addEventListener("wheel", () => console.log("[INFO] Mouse wheel used"), { passive: true });
+    console.log("[INFO] Debug mode is ON.");
+  } else {
+    console.log("[INFO] Debug mode is OFF.");
+  }
+
+  // The rest of your content script logic
+  // ...
+});
+
+
+// === 2) On DOMContentLoaded, check if auto-decryption is enabled ===
 document.addEventListener("DOMContentLoaded", async () => {
-  if (DEBUG_MODE) console.log("[INFO] Unified content script loaded.");
+  if (DEBUG_MODE) console.log("[INFO] Content script loaded.");
 
+  // Make sure decryptText is available
   await loadCryptoUtils();
 
-  // Check if user enabled auto decryption
   chrome.storage.local.get("decryptionEnabled", (data) => {
     if (data.decryptionEnabled) {
-      if (DEBUG_MODE) console.log("[INFO] Auto-decryption enabled. Scanning page...");
+      if (DEBUG_MODE) console.log("[INFO] Auto-decryption is ON. Scanning page...");
       scanAndDecrypt();
     }
   });
 });
 
-// === 3) Listen for messages from background/popup scripts ===
+// === 3) Listen for messages from background/popup ===
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "toggleDecryption") {
-    // Manual request to decrypt the entire page
+    // Manual request: decrypt entire page
     scanAndDecrypt();
     sendResponse({ status: "Decryption triggered" });
   } 
   else if (message.action === "decryptText") {
-    // Decrypt a single string (maybe from a popup button)
+    // Decrypt a single string (e.g. from a popup)
     loadCryptoUtils().then(() => {
       const userPassphrase = prompt("Enter decryption passphrase:", "mypassword");
       const decryptedText = decryptText(message.text, userPassphrase);
       sendResponse({ success: !!decryptedText, decryptedText });
     });
-    // Return true to indicate we'll respond asynchronously
+    // Return true to indicate async response
     return true;
   }
 });
 
-console.log("[DEBUG] Content script loaded");
-
-function scanAndDecrypt() {
-    console.log("[DEBUG] Scanning page for encrypted messages...");
-    document.querySelectorAll("*").forEach(element => {
-        const encryptedText = extractEncryptedText(element.innerText);
-        if (encryptedText) {
-            console.log("[DEBUG] Found encrypted text:", encryptedText);
-            let decryptedText = window.decryptText(encryptedText, prompt("Enter passphrase:", "mypassword"));
-            if (decryptedText) {
-                console.log("[DEBUG] Decrypted text:", decryptedText);
-                element.innerHTML = element.innerHTML.replace(
-                    `ENC[${encryptedText}]`,
-                    `<span class='decrypted-message' style='color: green;'>${decryptedText}</span>`
-                );
-            } else {
-                console.warn("[WARN] Decryption failed for:", encryptedText);
-            }
-        }
-    });
-}
-
-function extractEncryptedText(text) {
-    const match = text.match(/ENC\[(.*?)\]/);
-    return match ? match[1] : null;
-}
-
-document.addEventListener("DOMContentLoaded", scanAndDecrypt);
-
-
-// === 4) Dynamically load crypto-utils.js if needed ===
+/**
+ * Dynamically load crypto-utils.js if not already loaded
+ * so we can use decryptText(...) or encryptText(...).
+ */
 async function loadCryptoUtils() {
-  // If decryptText (or encryptText) is not defined, inject crypto-utils.js
   if (typeof decryptText === "undefined") {
+    if (DEBUG_MODE) console.log("[INFO] Injecting crypto-utils.js...");
     const script = document.createElement("script");
     script.src = chrome.runtime.getURL("crypto-utils.js");
     document.head.appendChild(script);
@@ -98,13 +83,22 @@ async function loadCryptoUtils() {
   }
 }
 
-// === 5) scanAndDecrypt: Use a TreeWalker to find ENC[...] in text nodes ===
+/**
+ * scanAndDecrypt():
+ * - Prompts once for passphrase
+ * - Scans the DOM using a TreeWalker for any text containing "ENC[...]"
+ * - Replaces each found occurrence with decrypted text (or a 🔓 symbol + decrypted)
+ */
 async function scanAndDecrypt() {
+  if (DEBUG_MODE) console.log("[INFO] Starting scanAndDecrypt...");
   await loadCryptoUtils();
 
-  // Prompt once for passphrase to avoid multiple prompts
+  // Prompt once for passphrase
   const passphrase = prompt("Enter passphrase:", "mypassword");
-  if (!passphrase) return;
+  if (!passphrase) {
+    if (DEBUG_MODE) console.log("[INFO] No passphrase provided. Aborting decryption.");
+    return;
+  }
 
   // Use a TreeWalker to iterate text nodes
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
@@ -114,10 +108,10 @@ async function scanAndDecrypt() {
     const textContent = node.nodeValue;
     if (!textContent || !textContent.includes("ENC[")) continue;
 
-    // Regex to find all ENC[...] occurrences in the text
+    // Find all ENC[...] occurrences
     const encRegex = /ENC\[(.*?)\]/g;
-    let match;
     let replacedText = textContent;
+    let match;
     let foundEncrypted = false;
 
     while ((match = encRegex.exec(textContent)) !== null) {
@@ -125,13 +119,21 @@ async function scanAndDecrypt() {
       const decrypted = decryptText(encryptedChunk, passphrase);
       if (decrypted) {
         foundEncrypted = true;
-        // Replace the exact ENC[...] with a 🔓 symbol + decrypted text
-        replacedText = replacedText.replace(`ENC[${encryptedChunk}]`, `🔓${decrypted}`);
+        // Example: replace with a 🔓 symbol plus the decrypted text
+        replacedText = replacedText.replace(
+          `ENC[${encryptedChunk}]`,
+          `🔓${decrypted}`
+        );
+      } else {
+        if (DEBUG_MODE) console.warn("[WARN] Decryption failed for:", encryptedChunk);
       }
     }
 
+    // If we successfully replaced anything, update the text node
     if (foundEncrypted) {
       node.nodeValue = replacedText;
     }
   }
+
+  if (DEBUG_MODE) console.log("[INFO] Finished scanning/decrypting.");
 }

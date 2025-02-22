@@ -14,18 +14,27 @@
   <div class="container">
     <h1>🔧 OpenForum Settings</h1>
 
+    <!-- Auto-Decryption Toggle -->
     <label>
       <input type="checkbox" id="autoDecryptToggle" />
       Enable Auto-Decryption
     </label>
 
+    <!-- Default Passphrase -->
     <label for="customPassphrase">Default Decryption Passphrase:</label>
-    <input 
-      type="text" 
-      id="customPassphrase" 
-      placeholder="Leave empty if you prefer a manual passphrase" 
+    <input
+      type="text"
+      id="customPassphrase"
+      placeholder="Leave empty if you prefer a manual passphrase"
     />
 
+    <!-- Debug Mode Toggle -->
+    <label>
+      <input type="checkbox" id="debugToggle" />
+      Enable Debug Logging
+    </label>
+
+    <!-- Save Button -->
     <button id="saveSettings">Save Settings</button>
     <p id="statusMessage"></p>
   </div>

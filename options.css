@@ -2,158 +2,78 @@
 
 /* Overall page styling */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
-    color: #333;
-  }
-  
-  /* Container to center the content and create a card-like look */
-  .container {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  
-  /* Page title */
-  h1 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-    text-align: center;
-  }
-  
-  /* Checkbox label alignment */
-  label {
-    display: block;
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-  
-  label input[type="checkbox"] {
-    margin-right: 8px;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
-  }
-  
-  /* Passphrase input styling */
-  #customPassphrase {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 14px;
-  }
-  
-  /* Save button styling */
-  #saveSettings {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border: none;
-    border-radius: 6px;
-    background: #007bff;
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out;
-  }
-  
-  #saveSettings:hover {
-    background: #0056b3;
-  }
-  
-  /* Status message */
-  #statusMessage {
-    margin-top: 15px;
-    text-align: center;
-    font-weight: bold;
-    color: green; /* You can change this if you want to show errors in red */
-  }
-/* options.css */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+}
 
-/* Overall page styling */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
-    color: #333;
-  }
-  
-  /* Container to center the content and create a card-like look */
-  .container {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  
-  /* Page title */
-  h1 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-    text-align: center;
-  }
-  
-  /* Checkbox label alignment */
-  label {
-    display: block;
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-  
-  label input[type="checkbox"] {
-    margin-right: 8px;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
-  }
-  
-  /* Passphrase input styling */
-  #customPassphrase {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 14px;
-  }
-  
-  /* Save button styling */
-  #saveSettings {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border: none;
-    border-radius: 6px;
-    background: #007bff;
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out;
-  }
-  
-  #saveSettings:hover {
-    background: #0056b3;
-  }
-  
-  /* Status message */
-  #statusMessage {
-    margin-top: 15px;
-    text-align: center;
-    font-weight: bold;
-    color: green; /* You can change this if you want to show errors in red */
-  }
-    
+/* Container to center the content and create a card-like look */
+.container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Page title */
+h1 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Checkbox label alignment */
+label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+label input[type="checkbox"] {
+  margin-right: 8px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* Passphrase input styling */
+#customPassphrase {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+/* Save button styling */
+#saveSettings {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+#saveSettings:hover {
+  background: #0056b3;
+}
+
+/* Status message */
+#statusMessage {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: green; /* You can change this if you want to show errors in red */
+}
