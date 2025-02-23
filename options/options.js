@@ -1,9 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  if (typeof CryptoJS === "undefined") {
-    alert("⚠️ Encryption library missing!");
-    return;
-  }
-
   const autoDecryptSelect = document.getElementById("autoDecrypt");
   const defaultPassphraseInput = document.getElementById("defaultPassphrase");
 
