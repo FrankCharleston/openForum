@@ -11,17 +11,38 @@
   --card-bg: #fff;
   --border-color: #ccc;
 
-  --button-bg: #4CAF50;
+  --button-bg: #007bff; /* Blue */
   --button-text: #fff;
-  --button-hover-bg: #45a049;
+  --button-hover-bg: #0056b3;
 
-  --danger-bg: #dc3545;
+  --danger-bg: #dc3545; /* Red */
   --danger-hover-bg: #c82333;
 
-  --success-bg: #28a745;
+  --success-bg: #28a745; /* Green */
   --success-hover-bg: #218838;
 
+  --warning-bg: #ffc107; /* Yellow */
+  --warning-hover-bg: #e0a800;
+
+  --info-bg: #17a2b8; /* Teal */
+  --info-hover-bg: #138496;
+
   --transition-speed: 0.3s;
+
+  --encrypt-bg: #007bff; /* Blue */
+  --encrypt-hover-bg: #0056b3;
+
+  --decrypt-bg: #28a745; /* Green */
+  --decrypt-hover-bg: #218838;
+
+  --copy-bg: #ffc107; /* Yellow */
+  --copy-hover-bg: #e0a800;
+
+  --settings-bg: #17a2b8; /* Teal */
+  --settings-hover-bg: #138496;
+
+  --toggle-passphrase-bg: #6c757d; /* Gray */
+  --toggle-passphrase-hover-bg: #5a6268;
 }
 
 /* Dark Mode overrides */
@@ -33,15 +54,21 @@ body.dark-mode {
   --card-bg: #1e1e1e;
   --border-color: #555;
 
-  --button-bg: #333;
+  --button-bg: #007bff; /* Blue */
   --button-text: #e0e0e0;
-  --button-hover-bg: #555;
+  --button-hover-bg: #0056b3;
 
-  --danger-bg: #c82333;
+  --danger-bg: #c82333; /* Red */
   --danger-hover-bg: #a30f24;
 
-  --success-bg: #218838;
+  --success-bg: #218838; /* Green */
   --success-hover-bg: #19692c;
+
+  --warning-bg: #e0a800; /* Yellow */
+  --warning-hover-bg: #c69500;
+
+  --info-bg: #138496; /* Teal */
+  --info-hover-bg: #0f6674;
 }
 
 /* ============================= */
@@ -151,10 +178,10 @@ button:hover {
 
 /* Specific Buttons */
 #saveSettings {
-  background: var(--header-bg);
+  background: var(--info-bg);
 }
 #saveSettings:hover {
-  background: var(--button-hover-bg);
+  background: var(--info-hover-bg);
 }
 
 #clearLogBtn {
@@ -169,6 +196,48 @@ button:hover {
 }
 #exportLogsBtn:hover {
   background: var(--success-hover-bg);
+}
+
+#checkUpdatesBtn {
+  background: var(--warning-bg);
+}
+#checkUpdatesBtn:hover {
+  background: var(--warning-hover-bg);
+}
+
+#openSettingsBtn {
+  background: var(--settings-bg);
+}
+#openSettingsBtn:hover {
+  background: var(--settings-hover-bg);
+}
+
+#togglePassphrase {
+  background: var(--toggle-passphrase-bg);
+}
+#togglePassphrase:hover {
+  background: var(--toggle-passphrase-hover-bg);
+}
+
+#encryptBtn {
+  background: var(--encrypt-bg);
+}
+#encryptBtn:hover {
+  background: var(--encrypt-hover-bg);
+}
+
+#decryptBtn {
+  background: var(--decrypt-bg);
+}
+#decryptBtn:hover {
+  background: var(--decrypt-hover-bg);
+}
+
+#copyBtn {
+  background: var(--copy-bg);
+}
+#copyBtn:hover {
+  background: var(--copy-hover-bg);
 }
 
 /* ============================= */

@@ -10,17 +10,38 @@
   --card-bg: #fff;
   --border-color: #ccc;
 
-  --button-bg: #007bff;
+  --button-bg: #007bff; /* Blue */
   --button-text: #fff;
   --button-hover-bg: #0056b3;
 
-  --danger-bg: #dc3545;
+  --danger-bg: #dc3545; /* Red */
   --danger-hover-bg: #c82333;
 
-  --success-bg: #28a745;
+  --success-bg: #28a745; /* Green */
   --success-hover-bg: #218838;
 
+  --warning-bg: #ffc107; /* Yellow */
+  --warning-hover-bg: #e0a800;
+
+  --info-bg: #17a2b8; /* Teal */
+  --info-hover-bg: #138496;
+
   --transition-speed: 0.3s;
+
+  --activity-log-bg: #007bff; /* Blue */
+  --activity-log-hover-bg: #0056b3;
+
+  --debug-log-bg: #28a745; /* Green */
+  --debug-log-hover-bg: #218838;
+
+  --error-log-bg: #dc3545; /* Red */
+  --error-log-hover-bg: #c82333;
+
+  --export-logs-bg: #ffc107; /* Yellow */
+  --export-logs-hover-bg: #e0a800;
+
+  --check-updates-bg: #17a2b8; /* Teal */
+  --check-updates-hover-bg: #138496;
 }
 
 /* Dark Mode overrides: add .dark-mode to <body> */
@@ -32,15 +53,21 @@ body.dark-mode {
   --card-bg: #1e1e1e;
   --border-color: #555;
 
-  --button-bg: #333;
+  --button-bg: #007bff; /* Blue */
   --button-text: #e0e0e0;
-  --button-hover-bg: #555;
+  --button-hover-bg: #0056b3;
 
-  --danger-bg: #c82333; /* or pick a darker shade if you like */
+  --danger-bg: #c82333; /* Red */
   --danger-hover-bg: #a30f24;
 
-  --success-bg: #218838;
+  --success-bg: #218838; /* Green */
   --success-hover-bg: #19692c;
+
+  --warning-bg: #e0a800; /* Yellow */
+  --warning-hover-bg: #c69500;
+
+  --info-bg: #138496; /* Teal */
+  --info-hover-bg: #0f6674;
 }
 
 /* ============================= */
@@ -138,13 +165,16 @@ button {
 }
 
 button:hover {
-  background: var(--button-hover-bg);
+  background-color: var(--button-hover-bg);
   transform: scale(1.05);
 }
 
 /* Example: Save Button */
 #saveSettings {
-  /* Inherits main button styles, can override if needed */
+  background: var(--info-bg);
+}
+#saveSettings:hover {
+  background: var(--info-hover-bg);
 }
 
 /* Example: Clear Log Button */
@@ -153,6 +183,44 @@ button:hover {
 }
 #clearLogBtn:hover {
   background: var(--danger-hover-bg);
+}
+
+/* Example: Export Logs Button */
+#exportLogsBtn {
+  background: var(--export-logs-bg);
+}
+#exportLogsBtn:hover {
+  background: var(--export-logs-hover-bg);
+}
+
+/* Example: Check Updates Button */
+#checkUpdatesBtn {
+  background: var(--check-updates-bg);
+}
+#checkUpdatesBtn:hover {
+  background: var(--check-updates-hover-bg);
+}
+
+/* Specific Buttons */
+#activityLogBtn {
+  background: var(--activity-log-bg);
+}
+#activityLogBtn:hover {
+  background: var(--activity-log-hover-bg);
+}
+
+#debugLogBtn {
+  background: var(--debug-log-bg);
+}
+#debugLogBtn:hover {
+  background: var(--debug-log-hover-bg);
+}
+
+#errorLogsBtn {
+  background: var(--error-log-bg);
+}
+#errorLogsBtn:hover {
+  background: var(--error-log-hover-bg);
 }
 
 /* ============================= */
