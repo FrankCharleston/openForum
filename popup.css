@@ -9,7 +9,7 @@ body {
   overflow: hidden; /* Prevent scroll bar */
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 500px; /* Increased height */
 }
 
 header, footer {
@@ -78,6 +78,18 @@ button {
 
 #clearLogBtn:hover {
   background: #c82333;
+  transform: scale(1.05);
+}
+
+/* Export Logs Button */
+#exportLogsBtn {
+  background: #28a745;
+  color: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#exportLogsBtn:hover {
+  background: #218838;
   transform: scale(1.05);
 }
 
