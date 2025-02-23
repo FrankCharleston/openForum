@@ -15,8 +15,7 @@
     "https://*/*"
   ],
   "background": {
-    "service_worker": "lib/background.js",
-    "type": "module"
+    "service_worker": "lib/background.js"
   },
   "content_scripts": [
     {
