@@ -11,9 +11,6 @@
     "tabs",
     "clipboardWrite",
     "clipboardRead",
-    "http://*/*",
-    "https://*/*",
-    "chrome-extension://kfloemnlnidejafkidccggfjilnkaoml/*"
   ],
   "host_permissions": [
     "http://*/*",
