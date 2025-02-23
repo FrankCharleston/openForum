@@ -102,7 +102,10 @@
     .input-group input {
       flex: 1;
     }
-    .input-group button {
+    .input-group .toggle-passphrase {
+      background: none;
+      border: none;
+      cursor: pointer;
       margin-left: 10px;
     }
     .header {
@@ -115,25 +118,33 @@
       border: none;
       cursor: pointer;
     }
+    .settings-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <header class="header">
     <h1>🔐 OpenForum</h1>
-    <button id="openSettingsBtn" title="Open Settings">⚙</button>
+    <button id="openSettingsBtn" class="settings-button" title="Open Settings">⚙</button>
   </header>
   <main class="container">
     <!-- Text to Encrypt/Decrypt -->
     <textarea 
       id="textInput" 
-      rows="5"
+      rows="10"
       placeholder="Enter text to encrypt or decrypt...">
     </textarea>
 
     <!-- Passphrase + Toggle Visibility -->
     <div class="input-group">
       <input type="password" id="passphrase" placeholder="Enter passphrase" />
-      <button id="togglePassphrase" title="Show/Hide Passphrase" style="background-color: #FFD700;">👁</button>
+      <button id="togglePassphrase" class="toggle-passphrase" title="Show/Hide Passphrase">👁</button>
     </div>
 
     <!-- Encrypt/Decrypt Buttons -->
@@ -145,7 +156,7 @@
     <!-- Output & Copy -->
     <textarea 
       id="output" 
-      rows="5"
+      rows="10"
       readonly 
       placeholder="Your result will appear here...">
     </textarea>
