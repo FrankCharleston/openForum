@@ -10,7 +10,7 @@
     "activeTab",
     "tabs",
     "clipboardWrite",
-    "clipboardRead",
+    "clipboardRead"
   ],
   "host_permissions": [
     "http://*/*",
