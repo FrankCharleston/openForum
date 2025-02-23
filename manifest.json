@@ -21,7 +21,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["<all_urls>"],
       "js": ["lib/content_script.js", "lib/crypto-js.min.js"]
     }
   ],
@@ -48,7 +48,7 @@
         "assets/icon-green-128.png",
         "lib/crypto-js.min.js"
       ],
-      "matches": ["http://*/*", "https://*/*"]
+      "matches": ["<all_urls>"],
     }
   ],
   "icons": {

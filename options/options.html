@@ -4,55 +4,25 @@
   <meta charset="UTF-8">
   <title>OpenForum Options</title>
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="options.js" defer></script>
 </head>
 <body>
   <header>
     <h1>OpenForum Options</h1>
   </header>
-  <main class="options-container">
+  <main>
     <label for="autoDecrypt">Auto Decrypt:</label>
     <select id="autoDecrypt">
       <option value="true">Enabled</option>
       <option value="false">Disabled</option>
     </select>
 
-    <div id="defaultPassphraseContainer" class="hidden">
-      <label for="defaultPassphrase">Default Passphrase:</label>
-      <input type="password" id="defaultPassphrase" placeholder="Enter passphrase">
-      <button id="toggleDefaultPassphrase">👁</button>
-    </div>
-
-    <label for="theme">Theme:</label>
-    <select id="theme">
-      <option value="system">System Default</option>
-      <option value="light">Light Mode</option>
-      <option value="dark">Dark Mode</option>
-    </select>
-
-    <label for="debugMode">Debug Mode:</label>
-    <select id="debugMode">
-      <option value="true">Enabled</option>
-      <option value="false">Disabled</option>
-    </select>
+    <label for="defaultPassphrase">Default Passphrase:</label>
+    <input type="password" id="defaultPassphrase">
+    <button id="toggleDefaultPassphrase">👁</button>
 
     <button id="saveSettings">Save Settings</button>
-
-    <h2>Logs</h2>
-    <button id="activityLogBtn">Activity Log</button>
-    <div id="activityLog" class="log-container hidden"></div>
-
-    <button id="debugLogBtn">Debug Log</button>
-    <div id="debugLog" class="log-container hidden"></div>
-
-    <button id="errorLogsBtn">Clear Error Logs</button>
-    <div id="errorLogs" class="log-container"></div>
-
-    <button id="exportLogsBtn">Export Logs</button>
-    <button id="checkUpdatesBtn">Check for Updates</button>
   </main>
-  <footer>
-    <p>OpenForum &copy; 2025</p>
-  </footer>
+  <script src="../lib/crypto-js.min.js"></script>
+  <script src="options.js"></script>
 </body>
 </html>

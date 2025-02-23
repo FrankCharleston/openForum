@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>OpenForum Popup</title>
+  <title>OpenForum</title>
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="popup.js" defer></script>
 </head>
 <body>
   <header>
@@ -12,43 +11,14 @@
     <button id="settingsButton">Settings</button>
     <button id="darkModeToggle">Dark Mode</button>
     <button id="helpButton">Help</button>
-    <button id="backButton" style="display: none;">Back</button>
   </header>
-  <main class="container popup-page">
-    <div id="popupContent">
-      <!-- Popup content -->
-      <div class="input-group">
-        <input type="password" id="password" placeholder="Enter your password" value="">
-        <button id="togglePassword" class="icon-button">
-          <i id="togglePasswordIcon" class="fa fa-eye"></i>
-        </button>
-      </div>
-    </div>
-    <iframe id="optionsFrame" src="../options/options.html" style="display: none;"></iframe>
-    <div id="helpContent" style="display: none;">
-      <h2>Help</h2>
-      <p>Here you can find information about how to use the extension.</p>
-    </div>
-    <div id="feedbackContent" style="display: none;">
-      <h2>Feedback</h2>
-      <form id="feedbackForm">
-        <label for="feedbackText">Your Feedback:</label>
-        <textarea id="feedbackText" rows="4" cols="50"></textarea>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-    <div id="themeContent" style="display: none;">
-      <h2>Choose Theme</h2>
-      <select id="themeSelector">
-        <option value="default">Default</option>
-        <option value="dark">Dark</option>
-        <option value="light">Light</option>
-      </select>
-    </div>
-    <!-- Log Container -->
-    <div id="logContainer">
-      <ul id="logList"></ul>
-    </div>
+  <main>
+    <input type="password" id="password" placeholder="Enter your password">
+    <button id="togglePassword">👁</button>
+    <textarea id="textInput" placeholder="Enter text..."></textarea>
+    <button id="encryptBtn">Encrypt</button>
+    <button id="decryptBtn">Decrypt</button>
+    <textarea id="output" readonly></textarea>
   </main>
   <footer>
     <button id="copyBtn">Copy</button>
@@ -57,6 +27,9 @@
     <button id="clearLogBtn">Clear Log</button>
     <button id="openOptions">Options</button>
   </footer>
-  <div id="statusMessage"></div>
+
+  <!-- Load CryptoJS -->
+  <script src="../lib/crypto-js.min.js"></script>
+  <script src="popup.js"></script>
 </body>
 </html>
