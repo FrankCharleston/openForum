@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>OpenForum</title>
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="../lib/crypto-js.min.js"></script>
+  <script defer src="popup.js"></script>
 </head>
 <body>
 
@@ -12,19 +14,21 @@
     <button id="settingsBtn" class="icon-button">⚙️</button>
   </div>
 
-  <div class="passphrase-container">
-    <input id="passphrase" class="passphrase-input" type="password" placeholder="Enter passphrase..." />
-    <button id="togglePassphrase" class="icon-button">👁️</button>
+  <div class="input-group">
+    <input id="textInput" type="text" placeholder="Enter text..." />
   </div>
 
-  <input id="textInput" type="text" placeholder="Enter text..." />
+  <div class="passphrase-container">
+    <input id="passphrase" class="passphrase-input" type="password" placeholder="Enter passphrase..." />
+    <button id="togglePassphrase" class="eye-button">👁️</button>
+  </div>
 
-  <button id="encryptBtn">🔒 Encrypt</button>
-  <button id="decryptBtn">🔓 Decrypt</button>
+  <button id="encryptBtn" class="action-btn">🔒 Encrypt</button>
+  <button id="decryptBtn" class="action-btn">🔓 Decrypt</button>
 
-  <textarea id="output" readonly></textarea>
+  <textarea id="output" placeholder="Encrypted/Decrypted text will appear here"></textarea>
 
-  <button id="copyBtn">📋 Copy</button>
+  <button id="copyBtn" class="action-btn">📋 Copy</button>
 
   <div id="logContainer" class="log-container"></div>
 
@@ -32,6 +36,5 @@
     <p>🔐 Securely encrypted with OpenForum</p>
   </footer>
 
-  <script src="popup.js"></script>
 </body>
 </html>

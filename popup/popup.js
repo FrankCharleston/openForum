@@ -1,16 +1,17 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await loadCryptoJS();
   initializePopup();
+  applyTheme();  // Ensure the correct theme is applied on load
 });
 
 // 📝 Log messages in popup UI
-function logMessage(message) {
+function logMessage(message, type = "info") {
   const logContainer = document.getElementById("logContainer");
   if (!logContainer) return;
-  
+
   const logEntry = document.createElement("div");
   logEntry.textContent = `📌 ${message}`;
-  logEntry.className = "log-entry";
+  logEntry.className = `log-entry ${type}`;
   logContainer.appendChild(logEntry);
   logContainer.scrollTop = logContainer.scrollHeight;
 }
@@ -22,7 +23,7 @@ async function loadCryptoJS() {
       const script = document.createElement("script");
       script.src = chrome.runtime.getURL("lib/crypto-js.min.js");
       script.onload = () => {
-        logMessage("✅ CryptoJS loaded in popup.");
+        logMessage("✅ CryptoJS loaded in popup.", "success");
         resolve();
       };
       document.head.appendChild(script);
@@ -42,11 +43,10 @@ function initializePopup() {
   const output = document.getElementById("output");
   const togglePassphraseBtn = document.getElementById("togglePassphrase");
   const settingsBtn = document.getElementById("settingsBtn");
-  const logContainer = document.getElementById("logContainer");
 
-  if (!encryptBtn || !decryptBtn || !copyBtn || !passphraseInput || !textInput || !output || !togglePassphraseBtn || !settingsBtn || !logContainer) {
+  if (!encryptBtn || !decryptBtn || !copyBtn || !passphraseInput || !textInput || !output || !togglePassphraseBtn || !settingsBtn) {
     console.error("❌ Missing one or more elements in popup.html.");
-    logMessage("❌ Error: UI elements missing. Please check popup.html.");
+    logMessage("❌ Error: UI elements missing. Please check popup.html.", "error");
     return;
   }
 
@@ -65,13 +65,13 @@ function initializePopup() {
   copyBtn.addEventListener("click", () => {
     if (!output.value.trim()) return;
     navigator.clipboard.writeText(output.value + "\n\n🔐 Securely encrypted with OpenForum")
-      .then(() => logMessage("📋 Copied to clipboard!"))
-      .catch(() => logMessage("❌ Copy failed."));
+      .then(() => logMessage("📋 Copied to clipboard!", "success"))
+      .catch(() => logMessage("❌ Copy failed.", "error"));
   });
 
   function processText(mode) {
     if (!textInput.value.trim() || !passphraseInput.value.trim()) {
-      logMessage("⚠️ Enter text & passphrase.");
+      logMessage("⚠️ Enter text & passphrase.", "warning");
       return;
     }
     const text = textInput.value.trim();
@@ -91,8 +91,22 @@ function initializePopup() {
       return decrypted || "❌ Decryption failed.";
     } catch (error) {
       console.error("Decryption failed:", error);
-      logMessage("❌ Decryption failed.");
+      logMessage("❌ Decryption failed.", "error");
       return "❌ Decryption failed.";
     }
   }
+}
+
+// 🎨 Apply Theme Settings
+function applyTheme() {
+  chrome.storage.local.get("theme", (data) => {
+    let theme = data.theme || "system";
+    if (theme === "system") {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      theme = prefersDark ? "dark" : "light";
+    }
+    document.body.classList.toggle("dark-mode", theme === "dark");
+    document.body.classList.toggle("light-mode", theme === "light");
+    logMessage(`🎨 Theme applied: ${theme}`);
+  });
 }
