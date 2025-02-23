@@ -123,6 +123,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
 });
 
 function updateIcon(autoDecryptEnabled) {
-  const iconPath = autoDecryptEnabled ? "icon-enabled.png" : "icon.png";
+  const iconPath = autoDecryptEnabled ? "assets/icon-enabled.png" : "assets/icon.png";
   chrome.action.setIcon({ path: iconPath });
 }
