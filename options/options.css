@@ -1,0 +1,7 @@
+#logContainer {
+  padding: 16px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  max-height: 400px;
+  overflow-y: auto;
+}
