@@ -124,5 +124,10 @@ chrome.storage.onChanged.addListener((changes, area) => {
 
 function updateIcon(autoDecryptEnabled) {
   const iconPath = autoDecryptEnabled ? "assets/icon-enabled.png" : "assets/icon.png";
-  chrome.action.setIcon({ path: iconPath });
+  console.log("Setting icon to:", iconPath);
+  chrome.action.setIcon({ path: iconPath }, () => {
+    if (chrome.runtime.lastError) {
+      console.error("Error setting icon:", chrome.runtime.lastError);
+    }
+  });
 }
