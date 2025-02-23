@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OpenForum Options</title>
   <!-- Reference your external CSS -->
   <link rel="stylesheet" href="css/styles.css">
@@ -14,63 +15,65 @@
     <h1>⚙ OpenForum Options</h1>
   </header>
 
-  <main class="container">
-    <!-- Left column: General Settings -->
-    <div class="column">
-      <h2>Settings</h2>
+  <main>
+    <div class="container">
+      <!-- Left column: General Settings -->
+      <div class="column">
+        <h2>Settings</h2>
 
-      <label for="autoDecrypt">Auto Decrypt:</label>
-      <select id="autoDecrypt">
-        <option value="true">Enabled</option>
-        <option value="false">Disabled</option>
-      </select>
+        <label for="autoDecrypt">Auto Decrypt:</label>
+        <select id="autoDecrypt">
+          <option value="true">Enabled</option>
+          <option value="false">Disabled</option>
+        </select>
 
-      <label for="defaultPassphrase">Default Passphrase (right click/on page load):</label>
-      <div class="passphrase-container">
-        <input type="password" id="defaultPassphrase" placeholder="Enter default passphrase">
-        <button id="toggleDefaultPassphrase" title="Show/Hide Passphrase">👁</button>
+        <label for="defaultPassphrase">Default Passphrase (right click/on page load):</label>
+        <div class="passphrase-container">
+          <input type="password" id="defaultPassphrase" placeholder="Enter default passphrase">
+          <button id="toggleDefaultPassphrase" title="Show/Hide Passphrase">👁</button>
+        </div>
+
+        <label for="theme">Theme:</label>
+        <select id="theme">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="system">System</option>
+        </select>
+
+        <label for="debugMode">Debug Mode:</label>
+        <select id="debugMode">
+          <option value="true">Enabled</option>
+          <option value="false">Disabled</option>
+        </select>
+
+        <button id="saveSettings">Save Settings</button>
       </div>
 
-      <label for="theme">Theme:</label>
-      <select id="theme">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="system">System</option>
-      </select>
+      <!-- Right column: single buttons + log containers -->
+      <div class="column">
+        <!-- Activity Log -->
+        <button id="activityLogBtn">Clear Activity Log 🗑</button>
+        <div id="activityLog"></div>
 
-      <label for="debugMode">Debug Mode:</label>
-      <select id="debugMode">
-        <option value="true">Enabled</option>
-        <option value="false">Disabled</option>
-      </select>
+        <!-- Debug Log -->
+        <button id="debugLogBtn">Clear Debug Log 🗑</button>
+        <div id="debugLog"></div>
 
-      <button id="saveSettings">Save Settings</button>
-    </div>
+        <!-- Error Logs -->
+        <button id="errorLogsBtn">Clear Error Logs 🗑</button>
+        <div id="errorLogs"></div>
 
-    <!-- Right column: single buttons + log containers -->
-    <div class="column">
-      <!-- Activity Log -->
-      <button id="activityLogBtn">Clear Activity Log 🗑</button>
-      <div id="activityLog"></div>
+        <!-- Export Logs -->
+        <button id="exportLogsBtn">Export extension Logs 📦</button>
 
-      <!-- Debug Log -->
-      <button id="debugLogBtn">Clear Debug Log 🗑</button>
-      <div id="debugLog"></div>
-
-      <!-- Error Logs -->
-      <button id="errorLogsBtn">Clear Error Logs 🗑</button>
-      <div id="errorLogs"></div>
-
-      <!-- Export Logs -->
-      <button id="exportLogsBtn">Export extension Logs 📦</button>
-
-      <!-- Check for Updates -->
-      <button id="checkUpdatesBtn">Check for openForum latest release 🔄</button>
+        <!-- Check for Updates -->
+        <button id="checkUpdatesBtn">Check for openForum latest release 🔄</button>
+      </div>
     </div>
   </main>
 
   <footer>
-    <p>OpenForum © 2025 | <a href="https://github.com/FrankCharleston/openForum#readme" target="_blank">README</a></p>
+    <p>&copy; 2023 OpenForum | <a href="https://github.com/FrankCharleston/openForum#readme" target="_blank">README</a></p>
   </footer>
 </body>
 </html>
