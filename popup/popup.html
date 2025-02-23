@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>OpenForum Popup</title>
-  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="popup.js" defer></script>
 </head>
 <body>
   <header>
@@ -15,7 +16,7 @@
   </header>
   <main>
     <div id="popupContent">
-      <!-- Existing popup content goes here -->
+      <!-- Popup content -->
       <input type="password" id="password" placeholder="Enter your password" value="">
       <button id="togglePassword">
         <i id="togglePasswordIcon" class="fa fa-eye"></i>
@@ -25,7 +26,6 @@
     <div id="helpContent" style="display: none;">
       <h2>Help</h2>
       <p>Here you can find information about how to use the extension.</p>
-      <!-- Add more help content as needed -->
     </div>
     <div id="feedbackContent" style="display: none;">
       <h2>Feedback</h2>
@@ -43,13 +43,18 @@
         <option value="light">Light</option>
       </select>
     </div>
+    <!-- Log Container: logList will be created here if missing -->
+    <div id="logContainer">
+      <ul id="logList"></ul>
+    </div>
   </main>
   <footer>
     <button id="togglePassword">Toggle Password</button>
-    <button id="copyButton">Copy</button>
+    <button id="copyBtn">Copy</button>
     <button id="feedbackButton">Feedback</button>
     <button id="themeButton">Themes</button>
   </footer>
-  <script src="popup.js"></script>
+  <!-- Optionally include a status message element -->
+  <div id="statusMessage" style="display: none;"></div>
 </body>
 </html>
