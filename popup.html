@@ -16,7 +16,7 @@
   <header>
     <h1>🔐 OpenForum</h1>
     <!-- Settings button -->
-    <button id="openSettingsBtn" title="Open Settings">⚙</button>
+    <button id="openSettingsBtn" title="Open Settings" class="settings-btn">⚙</button>
   </header>
 
   <main class="container">
@@ -27,18 +27,19 @@
     </textarea>
 
     <!-- Passphrase -->
-    <input
-      type="password"
-      id="passphrase"
-      placeholder="Enter passphrase"
-    />
-
-    <!-- Show/Hide Passphrase -->
-    <button
-      id="togglePassphrase"
-      title="Show/Hide Passphrase">
-      👁
-    </button>
+    <div class="passphrase-container">
+      <input
+        type="password"
+        id="passphrase"
+        placeholder="Enter passphrase"
+      />
+      <!-- Show/Hide Passphrase -->
+      <button
+        id="togglePassphrase"
+        title="Show/Hide Passphrase">
+        👁
+      </button>
+    </div>
 
     <!-- Encrypt/Decrypt Buttons -->
     <div class="button-group">

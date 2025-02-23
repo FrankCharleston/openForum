@@ -240,6 +240,28 @@ button:hover {
   background: var(--copy-hover-bg);
 }
 
+/* Settings Button */
+.settings-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background: var(--settings-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background var(--transition-speed), transform var(--transition-speed);
+}
+
+.settings-btn:hover {
+  background: var(--settings-hover-bg);
+  transform: scale(1.1);
+}
+
 /* ============================= */
 /*        STATUS & LOG LIST      */
 /* ============================= */

@@ -80,10 +80,11 @@ body {
   padding: 0;
   background: var(--bg-color);
   color: var(--text-color);
-  width: 320vh; /* The default width of your extension options */
+  width: 100vw; /* Dynamic width to match the browser's width */
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden; /* Prevent vertical scroll bar in small extension window */
   transition: background var(--transition-speed), color var(--transition-speed);
 }
@@ -104,7 +105,8 @@ footer p {
 
 /* The main container that holds content */
 .container {
-  flex: 1;
+  width: 90%;
+  max-width: 600px;
   background: var(--card-bg);
   padding: 15px;
   border-radius: 12px;
@@ -120,8 +122,8 @@ textarea,
 input,
 select {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 8px;
+  margin: 8px 0;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
@@ -146,13 +148,45 @@ label {
   text-align: left;
 }
 
+/* Passphrase Container */
+.passphrase-container {
+  display: flex;
+  align-items: center;
+}
+
+.passphrase-container input {
+  flex: 1;
+}
+
+.passphrase-container button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background var(--transition-speed), transform var(--transition-speed);
+}
+
+.passphrase-container button:hover {
+  background: var(--button-hover-bg);
+  transform: scale(1.1);
+}
+
 /* ============================= */
 /*          BUTTON STYLES        */
 /* ============================= */
 button {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 10px;
+  margin: 8px 0;
   border: none;
   border-radius: 8px;
   cursor: pointer;
