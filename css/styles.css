@@ -109,7 +109,8 @@ body {
   width: 400px; /* Set fixed size for the popup window */
   height: 600px; /* Set fixed size for the popup window */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   overflow: hidden; /* Prevent vertical scrollbar in small extension window */
   transition: background var(--transition-speed), color var(--transition-speed);
