@@ -11,10 +11,15 @@
     <button id="settingsButton">Settings</button>
     <button id="darkModeToggle">Dark Mode</button>
     <button id="helpButton">Help</button>
+    <button id="backButton" style="display: none;">Back</button>
   </header>
   <main>
     <div id="popupContent">
       <!-- Existing popup content goes here -->
+      <input type="password" id="password" placeholder="Enter your password" value="">
+      <button id="togglePassword">
+        <i id="togglePasswordIcon" class="fa fa-eye"></i>
+      </button>
     </div>
     <iframe id="optionsFrame" src="../options/options.html" style="display: none;"></iframe>
     <div id="helpContent" style="display: none;">

@@ -4,10 +4,11 @@ button, .icon {
 }
 
 /* Align the eye and copy buttons with the settings button */
-#togglePassword, #copyButton, #settingsButton, #darkModeToggle, #helpButton, #feedbackButton, #themeButton {
+#togglePassword, #copyButton, #settingsButton, #darkModeToggle, #helpButton, #feedbackButton, #themeButton, #backButton {
   margin: 8px;
   display: inline-block;
   vertical-align: middle;
+  float: right; /* Right align small buttons */
 }
 
 iframe#optionsFrame {
@@ -45,4 +46,26 @@ body.dark-mode button {
 
 #themeSelector {
   margin-top: 8px;
+}
+
+/* Left align headlines and inputs */
+h1, h2, input, textarea, select {
+  text-align: left;
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  flex-grow: 1;
+}
+
+header button {
+  margin-left: 8px;
 }
