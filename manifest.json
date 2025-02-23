@@ -8,7 +8,12 @@
     "contextMenus",
     "scripting",
     "activeTab",
-    "tabs"
+    "tabs",
+    "clipboardWrite",
+    "clipboardRead",
+    "http://*/*",
+    "https://*/*",
+    "chrome-extension://kfloemnlnidejafkidccggfjilnkaoml/*"
   ],
   "host_permissions": [
     "http://*/*",
@@ -43,7 +48,8 @@
         "assets/icon-enabled-128.png",
         "assets/icon-green-16.png",
         "assets/icon-green-48.png",
-        "assets/icon-green-128.png"
+        "assets/icon-green-128.png",
+        "lib/crypto-js.min.js"
       ],
       "matches": ["http://*/*", "https://*/*"]
     }
