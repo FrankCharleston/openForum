@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const textInput = document.getElementById("textInput");
   const output = document.getElementById("output");
   const statusMessage = document.getElementById("statusMessage");
+  const clearLogBtn = document.getElementById("clearLogBtn");
+  const openOptions = document.getElementById("openOptions");
+  const openErrors = document.getElementById("openErrors");
 
   // ✅ Check if CryptoJS is Loaded
   if (typeof CryptoJS === "undefined") {
@@ -37,6 +40,22 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(() => {
         showStatus("❌ Failed to copy.", "error");
       });
+  });
+
+  // Clear log
+  clearLogBtn.addEventListener("click", () => {
+    document.getElementById("logList").innerHTML = "";
+    showStatus("🗑 Log cleared.", "success");
+  });
+
+  // Open options page
+  openOptions.addEventListener("click", () => {
+    chrome.runtime.openOptionsPage();
+  });
+
+  // Open errors page
+  openErrors.addEventListener("click", () => {
+    window.open(chrome.runtime.getURL("errors.html"));
   });
 
   // Main logic for encryption/decryption
@@ -90,5 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function showStatus(message, type) {
     statusMessage.textContent = message;
     statusMessage.className = type;
+    setTimeout(() => {
+      statusMessage.textContent = "";
+      statusMessage.className = "";
+    }, 3000);
   }
 });
