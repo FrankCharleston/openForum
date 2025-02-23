@@ -37,6 +37,9 @@
       padding: 8px;
       box-sizing: border-box;
     }
+    textarea {
+      resize: none;
+    }
     button {
       background-color: #4CAF50;
       color: white;
@@ -85,23 +88,52 @@
     .log-entry.success {
       background-color: #d4edda;
     }
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+    .button-group button {
+      flex: 1;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+    .input-group input {
+      flex: 1;
+    }
+    .input-group button {
+      margin-left: 10px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <header>
+  <header class="header">
     <h1>🔐 OpenForum</h1>
+    <button id="openSettingsBtn" title="Open Settings">⚙</button>
   </header>
   <main class="container">
     <!-- Text to Encrypt/Decrypt -->
     <textarea 
       id="textInput" 
+      rows="5"
       placeholder="Enter text to encrypt or decrypt...">
     </textarea>
 
     <!-- Passphrase + Toggle Visibility -->
     <div class="input-group">
       <input type="password" id="passphrase" placeholder="Enter passphrase" />
-      <button id="togglePassphrase" title="Show/Hide Passphrase" style="background-color: yellow;">👁</button>
+      <button id="togglePassphrase" title="Show/Hide Passphrase" style="background-color: #FFD700;">👁</button>
     </div>
 
     <!-- Encrypt/Decrypt Buttons -->
@@ -113,10 +145,11 @@
     <!-- Output & Copy -->
     <textarea 
       id="output" 
+      rows="5"
       readonly 
       placeholder="Your result will appear here...">
     </textarea>
-    <button id="copyBtn" title="Copy to Clipboard">📋 Copy</button>
+    <button id="copyBtn" title="Copy to Clipboard" style="width: 100%;">📋 Copy</button>
 
     <!-- Loading Spinner -->
     <div id="loadingSpinner" class="spinner hidden"></div>
@@ -124,12 +157,11 @@
     <!-- Status/Activity Log -->
     <p id="statusMessage"></p>
     <div id="logContainer">
-      <h3>🔍 Activity Log</h3>
-      <ul id="logList"></ul>
-      <div class="button-group">
-        <button id="clearLogBtn">🗑 Clear Log</button>
-        <button id="openSettingsBtn">⚙ Open Settings</button>
+      <div class="header">
+        <h3>🔍 Activity Log</h3>
+        <button id="clearLogBtn" title="Clear Log">🗑</button>
       </div>
+      <ul id="logList" style="height: 100px; overflow-y: auto;"></ul>
     </div>
   </main>
   <footer>
