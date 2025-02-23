@@ -12,7 +12,7 @@
 </head>
 <body class="options-page">
   <header>
-    <h1>⚙ OpenForum Options</h1>
+    <h1>OpenForum Options</h1>
   </header>
 
   <main>
@@ -27,10 +27,10 @@
           <option value="false">Disabled</option>
         </select>
 
-        <label for="defaultPassphrase">Default Passphrase (right click/on page load):</label>
+        <label for="defaultPassphrase">Default Passphrase:</label>
         <div class="passphrase-container">
           <input type="password" id="defaultPassphrase" placeholder="Enter default passphrase">
-          <button id="toggleDefaultPassphrase" title="Show/Hide Passphrase">👁</button>
+          <button id="toggleDefaultPassphrase" class="icon-button">👁</button>
         </div>
 
         <label for="theme">Theme:</label>
@@ -52,22 +52,19 @@
       <!-- Right column: single buttons + log containers -->
       <div class="column">
         <!-- Activity Log -->
-        <button id="activityLogBtn">Clear Activity Log 🗑</button>
         <div id="activityLog"></div>
 
         <!-- Debug Log -->
-        <button id="debugLogBtn">Clear Debug Log 🗑</button>
         <div id="debugLog"></div>
 
         <!-- Error Logs -->
-        <button id="errorLogsBtn">Clear Error Logs 🗑</button>
         <div id="errorLogs"></div>
 
         <!-- Export Logs -->
-        <button id="exportLogsBtn">Export extension Logs 📦</button>
+        <button id="exportLogsBtn">Export Logs 📦</button>
 
         <!-- Check for Updates -->
-        <button id="checkUpdatesBtn">Check for openForum latest release 🔄</button>
+        <button id="checkUpdatesBtn">Check for Updates 🔄</button>
       </div>
     </div>
   </main>

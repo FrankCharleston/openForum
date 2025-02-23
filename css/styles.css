@@ -5,8 +5,7 @@
   /* Light Mode (Default) */
   --bg-color: #f9f9f9;
   --text-color: #333;
-  /* Keep brand-like header color but lighten if desired */
-  --header-bg: #0056b3; /* "On brand" darker blue */
+  --header-bg: #004080; /* Slightly different hue */
   --header-text: #fff;
   --card-bg: #fff;
   --border-color: #ccc;
@@ -53,7 +52,7 @@
 body.dark-mode {
   --bg-color: #121212;
   --text-color: #e0e0e0;
-  --header-bg: #2c3e50; /* Midnight Blue */
+  --header-bg: #002040; /* Slightly different hue */
   --header-text: #fff;
   --card-bg: #1e1e1e;
   --border-color: #555;
@@ -396,4 +395,27 @@ button {
 }
 .log-entry.success {
   color: #2e7d32;
+}
+
+/* Small Icon Buttons */
+.icon-button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background: var(--toggle-passphrase-btn-bg);
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background var(--transition-speed), transform var(--transition-speed);
+}
+
+.icon-button:hover {
+  background: var(--toggle-passphrase-btn-hover-bg);
+  transform: scale(1.1);
 }

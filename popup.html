@@ -14,55 +14,55 @@
   <script src="lib/popup.js" defer></script>
 </head>
 <body class="popup-page">
-  <!-- Combined into one .container -->
-  <div class="container">
+  <header>
     <h1>🔐 OpenForum</h1>
+    <button id="openOptions" class="icon-button">⚙</button>
+  </header>
+  
+  <main>
+    <div class="container">
+      <textarea 
+        id="textInput" 
+        placeholder="Enter text to encrypt or decrypt...">
+      </textarea>
 
-    <!-- Text to Encrypt/Decrypt -->
-    <textarea 
-      id="textInput" 
-      placeholder="Enter text to encrypt or decrypt...">
-    </textarea>
-
-    <!-- Passphrase + Toggle Visibility -->
-    <div class="input-group">
-      <input type="password" id="passphrase" placeholder="Enter passphrase" />
-      <button id="togglePassphrase">👁</button>
-    </div>
-
-    <!-- Encrypt/Decrypt Buttons -->
-    <div class="button-group">
-      <button id="encryptBtn">Encrypt</button>
-      <button id="decryptBtn">Decrypt</button>
-    </div>
-
-    <!-- Output & Copy -->
-    <textarea 
-      id="output" 
-      readonly 
-      placeholder="Your result will appear here...">
-    </textarea>
-    <button id="copyBtn">📋 Copy</button>
-
-    <!-- Status/Activity Log and Additional Buttons -->
-    <p id="statusMessage"></p>
-    <div class="button-group">
-      <button id="clearLogBtn">🗑 Clear Log</button>
-      <button id="openOptions">⚙ Open Settings</button>
-    </div>
-
-    <!-- Logs / Footer -->
-    <div class="logs">
-      <div id="activityLog" class="log hidden">
-        <!-- Activity log content -->
+      <!-- Passphrase + Toggle Visibility -->
+      <div class="input-group">
+        <input type="password" id="passphrase" placeholder="Enter passphrase" />
+        <button id="togglePassphrase" class="icon-button">👁</button>
       </div>
-      <div id="errorLogs" class="log hidden">
-        <!-- Error log content -->
+
+      <!-- Encrypt/Decrypt Buttons -->
+      <div class="button-group">
+        <button id="encryptBtn">Encrypt</button>
+        <button id="decryptBtn">Decrypt</button>
+      </div>
+
+      <!-- Output & Copy -->
+      <textarea 
+        id="output" 
+        readonly 
+        placeholder="Your result will appear here...">
+      </textarea>
+      <button id="copyBtn" class="icon-button">📋</button>
+
+      <!-- Status/Activity Log and Additional Buttons -->
+      <p id="statusMessage"></p>
+
+      <!-- Logs / Footer -->
+      <div class="logs">
+        <div id="activityLog" class="log hidden">
+          <!-- Activity log content -->
+        </div>
+        <div id="errorLogs" class="log hidden">
+          <!-- Error log content -->
+        </div>
       </div>
     </div>
-  </div>
+  </main>
+  
+  <footer>
+    <p>OpenForum © 2025 | <a href="https://github.com/FrankCharleston/openForum#readme" target="_blank">README</a></p>
+  </footer>
 </body>
-<footer class="footer">
-  <p>OpenForum © 2025 | <a href="https://github.com/FrankCharleston/openForum#readme" target="_blank">README</a></p>
-</footer>
 </html>
