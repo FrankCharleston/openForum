@@ -1,7 +1,7 @@
 {
   "name": "openforum",
   "version": "1.0.0",
-  "description": "OpenForum",
+  "description": "OpenForum - A simple forum encryption/decryption extension",
   "main": "content_scripts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/FrankCharleston/openForum.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["encryption", "decryption", "forum", "extension"],
+  "author": "Frank Charleston",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/FrankCharleston/openForum/issues"

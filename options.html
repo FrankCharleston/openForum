@@ -3,36 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenForum Settings</title>
+  <title>OpenForum Options</title>
   <link rel="stylesheet" href="options.css" />
-  <script src="options.js" defer></script>
+  <script src="lib/options.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <h1>🔧 OpenForum Settings</h1>
-
-    <!-- Auto-Decryption Toggle -->
+  <header>
+    <h1>OpenForum Settings</h1>
+  </header>
+  <main class="container">
     <label>
       <input type="checkbox" id="autoDecryptToggle" />
       Enable Auto-Decryption
     </label>
-
-    <!-- Default Passphrase -->
-    <label for="customPassphrase">Default Decryption Passphrase:</label>
-    <input
-      type="text"
-      id="customPassphrase"
-      placeholder="Leave empty if you prefer a manual passphrase"
-    />
-
-    <!-- Debug Mode Toggle -->
+    <div id="autoDecryptIndicator">🔒</div>
+    <label>
+      Default Passphrase:
+      <input type="text" id="customPassphrase" />
+    </label>
     <label>
       <input type="checkbox" id="debugToggle" />
-      Enable Debug Logging
+      Enable Debug Mode
     </label>
-
     <button id="saveSettings">Save Settings</button>
     <p id="statusMessage"></p>
-  </div>
+    <h3>Activity Log</h3>
+    <ul id="logList"></ul>
+    <button id="clearLogBtn">Clear Log</button>
+  </main>
+  <footer>
+    <p>OpenForum © 2025</p>
+  </footer>
 </body>
 </html>
