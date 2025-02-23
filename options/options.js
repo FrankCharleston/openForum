@@ -1,11 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
   const logContainer = document.getElementById('logContainer');
+  let logList = document.getElementById('logList');
+
+  if (!logList) {
+    logList = document.createElement('div');
+    logList.id = 'logList';
+    logContainer.appendChild(logList);
+  }
 
   chrome.runtime.onMessage.addListener((message) => {
     if (message.log) {
       const logEntry = document.createElement('div');
       logEntry.textContent = message.log;
-      logContainer.appendChild(logEntry);
+      logList.appendChild(logEntry);
     }
   });
 
@@ -15,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
       data.logs.forEach(log => {
         const logEntry = document.createElement('div');
         logEntry.textContent = log;
-        logContainer.appendChild(logEntry);
+        logList.appendChild(logEntry);
       });
     }
   });

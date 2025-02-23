@@ -88,4 +88,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const theme = event.target.value;
     document.body.className = theme;
   });
+
+  function decryptText(text, passphrase) {
+    try {
+      const encRegex = /ENC\[(.*?)\]/g;
+      let replacedText = text;
+      let match;
+      let foundEncrypted = false;
+
+      while ((match = encRegex.exec(text)) !== null) {
+        const encryptedChunk = match[1];
+        const bytes = CryptoJS.AES.decrypt(encryptedChunk, passphrase);
+        const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+
+        if (decrypted) {
+          foundEncrypted = true;
+          replacedText = replacedText.replace(`ENC[${encryptedChunk}]`, `🔓${decrypted}`);
+        } else {
+          console.error("Decryption failed for chunk:", encryptedChunk);
+        }
+      }
+
+      return foundEncrypted ? replacedText : "❌ Decryption failed. Incorrect passphrase or corrupted data.";
+    } catch (error) {
+      console.error("Decryption failed:", error);
+      showStatus("❌ Decryption failed.", "error");
+      saveErrorLog("Decryption failed: " + error.message);
+      return "❌ Decryption failed. Incorrect passphrase or corrupted data.";
+    }
+  }
 });
