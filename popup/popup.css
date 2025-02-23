@@ -2,3 +2,8 @@ button, .icon {
   margin: 8px;
   border: 2px solid transparent;
 }
+
+/* Align the eye and copy buttons with the settings button */
+#togglePassword, #copyButton {
+  margin: 8px;
+}
