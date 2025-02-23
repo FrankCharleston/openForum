@@ -6,11 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const textInput = document.getElementById("textInput");
   const output = document.getElementById("output");
   const togglePassphraseBtn = document.getElementById("togglePassphrase");
+  const settingsBtn = document.getElementById("settingsBtn");
 
-  if (!encryptBtn || !decryptBtn || !copyBtn || !passphraseInput || !textInput || !output) {
-    console.error("❌ Missing one or more elements in popup.html.");
-    return;
-  }
+  // Open options page when clicking settings button
+  settingsBtn.addEventListener("click", () => {
+    chrome.runtime.openOptionsPage();
+  });
+
+  // Fetch autoDecrypt and default passphrase settings
+  chrome.storage.local.get(["autoDecrypt", "defaultPassphrase"], (data) => {
+    if (data.autoDecrypt) {
+      passphraseInput.value = data.defaultPassphrase || "default";
+    }
+  });
 
   encryptBtn.addEventListener("click", () => processText("encrypt"));
   decryptBtn.addEventListener("click", () => processText("decrypt"));

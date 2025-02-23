@@ -7,12 +7,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   chrome.storage.local.get(["autoDecrypt", "defaultPassphrase", "theme"], (data) => {
     autoDecrypt.value = data.autoDecrypt ? "true" : "false";
-    defaultPassphrase.value = data.defaultPassphrase || "default";
+    defaultPassphrase.value = data.defaultPassphrase || "";
     themeSelect.value = data.theme || "system";
   });
 
   autoDecrypt.addEventListener("change", () => {
     chrome.storage.local.set({ autoDecrypt: autoDecrypt.value === "true" });
+  });
+
+  defaultPassphrase.addEventListener("input", () => {
+    chrome.storage.local.set({ defaultPassphrase: defaultPassphrase.value });
   });
 
   themeSelect.addEventListener("change", () => {
