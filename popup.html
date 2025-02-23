@@ -17,7 +17,8 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 10px;
-      background-color: #f4f4f4;
+      background-color: #f0f0f0;
+      color: #333;
       overflow: hidden; /* Prevent scrolling */
     }
     .container {
@@ -31,25 +32,31 @@
     label {
       display: block;
       margin-bottom: 5px;
+      color: #555;
     }
     input[type="text"], input[type="password"], select, textarea {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      color: #333;
     }
     textarea {
       resize: none;
     }
     button {
-      background-color: #4CAF50;
+      background-color: #ffb3ba;
       color: white;
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     button:hover {
-      background-color: #45a049;
+      background-color: #ffdfba;
     }
     .tooltip {
       position: relative;
@@ -107,6 +114,7 @@
       border: none;
       cursor: pointer;
       margin-left: 10px;
+      color: #ffb3ba;
     }
     .header {
       display: flex;
@@ -117,6 +125,7 @@
       background: none;
       border: none;
       cursor: pointer;
+      color: #ffb3ba;
     }
     .settings-button {
       position: absolute;
@@ -125,6 +134,7 @@
       background: none;
       border: none;
       cursor: pointer;
+      color: #ffb3ba;
     }
   </style>
 </head>
@@ -149,8 +159,8 @@
 
     <!-- Encrypt/Decrypt Buttons -->
     <div class="button-group">
-      <button id="encryptBtn" style="background-color: #4CAF50;">Encrypt</button>
-      <button id="decryptBtn" style="background-color: #f44336;">Decrypt</button>
+      <button id="encryptBtn" style="background-color: #ffb3ba;">Encrypt</button>
+      <button id="decryptBtn" style="background-color: #ffdfba;">Decrypt</button>
     </div>
 
     <!-- Output & Copy -->
@@ -160,7 +170,7 @@
       readonly 
       placeholder="Your result will appear here...">
     </textarea>
-    <button id="copyBtn" title="Copy to Clipboard" style="width: 100%;">📋 Copy</button>
+    <button id="copyBtn" title="Copy to Clipboard" style="width: 100%; background-color: #bae1ff;">📋 Copy</button>
 
     <!-- Loading Spinner -->
     <div id="loadingSpinner" class="spinner hidden"></div>
