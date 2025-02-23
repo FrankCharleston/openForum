@@ -14,13 +14,15 @@
     <button id="helpButton">Help</button>
     <button id="backButton" style="display: none;">Back</button>
   </header>
-  <main>
+  <main class="container popup-page">
     <div id="popupContent">
       <!-- Popup content -->
-      <input type="password" id="password" placeholder="Enter your password" value="">
-      <button id="togglePassword">
-        <i id="togglePasswordIcon" class="fa fa-eye"></i>
-      </button>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Enter your password" value="">
+        <button id="togglePassword" class="icon-button">
+          <i id="togglePasswordIcon" class="fa fa-eye"></i>
+        </button>
+      </div>
     </div>
     <iframe id="optionsFrame" src="../options/options.html" style="display: none;"></iframe>
     <div id="helpContent" style="display: none;">
@@ -43,18 +45,18 @@
         <option value="light">Light</option>
       </select>
     </div>
-    <!-- Log Container: logList will be created here if missing -->
+    <!-- Log Container -->
     <div id="logContainer">
       <ul id="logList"></ul>
     </div>
   </main>
   <footer>
-    <button id="togglePassword">Toggle Password</button>
     <button id="copyBtn">Copy</button>
     <button id="feedbackButton">Feedback</button>
     <button id="themeButton">Themes</button>
+    <button id="clearLogBtn">Clear Log</button>
+    <button id="openOptions">Options</button>
   </footer>
-  <!-- Optionally include a status message element -->
-  <div id="statusMessage" style="display: none;"></div>
+  <div id="statusMessage"></div>
 </body>
 </html>

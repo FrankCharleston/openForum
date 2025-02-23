@@ -5,11 +5,11 @@
   /* Light Mode (Default) */
   --bg-color: #f9f9f9;
   --text-color: #333;
-  --header-bg: #004080; /* Slightly different hue */
+  --header-bg: #004080;
   --header-text: #fff;
   --card-bg: #fff;
   --border-color: #ccc;
-  --footer-bg: rgba(0, 64, 128, 0.8); /* Translucent header color */
+  --footer-bg: rgba(0, 64, 128, 0.8);
   --footer-text: #fff;
 
   /* Pastel Button Colors */
@@ -50,18 +50,17 @@
   --check-updates-hover-bg: #aaf0f0;
 }
 
-/* Dark Mode overrides: add .dark-mode to <body> */
+/* Dark Mode overrides */
 body.dark-mode {
   --bg-color: #121212;
   --text-color: #e0e0e0;
-  --header-bg: #002040; /* Slightly different hue */
+  --header-bg: #002040;
   --header-text: #fff;
   --card-bg: #1e1e1e;
   --border-color: #555;
-  --footer-bg: rgba(0, 32, 64, 0.8); /* Translucent header color */
+  --footer-bg: rgba(0, 32, 64, 0.8);
   --footer-text: #e0e0e0;
 
-  /* Keep pastel-ish but slightly more saturated for contrast in dark mode */
   --encrypt-btn-bg: #b8e6b8; 
   --encrypt-btn-hover-bg: #a3daa3;
 
@@ -106,17 +105,16 @@ body {
   padding: 0;
   background: var(--bg-color);
   color: var(--text-color);
-  width: 400px; /* Set fixed size for the popup window */
-  height: 600px; /* Set fixed size for the popup window */
+  width: 400px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  overflow: hidden; /* Prevent vertical scrollbar in small extension window */
+  overflow: hidden;
   transition: background var(--transition-speed), color var(--transition-speed);
 }
 
-/* Set minimum size for the options page */
 body.options-page {
   min-width: 400px;
   min-height: 600px;
@@ -131,7 +129,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%; /* Ensure header and footer span the full width */
+  width: 100%;
   transition: background var(--transition-speed), color var(--transition-speed);
 }
 
@@ -145,31 +143,26 @@ footer {
   color: var(--footer-text);
 }
 
-/* The main container that holds content */
-
+/* Main Container */
 .container {
-  width: 100%; /* Ensure the container fits within the fixed size */
-  height: auto; /* Allow the container to adjust height based on content */
+  width: 100%;
   background: var(--card-bg);
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   transition: background var(--transition-speed), color var(--transition-speed);
-  margin: 0 auto; /* Center the container */
+  margin: 0 auto;
 }
 
 .popup-page {
   display: flex;
   flex-direction: column;
-  /* This ensures everything is stacked top to bottom */
   align-items: stretch;
-  /* If you want them to fill the full width */
   margin: 0;
   padding: 0;
 }
 
-/* Ensure the main container in options page takes full height */
 body.options-page .container {
   height: 100%;
   display: flex;
@@ -177,7 +170,6 @@ body.options-page .container {
   justify-content: space-between;
 }
 
-/* Ensure columns in options page are aligned properly */
 body.options-page .column {
   flex: 1;
   margin: 10px;
@@ -189,29 +181,25 @@ body.options-page .column {
 textarea,
 input,
 select {
-  width: calc(100% - 20px); /* Make input fields smaller */
+  width: calc(100% - 20px);
   padding: 8px;
-  margin: 8px 10px; /* Add margin to the right side */
+  margin: 8px 10px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
   box-sizing: border-box;
   background: var(--card-bg);
   color: var(--text-color);
-  transition: 
-    background var(--transition-speed), 
-    color var(--transition-speed), 
-    border var(--transition-speed);
+  transition: background var(--transition-speed), color var(--transition-speed), border var(--transition-speed);
 }
 
 textarea:focus,
 input:focus,
 select:focus {
   outline: none;
-  border-color: #aad4ff; /* Soft highlight on focus */
+  border-color: #aad4ff;
 }
 
-/* Labels */
 label {
   display: block;
   margin-bottom: 5px;
@@ -239,7 +227,6 @@ label {
   align-items: center;
   font-size: 18px;
   background: var(--toggle-passphrase-btn-bg);
-  /* If you want a consistent text color: */
   color: #333;
   border: none;
   border-radius: 5px;
@@ -256,9 +243,9 @@ label {
 /*          BUTTON STYLES        */
 /* ============================= */
 button {
-  width: calc(100% - 20px); /* Make buttons smaller */
+  width: calc(100% - 20px);
   padding: 10px;
-  margin: 8px 10px; /* Add margin to the right side */
+  margin: 8px 10px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -268,7 +255,6 @@ button {
   transition: background var(--transition-speed), transform var(--transition-speed);
 }
 
-/* Encrypt / Decrypt / Copy */
 #encryptBtn {
   background-color: var(--encrypt-btn-bg);
 }
@@ -290,7 +276,6 @@ button {
   background-color: var(--copy-btn-hover-bg);
 }
 
-/* Clear Log / Open Options */
 #clearLogBtn {
   background: var(--clear-log-btn-bg);
 }
@@ -305,7 +290,6 @@ button {
   background: var(--open-options-btn-hover-bg);
 }
 
-/* Activity / Debug / Error / Export / Check Updates */
 #activityLogBtn {
   background: var(--activity-log-bg);
 }
@@ -344,14 +328,12 @@ button {
 /* ============================= */
 /*          MISC ELEMENTS        */
 /* ============================= */
-/* Status Message */
 #statusMessage {
   margin-top: 10px;
   font-size: 14px;
   font-weight: bold;
 }
 
-/* Activity Log */
 #logList {
   max-height: 100px;
   overflow-y: auto;
@@ -362,18 +344,15 @@ button {
   background: var(--card-bg);
 }
 
-/* Ensure the log container is below the functions in popup */
 #logContainer {
   width: 100%;
   margin-top: 20px;
 }
 
-/* Each log entry */
 #logList li {
   margin-bottom: 5px;
 }
 
-/* Keyframes for potential animations (if needed) */
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -385,21 +364,17 @@ button {
   }
 }
 
-/* Hide elements with the .hidden class */
 .hidden {
   display: none;
 }
 
-/* Status message colors (for .error or .success) */
 .error {
-  color: #d93025; /* a slightly muted red for errors */
-  /* You can also do something like a pastel red background, etc. */
+  color: #d93025;
 }
 .success {
-  color: #2e7d32; /* a slightly muted green for success */
+  color: #2e7d32;
 }
 
-/* Optional: if you want logs in options page to have color-coded text */
 .log-entry.error {
   color: #d93025;
 }
@@ -407,7 +382,6 @@ button {
   color: #2e7d32;
 }
 
-/* Small Icon Buttons */
 .icon-button {
   width: 40px;
   height: 40px;
