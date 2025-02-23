@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OpenForum Popup</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>OpenForum</h1>
+    <button id="settingsButton">Settings</button>
+    <button id="darkModeToggle">Dark Mode</button>
+    <button id="helpButton">Help</button>
+  </header>
+  <main>
+    <div id="popupContent">
+      <!-- Existing popup content goes here -->
+    </div>
+    <iframe id="optionsFrame" src="../options/options.html" style="display: none;"></iframe>
+    <div id="helpContent" style="display: none;">
+      <h2>Help</h2>
+      <p>Here you can find information about how to use the extension.</p>
+      <!-- Add more help content as needed -->
+    </div>
+    <div id="feedbackContent" style="display: none;">
+      <h2>Feedback</h2>
+      <form id="feedbackForm">
+        <label for="feedbackText">Your Feedback:</label>
+        <textarea id="feedbackText" rows="4" cols="50"></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <div id="themeContent" style="display: none;">
+      <h2>Choose Theme</h2>
+      <select id="themeSelector">
+        <option value="default">Default</option>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </div>
+  </main>
+  <footer>
+    <button id="togglePassword">Toggle Password</button>
+    <button id="copyButton">Copy</button>
+    <button id="feedbackButton">Feedback</button>
+    <button id="themeButton">Themes</button>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>

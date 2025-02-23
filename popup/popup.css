@@ -4,6 +4,45 @@ button, .icon {
 }
 
 /* Align the eye and copy buttons with the settings button */
-#togglePassword, #copyButton {
+#togglePassword, #copyButton, #settingsButton, #darkModeToggle, #helpButton, #feedbackButton, #themeButton {
   margin: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+iframe#optionsFrame {
+  width: 100%;
+  height: calc(100vh - 100px); /* Adjust height to fit within the popup */
+  border: none;
+}
+
+#popupContent {
+  display: block;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode button {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+#helpContent, #feedbackContent, #themeContent {
+  padding: 16px;
+}
+
+#feedbackForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#feedbackForm textarea {
+  margin-bottom: 8px;
+}
+
+#themeSelector {
+  margin-top: 8px;
 }
