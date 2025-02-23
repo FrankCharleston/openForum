@@ -1,246 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>OpenForum Options</title>
-  <style>
-    /* 
-      LIGHT THEME (Default) 
-      Using CSS variables for easy theme switching
-    */
-    :root {
-      --bg-color: #f0f0f0;
-      --text-color: #333;
-      --column-bg-color: #fff;
-      --border-color: #ccc;
+  <!-- Reference your external options CSS -->
+  <link rel="stylesheet" href="options.css">
 
-      --btn-bg-color: #ffb3ba;
-      --btn-text-color: #fff;
-      --btn-hover-bg-color: #ffdfba;
-
-      --heading-color: #ffb3ba; /* For h2 headings in light mode */
-
-      --transition-speed: 0.3s;
-    }
-
-    /*
-      DARK THEME 
-      Override the same variables with “dark” values.
-      Just add .dark-mode to <body> to enable these.
-    */
-    body.dark-mode {
-      --bg-color: #1e1e1e;
-      --text-color: #f0f0f0;
-      --column-bg-color: #2d2d2d;
-      --border-color: #555;
-
-      --btn-bg-color: #3a3a3a;
-      --btn-text-color: #fff;
-      --btn-hover-bg-color: #5c5c5c;
-
-      --heading-color: #f48c8e; /* Slightly different accent for dark mode */
-    }
-
-    /* Global page styling */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color var(--transition-speed), color var(--transition-speed);
-    }
-
-    header h1 {
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-    }
-
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    /* Each column (settings and logs) */
-    .column {
-      flex: 1;
-      min-width: 300px;
-      background: var(--column-bg-color);
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform var(--transition-speed), background-color var(--transition-speed);
-    }
-    .column:hover {
-      transform: translateY(-5px);
-    }
-
-    /* Section headers with a small utility button next to them */
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0; /* Reset default margin on headings */
-      margin-bottom: 10px;
-    }
-
-    .section-header h2 {
-      font-size: 1.2rem;
-      color: var(--heading-color);
-      margin: 0;
-    }
-
-    /* Input groups & form elements */
-    .form-group {
-      margin-bottom: 15px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 500;
-    }
-    input[type="text"],
-    input[type="password"],
-    select {
-      width: 100%;
-      padding: 12px;
-      box-sizing: border-box;
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      background-color: var(--column-bg-color);
-      color: var(--text-color);
-      font-size: 1rem;
-      transition: border-color var(--transition-speed);
-    }
-    input[type="text"]:focus,
-    input[type="password"]:focus,
-    select:focus {
-      outline: none;
-      border-color: var(--btn-bg-color);
-    }
-
-    /* Buttons */
-    button {
-      background-color: var(--btn-bg-color);
-      color: var(--btn-text-color);
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color var(--transition-speed);
-    }
-    button:hover {
-      background-color: var(--btn-hover-bg-color);
-    }
-
-    /* Smaller utility buttons (for clearing logs, etc.) */
-    .small-btn {
-      padding: 6px 12px;
-      font-size: 0.85rem;
-      border-radius: 4px;
-      background-color: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-      transition: background-color var(--transition-speed), color var(--transition-speed);
-    }
-    .small-btn:hover {
-      background-color: var(--btn-hover-bg-color);
-      color: var(--btn-text-color);
-      border-color: var(--btn-hover-bg-color);
-    }
-
-    footer {
-      margin-top: 20px;
-      text-align: center;
-    }
-    footer p {
-      margin: 0;
-      font-size: 0.85rem;
-    }
-  </style>
-  <!-- Load your JS after the DOM is ready -->
+  <!-- Main options script -->
   <script src="lib/options.js" defer></script>
 </head>
-
-<!-- Toggle "dark-mode" on the body to see dark mode -->
 <body class="light-mode">
   <header>
     <h1>⚙ OpenForum Options</h1>
   </header>
 
   <main class="container">
-    <!-- GENERAL SETTINGS COLUMN -->
+    <!-- Left column: General Settings -->
     <div class="column">
-      <div class="section-header">
-        <h2>General Settings</h2>
-      </div>
-      <div class="form-group">
-        <label for="autoDecrypt">Auto Decrypt:</label>
-        <select id="autoDecrypt">
-          <option value="true">Enabled</option>
-          <option value="false">Disabled</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="defaultPassphrase">Default Passphrase:</label>
-        <input type="password" id="defaultPassphrase">
-      </div>
-      <div class="form-group">
-        <label for="theme">Theme:</label>
-        <select id="theme">
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-          <option value="system">System</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="debugMode">Debug Mode:</label>
-        <select id="debugMode">
-          <option value="true">Enabled</option>
-          <option value="false">Disabled</option>
-        </select>
-      </div>
+      <h2>General Settings</h2>
+
+      <label for="autoDecrypt">Auto Decrypt:</label>
+      <select id="autoDecrypt">
+        <option value="true">Enabled</option>
+        <option value="false">Disabled</option>
+      </select>
+
+      <label for="defaultPassphrase">Default Passphrase:</label>
+      <input
+        type="password"
+        id="defaultPassphrase"
+      />
+
+      <label for="theme">Theme:</label>
+      <select id="theme">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="system">System</option>
+      </select>
+
+      <label for="debugMode">Debug Mode:</label>
+      <select id="debugMode">
+        <option value="true">Enabled</option>
+        <option value="false">Disabled</option>
+      </select>
+
       <button id="saveSettings">Save Settings</button>
     </div>
 
-    <!-- LOGS & UTILITIES COLUMN -->
+    <!-- Right column: Combine headings & clear actions into single buttons -->
     <div class="column">
       <!-- Activity Log -->
-      <div class="section-header">
-        <h2>Activity Log</h2>
-        <button id="clearActivityLog" class="small-btn" title="Clear Activity Log">🗑</button>
-      </div>
+      <button id="activityLogBtn">Activity Log 🗑</button>
       <div id="activityLog"></div>
 
       <!-- Debug Log -->
-      <div class="section-header" style="margin-top: 20px;">
-        <h2>Debug Log</h2>
-        <button id="clearDebugLog" class="small-btn" title="Clear Debug Log">🗑</button>
-      </div>
+      <button id="debugLogBtn">Debug Log 🗑</button>
       <div id="debugLog"></div>
 
       <!-- Error Logs -->
-      <div class="section-header" style="margin-top: 20px;">
-        <h2>Error Logs</h2>
-        <button id="clearErrorLogs" class="small-btn" title="Clear Error Logs">🗑</button>
-      </div>
+      <button id="errorLogsBtn">Error Logs 🗑</button>
       <div id="errorLogs"></div>
 
       <!-- Export Logs -->
-      <div class="section-header" style="margin-top: 20px;">
-        <h2>Export Logs</h2>
-        <button id="exportLogsBtn" class="small-btn" title="Export Logs">📦</button>
-      </div>
+      <button id="exportLogsBtn">Export Logs 📦</button>
 
       <!-- Check for Updates -->
-      <div class="section-header" style="margin-top: 20px;">
-        <h2>Check for Updates</h2>
-        <button id="checkUpdatesBtn" class="small-btn" title="Check for Updates">🔄</button>
-      </div>
+      <button id="checkUpdatesBtn">Check for Updates 🔄</button>
     </div>
   </main>
 

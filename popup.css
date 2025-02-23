@@ -54,8 +54,8 @@ body {
   padding: 10px;
   background: var(--bg-color);
   color: var(--text-color);
-  width: 400px;  /* Popup width */
-  height: 400px; /* Popup height */
+  width: 800px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   transition: background var(--transition-speed), color var(--transition-speed);
