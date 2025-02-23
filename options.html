@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>OpenForum Options</title>
-  <!-- Reference your external options CSS -->
+  <!-- Reference your external CSS -->
   <link rel="stylesheet" href="css/options.css">
 
-  <!-- Main options script -->
+  <!-- Load the JS for options AFTER the DOM is parsed -->
   <script src="lib/options.js" defer></script>
 </head>
 <body class="light-mode">
@@ -47,7 +47,7 @@
       <button id="saveSettings">Save Settings</button>
     </div>
 
-    <!-- Right column: Combine headings & clear actions into single buttons -->
+    <!-- Right column: single buttons + log containers -->
     <div class="column">
       <!-- Activity Log -->
       <button id="activityLogBtn">Activity Log 🗑</button>
