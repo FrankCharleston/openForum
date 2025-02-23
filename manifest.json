@@ -40,7 +40,10 @@
         "assets/icon-128.png",
         "assets/icon-enabled-16.png",
         "assets/icon-enabled-48.png",
-        "assets/icon-enabled-128.png"
+        "assets/icon-enabled-128.png",
+        "assets/icon-green-16.png",
+        "assets/icon-green-48.png",
+        "assets/icon-green-128.png"
       ],
       "matches": ["http://*/*", "https://*/*"]
     }
