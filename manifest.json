@@ -11,14 +11,15 @@
     "tabs"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "http://*/*",
+    "https://*/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["http://*/*", "https://*/*"],
       "js": ["content_script.js", "crypto-js.min.js"]
     }
   ],
@@ -34,7 +35,7 @@
   "web_accessible_resources": [
     {
       "resources": ["icon.png"],
-      "matches": ["<all_urls>"]
+      "matches": ["http://*/*", "https://*/*"]
     }
   ],
   "icons": {
