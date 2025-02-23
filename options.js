@@ -1,37 +1,38 @@
-// options.js
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const autoDecryptToggle = document.getElementById("autoDecryptToggle");
-  const customPassphraseInput = document.getElementById("customPassphrase");
+  const customPassphrase = document.getElementById("customPassphrase");
   const debugToggle = document.getElementById("debugToggle");
-  const saveButton = document.getElementById("saveSettings");
+  const saveSettings = document.getElementById("saveSettings");
   const statusMessage = document.getElementById("statusMessage");
 
-  // Load current settings
+  // Load settings from storage and update UI
   chrome.storage.local.get(["autoDecrypt", "defaultPassphrase", "debugMode"], (data) => {
     autoDecryptToggle.checked = data.autoDecrypt || false;
-    customPassphraseInput.value = data.defaultPassphrase || "";
+    customPassphrase.value = data.defaultPassphrase || "";
     debugToggle.checked = data.debugMode || false;
   });
 
-  // Save settings
-  saveButton.addEventListener("click", () => {
+  // Save settings to storage
+  saveSettings.addEventListener("click", () => {
     const autoDecrypt = autoDecryptToggle.checked;
-    const defaultPassphrase = customPassphraseInput.value.trim();
+    const defaultPassphrase = customPassphrase.value.trim();
     const debugMode = debugToggle.checked;
 
-    chrome.storage.local.set({ autoDecrypt, defaultPassphrase, debugMode }, () => {
-      statusMessage.innerText = "✅ Settings saved!";
-      setTimeout(() => (statusMessage.innerText = ""), 2000);
-
-      // Optional: update extension badge
-      chrome.action.setBadgeText({ text: autoDecrypt ? "ON" : "OFF" });
-      chrome.action.setBadgeBackgroundColor({
-        color: autoDecrypt ? "#4CAF50" : "#F44336",
-      });
-
-      if (debugMode) {
-        console.log("[DEBUG] Debug mode enabled in extension settings.");
-      }
+    chrome.storage.local.set({
+      autoDecrypt,
+      defaultPassphrase,
+      debugMode
+    }, () => {
+      showStatus("Settings saved successfully!", "success");
     });
   });
+
+  function showStatus(message, type) {
+    statusMessage.textContent = message;
+    statusMessage.className = type;
+    setTimeout(() => {
+      statusMessage.textContent = "";
+      statusMessage.className = "";
+    }, 3000);
+  }
 });

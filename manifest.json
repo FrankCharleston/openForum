@@ -11,7 +11,7 @@
     "tabs"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "https://*.example.com/*"
   ],
 
   "background": {
@@ -20,7 +20,7 @@
 
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://*.example.com/*"],
       "js": ["content_script.js", "crypto-js.min.js"]
     }
   ],
@@ -39,7 +39,15 @@
   "web_accessible_resources": [
     {
       "resources": ["icon.png"],
-      "matches": ["<all_urls>"]
+      "matches": ["https://*.example.com/*"]
     }
-  ]
+  ],
+
+  "default_locale": "en",
+
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
 }

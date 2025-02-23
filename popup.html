@@ -1,57 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenForum Encryption</title>
-  <!-- Load the CSS for the popup -->
-  <link rel="stylesheet" href="popup.css" />
+name: Dependency Check
 
-  <!-- Load CryptoJS first, so it's available to popup.js -->
-  <script src="crypto-js.min.js"></script>
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Runs every Monday at 00:00 UTC
+  workflow_dispatch: # Allows manual triggering of the workflow
 
-  <!-- Defer loading of our main popup script -->
-  <script src="popup.js" defer></script>
-</head>
-<body>
-  <div class="container">
-    <h1>🔐 OpenForum</h1>
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
 
-    <!-- Text to Encrypt/Decrypt -->
-    <textarea 
-      id="textInput" 
-      placeholder="Enter text to encrypt or decrypt...">
-    </textarea>
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-    <!-- Passphrase + Toggle Visibility -->
-    <div class="input-group">
-      <input type="password" id="passphrase" placeholder="Enter passphrase" />
-      <button id="togglePassphrase">👁</button>
-    </div>
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
 
-    <!-- Encrypt/Decrypt Buttons -->
-    <div class="button-group">
-      <button id="encryptBtn">Encrypt</button>
-      <button id="decryptBtn">Decrypt</button>
-    </div>
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node_modules-
 
-    <!-- Output & Copy -->
-    <textarea 
-      id="output" 
-      readonly 
-      placeholder="Your result will appear here...">
-    </textarea>
-    <button id="copyBtn">📋 Copy</button>
-  </div>
+    - name: Install dependencies
+      run: npm install
 
-  <!-- Status/Activity Log -->
-  <p id="statusMessage"></p>
-  <div id="logContainer">
-    <h3>🔍 Activity Log</h3>
-    <ul id="logList"></ul>
-    <button id="clearLogBtn">🗑 Clear Log</button>
-    <button id="openOptions">⚙ Open Settings</button>
-    <button id="openErrors">🚨 View Errors</button>
-  </div>
-</body>
-</html>
+    - name: Check for outdated dependencies
+      run: npm outdated
+
+    - name: Create issue if dependencies are outdated
+      if: success() && steps.check-dependencies.outputs.outdated != ''
+      uses: peter-evans/create-issue-from-file@v3
+      with:
+        title: 'Outdated Dependencies Found'
+        content-filepath: ./outdated-dependencies.txt
+        labels: 'dependencies'name: Dependency Check
+
+        on:
+          schedule:
+            - cron: '0 0 * * 1' # Runs every Monday at 00:00 UTC
+          workflow_dispatch: # Allows manual triggering of the workflow
+        
+        jobs:
+          check-dependencies:
+            runs-on: ubuntu-latest
+        
+            steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+        
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                node-version: '18'
+        
+            - name: Cache node_modules
+              uses: actions/cache@v3
+              with:
+                path: node_modules
+                key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-node_modules-
+        
+            - name: Install dependencies
+              run: npm install
+        
+            - name: Check for outdated dependencies
+              run: npm outdated
+        
+            - name: Create issue if dependencies are outdated
+              if: success() && steps.check-dependencies.outputs.outdated != ''
+              uses: peter-evans/create-issue-from-file@v3
+              with:
+                title: 'Outdated Dependencies Found'
+                content-filepath: ./outdated-dependencies.txt
+                labels: 'dependencies'

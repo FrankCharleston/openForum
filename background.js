@@ -22,37 +22,31 @@ chrome.runtime.onInstalled.addListener(() => {
 // 2) Handle context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "encryptText") {
-    // Inject crypto-js then run encryption
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: tab.id },
-        files: ["crypto-js.min.js"]
-      },
-      () => {
-        chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          func: encryptSelectedText,
-          args: [info.selectionText]
-        });
-      }
-    );
+    injectAndExecuteScript(tab.id, encryptSelectedText, info.selectionText);
   } else if (info.menuItemId === "decryptText") {
-    // Inject crypto-js then run decryption
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: tab.id },
-        files: ["crypto-js.min.js"]
-      },
-      () => {
-        chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          func: decryptSelectedText,
-          args: [info.selectionText]
-        });
-      }
-    );
+    injectAndExecuteScript(tab.id, decryptSelectedText, info.selectionText);
   }
 });
+
+/**
+ * injectAndExecuteScript(tabId, func, args)
+ * Injects crypto-js and executes the given function with arguments
+ */
+function injectAndExecuteScript(tabId, func, args) {
+  chrome.scripting.executeScript(
+    {
+      target: { tabId: tabId },
+      files: ["crypto-js.min.js"]
+    },
+    () => {
+      chrome.scripting.executeScript({
+        target: { tabId: tabId },
+        func: func,
+        args: [args]
+      });
+    }
+  );
+}
 
 /**
  * encryptSelectedText(text)
@@ -72,7 +66,8 @@ function encryptSelectedText(text) {
 
   navigator.clipboard.writeText(formattedMessage).then(() => {
     alert("Encrypted text copied to clipboard.");
-  }).catch(() => {
+  }).catch((error) => {
+    console.error("Failed to copy encrypted text:", error);
     alert("Failed to copy encrypted text.");
   });
 }

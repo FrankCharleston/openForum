@@ -1,20 +1,21 @@
-// errors.js
-document.addEventListener("DOMContentLoaded", () => {
-  // Retrieve decryption errors from local storage
+document.addEventListener("DOMContentLoaded", function () {
+  const errorLog = document.getElementById("errorLog");
+  const clearErrors = document.getElementById("clearErrors");
+
+  // Load errors from storage and display them
   chrome.storage.local.get("decryptionErrors", (data) => {
-    const logElement = document.getElementById("errorLog");
     const errors = data.decryptionErrors || [];
-
     if (errors.length === 0) {
-      logElement.textContent = "No errors found.";
-      return;
+      errorLog.textContent = "No decryption errors found.";
+    } else {
+      errorLog.textContent = errors.map(error => `${error.timestamp}: ${error.error}`).join("\n");
     }
+  });
 
-    // Format each error entry. Example structure: { timestamp, error }
-    const formattedErrors = errors.map(err => {
-      return `[${err.timestamp}] ${err.error}`;
-    }).join("\n\n");
-
-    logElement.textContent = formattedErrors;
+  // Clear errors from storage
+  clearErrors.addEventListener("click", () => {
+    chrome.storage.local.set({ decryptionErrors: [] }, () => {
+      errorLog.textContent = "No decryption errors found.";
+    });
   });
 });
