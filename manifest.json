@@ -42,48 +42,4 @@
     "48": "icon.png",
     "128": "icon.png"
   }
-}{
-  "manifest_version": 3,
-  "name": "OpenForum",
-  "version": "1.3",
-  "description": "A simple forum encryption/decryption extension",
-  "permissions": [
-    "storage",
-    "contextMenus",
-    "scripting",
-    "activeTab",
-    "tabs"
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content_script.js", "crypto-js.min.js"]
-    }
-  ],
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon.png",
-      "48": "icon.png",
-      "128": "icon.png"
-    }
-  },
-  "options_page": "options.html",
-  "web_accessible_resources": [
-    {
-      "resources": ["icon.png"],
-      "matches": ["<all_urls>"]
-    }
-  ],
-  "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
-  }
 }
