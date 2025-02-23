@@ -4,195 +4,295 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OpenForum Encryption</title>
-  <!-- Load the CSS for the popup -->
-  <link rel="stylesheet" href="popup.css" />
+  <!-- Load your external CSS if desired -->
+  <!-- <link rel="stylesheet" href="popup.css" /> -->
 
   <!-- Load CryptoJS first, so it's available to popup.js -->
   <script src="lib/crypto-js.min.js"></script>
 
-  <!-- Defer loading of our main popup script -->
+  <!-- Defer loading of your main popup script -->
   <script src="lib/popup.js" defer></script>
+
   <style>
+    /* 
+      LIGHT THEME (Default) 
+      Use CSS variables so you can easily override them for dark mode. 
+    */
+    :root {
+      --bg-color: #f0f0f0;
+      --text-color: #333;
+      --input-bg-color: #fff;
+      --input-text-color: #333;
+      --border-color: #ccc;
+
+      --btn-bg-color: #ffb3ba;         /* Default button color */
+      --btn-text-color: #fff;
+      --btn-hover-bg-color: #ffdfba;   /* Lighter hover color */
+
+      --encrypt-bg-color: #b3ffba;     /* Specific to Encrypt button */
+      --encrypt-text-color: #333;
+      --decrypt-bg-color: #ffb3ba;     /* Specific to Decrypt button */
+      --decrypt-text-color: #333;
+
+      --header-text-color: #333;
+      --log-bg-color: #e0e0e0;
+      --log-error-bg-color: #f8d7da;
+      --log-success-bg-color: #d4edda;
+
+      --transition-speed: 0.3s;
+    }
+
+    /*
+      DARK THEME 
+      Override the same variables with “dark” values.
+      Just add .dark-mode to <body> to enable these.
+    */
+    body.dark-mode {
+      --bg-color: #1e1e1e;
+      --text-color: #f0f0f0;
+      --input-bg-color: #2d2d2d;
+      --input-text-color: #fff;
+      --border-color: #555;
+
+      --btn-bg-color: #3a3a3a;
+      --btn-text-color: #fff;
+      --btn-hover-bg-color: #5c5c5c;
+
+      --encrypt-bg-color: #4caf50;
+      --encrypt-text-color: #fff;
+      --decrypt-bg-color: #f44336;
+      --decrypt-text-color: #fff;
+
+      --header-text-color: #fff;
+      --log-bg-color: #333;
+      --log-error-bg-color: #662020;
+      --log-success-bg-color: #1f3d1f;
+    }
+
+    /* Global styling */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 10px;
-      background-color: #f0f0f0;
-      color: #333;
-      overflow: hidden; /* Prevent scrolling */
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow: hidden; /* Prevent scrolling in a small popup */
+      transition: background-color var(--transition-speed), color var(--transition-speed);
     }
+
     .container {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .form-group {
-      margin-bottom: 10px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      color: #555;
-    }
-    input[type="text"], input[type="password"], select, textarea {
+
+    /* Input fields */
+    input[type="text"],
+    input[type="password"],
+    select,
+    textarea {
       width: 100%;
-      padding: 10px;
       box-sizing: border-box;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border-color);
       border-radius: 4px;
-      background-color: #fff;
-      color: #333;
+      background-color: var(--input-bg-color);
+      color: var(--input-text-color);
+      padding: 12px;
+      font-size: 1rem;
     }
+
     textarea {
       resize: none;
+      min-height: 150px; /* Make textareas taller */
     }
+
+    /* Buttons */
     button {
-      background-color: #ffb3ba;
-      color: white;
+      background-color: var(--btn-bg-color);
+      color: var(--btn-text-color);
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-size: 1rem;
+      transition: background-color var(--transition-speed);
     }
     button:hover {
-      background-color: #ffdfba;
+      background-color: var(--btn-hover-bg-color);
     }
-    .tooltip {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
+
+    /* Encrypt/Decrypt have specific colors if desired */
+    #encryptBtn {
+      background-color: var(--encrypt-bg-color);
+      color: var(--encrypt-text-color);
     }
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 120px;
-      background-color: #555;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 5px 0;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%; /* Position the tooltip above the text */
-      left: 50%;
-      margin-left: -60px;
-      opacity: 0;
-      transition: opacity 0.3s;
+    #decryptBtn {
+      background-color: var(--decrypt-bg-color);
+      color: var(--decrypt-text-color);
     }
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
+
+    /* Small utility buttons (reveal passphrase, clear logs, etc.) */
+    .small-btn {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      background-color: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
     }
-    .log-entry {
-      background-color: #e0e0e0;
-      padding: 5px;
-      border-radius: 5px;
-      margin-bottom: 5px;
+    .small-btn:hover {
+      background-color: var(--btn-hover-bg-color);
+      color: var(--btn-text-color);
+      border-color: var(--btn-hover-bg-color);
     }
-    .log-entry.error {
-      background-color: #f8d7da;
-    }
-    .log-entry.success {
-      background-color: #d4edda;
-    }
-    .button-group {
-      display: flex;
-      gap: 10px;
-    }
-    .button-group button {
-      flex: 1;
-    }
-    .input-group {
-      display: flex;
-      align-items: center;
-    }
-    .input-group input {
-      flex: 1;
-    }
-    .input-group .toggle-passphrase {
-      background: none;
-      border: none;
-      cursor: pointer;
-      margin-left: 10px;
-      color: #333;
-    }
+
+    /* Header & settings icon */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .header button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #333;
+    .header h1 {
+      color: var(--header-text-color);
+      margin: 0;
+      font-size: 1.2rem;
     }
     .settings-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: none;
+      font-size: 1.2rem; /* Make the settings icon bigger */
+      width: 40px;
+      height: 40px;
+      background-color: transparent;
+      border: 2px solid var(--text-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      color: #333;
+      transition: background-color var(--transition-speed), border-color var(--transition-speed);
     }
-    .clear-log-button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #333;
-      padding: 0;
-      margin-left: 10px;
+    .settings-button:hover {
+      background-color: var(--btn-hover-bg-color);
+      border-color: var(--btn-hover-bg-color);
+      color: var(--btn-text-color);
+    }
+
+    /* Input group (passphrase + reveal icon) */
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .input-group input {
+      flex: 1;
+    }
+
+    /* Logs */
+    #logContainer {
+      margin-top: 10px;
+    }
+    #logList {
+      margin: 0;
+      padding: 5px;
+      list-style-type: none;
+      height: 100px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: var(--input-bg-color);
+      color: var(--input-text-color);
+    }
+    .log-entry {
+      background-color: var(--log-bg-color);
+      margin-bottom: 5px;
+      padding: 6px;
+      border-radius: 4px;
+      color: var(--text-color);
+    }
+    .log-entry.error {
+      background-color: var(--log-error-bg-color);
+    }
+    .log-entry.success {
+      background-color: var(--log-success-bg-color);
+    }
+
+    footer p {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.85rem;
     }
   </style>
 </head>
-<body>
+<!-- Toggle "dark-mode" on the body to see dark mode -->
+<body class="light-mode">
   <header class="header">
     <h1>🔐 OpenForum</h1>
     <button id="openSettingsBtn" class="settings-button" title="Open Settings">⚙</button>
   </header>
+
   <main class="container">
     <!-- Text to Encrypt/Decrypt -->
     <textarea 
       id="textInput" 
-      rows="12"
       placeholder="Enter text to encrypt or decrypt...">
     </textarea>
 
     <!-- Passphrase + Toggle Visibility -->
     <div class="input-group">
-      <input type="password" id="passphrase" placeholder="Enter passphrase" />
-      <button id="togglePassphrase" class="toggle-passphrase" title="Show/Hide Passphrase">👁</button>
+      <input 
+        type="password" 
+        id="passphrase" 
+        placeholder="Enter passphrase"
+      />
+      <button 
+        id="togglePassphrase" 
+        class="small-btn" 
+        title="Show/Hide Passphrase"
+      >
+        👁
+      </button>
     </div>
 
     <!-- Encrypt/Decrypt Buttons -->
-    <div class="button-group">
-      <button id="encryptBtn" style="background-color: #b3ffba;">Encrypt</button>
-      <button id="decryptBtn" style="background-color: #ffb3ba;">Decrypt</button>
+    <div class="button-group" style="display: flex; gap: 10px;">
+      <button id="encryptBtn">Encrypt</button>
+      <button id="decryptBtn">Decrypt</button>
     </div>
 
     <!-- Output & Copy -->
     <textarea 
       id="output" 
-      rows="12"
       readonly 
       placeholder="Your result will appear here...">
     </textarea>
-    <button id="copyBtn" title="Copy to Clipboard" style="width: 100%; background-color: #d3d3d3;">📋 Copy</button>
+    <button 
+      id="copyBtn" 
+      class="small-btn" 
+      title="Copy to Clipboard" 
+      style="width: 100%; margin-top: 5px;"
+    >
+      📋 Copy
+    </button>
 
-    <!-- Loading Spinner -->
+    <!-- Loading Spinner (hidden by default) -->
     <div id="loadingSpinner" class="spinner hidden"></div>
 
     <!-- Status/Activity Log -->
     <p id="statusMessage"></p>
     <div id="logContainer">
       <div class="header">
-        <h3>🔍 Activity Log</h3>
-        <button id="clearLogBtn" class="clear-log-button" title="Clear Log">🗑 Clear Logs</button>
+        <h3 style="margin: 0; color: var(--header-text-color);">🔍 Activity Log</h3>
+        <button 
+          id="clearLogBtn" 
+          class="small-btn" 
+          title="Clear Log"
+        >
+          🗑
+        </button>
       </div>
-      <ul id="logList" style="height: 100px; overflow-y: auto;"></ul>
+      <ul id="logList"></ul>
     </div>
   </main>
+
   <footer>
     <p>OpenForum © 2025</p>
   </footer>

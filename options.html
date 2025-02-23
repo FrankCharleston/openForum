@@ -5,76 +5,179 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OpenForum Options</title>
   <style>
+    /* 
+      LIGHT THEME (Default) 
+      Using CSS variables for easy theme switching
+    */
+    :root {
+      --bg-color: #f0f0f0;
+      --text-color: #333;
+      --column-bg-color: #fff;
+      --border-color: #ccc;
+
+      --btn-bg-color: #ffb3ba;
+      --btn-text-color: #fff;
+      --btn-hover-bg-color: #ffdfba;
+
+      --heading-color: #ffb3ba; /* For h2 headings in light mode */
+
+      --transition-speed: 0.3s;
+    }
+
+    /*
+      DARK THEME 
+      Override the same variables with “dark” values.
+      Just add .dark-mode to <body> to enable these.
+    */
+    body.dark-mode {
+      --bg-color: #1e1e1e;
+      --text-color: #f0f0f0;
+      --column-bg-color: #2d2d2d;
+      --border-color: #555;
+
+      --btn-bg-color: #3a3a3a;
+      --btn-text-color: #fff;
+      --btn-hover-bg-color: #5c5c5c;
+
+      --heading-color: #f48c8e; /* Slightly different accent for dark mode */
+    }
+
+    /* Global page styling */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
-      background-color: #f0f0f0;
-      color: #333;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
     }
+
+    header h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
     .container {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
     }
+
+    /* Each column (settings and logs) */
     .column {
       flex: 1;
       min-width: 300px;
-      background: white;
+      background: var(--column-bg-color);
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
+      transition: transform var(--transition-speed), background-color var(--transition-speed);
     }
     .column:hover {
       transform: translateY(-5px);
     }
-    h2 {
-      margin-top: 0;
-      color: #ffb3ba;
+
+    /* Section headers with a small utility button next to them */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0; /* Reset default margin on headings */
+      margin-bottom: 10px;
     }
+
+    .section-header h2 {
+      font-size: 1.2rem;
+      color: var(--heading-color);
+      margin: 0;
+    }
+
+    /* Input groups & form elements */
     .form-group {
       margin-bottom: 15px;
     }
     label {
       display: block;
       margin-bottom: 5px;
-      color: #555;
+      font-weight: 500;
     }
-    input[type="text"], input[type="password"], select {
+    input[type="text"],
+    input[type="password"],
+    select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       box-sizing: border-box;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border-color);
       border-radius: 4px;
-      background-color: #fff;
-      color: #333;
+      background-color: var(--column-bg-color);
+      color: var(--text-color);
+      font-size: 1rem;
+      transition: border-color var(--transition-speed);
     }
-    input[type="text"]:focus, input[type="password"]:focus, select:focus {
-      border-color: #ffb3ba;
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--btn-bg-color);
     }
+
+    /* Buttons */
     button {
-      background-color: #ffb3ba;
-      color: white;
+      background-color: var(--btn-bg-color);
+      color: var(--btn-text-color);
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-size: 1rem;
+      transition: background-color var(--transition-speed);
     }
     button:hover {
-      background-color: #ffdfba;
+      background-color: var(--btn-hover-bg-color);
+    }
+
+    /* Smaller utility buttons (for clearing logs, etc.) */
+    .small-btn {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      background-color: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+    .small-btn:hover {
+      background-color: var(--btn-hover-bg-color);
+      color: var(--btn-text-color);
+      border-color: var(--btn-hover-bg-color);
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+    }
+    footer p {
+      margin: 0;
+      font-size: 0.85rem;
     }
   </style>
+  <!-- Load your JS after the DOM is ready -->
   <script src="lib/options.js" defer></script>
 </head>
-<body>
+
+<!-- Toggle "dark-mode" on the body to see dark mode -->
+<body class="light-mode">
   <header>
     <h1>⚙ OpenForum Options</h1>
   </header>
+
   <main class="container">
+    <!-- GENERAL SETTINGS COLUMN -->
     <div class="column">
-      <h2>General Settings</h2>
+      <div class="section-header">
+        <h2>General Settings</h2>
+      </div>
       <div class="form-group">
         <label for="autoDecrypt">Auto Decrypt:</label>
         <select id="autoDecrypt">
@@ -103,26 +206,44 @@
       </div>
       <button id="saveSettings">Save Settings</button>
     </div>
+
+    <!-- LOGS & UTILITIES COLUMN -->
     <div class="column">
-      <h2>Activity Log</h2>
+      <!-- Activity Log -->
+      <div class="section-header">
+        <h2>Activity Log</h2>
+        <button id="clearActivityLog" class="small-btn" title="Clear Activity Log">🗑</button>
+      </div>
       <div id="activityLog"></div>
-      <button id="clearActivityLog">Clear Activity Log</button>
 
-      <h2>Debug Log</h2>
+      <!-- Debug Log -->
+      <div class="section-header" style="margin-top: 20px;">
+        <h2>Debug Log</h2>
+        <button id="clearDebugLog" class="small-btn" title="Clear Debug Log">🗑</button>
+      </div>
       <div id="debugLog"></div>
-      <button id="clearDebugLog">Clear Debug Log</button>
 
-      <h2>Error Logs</h2>
+      <!-- Error Logs -->
+      <div class="section-header" style="margin-top: 20px;">
+        <h2>Error Logs</h2>
+        <button id="clearErrorLogs" class="small-btn" title="Clear Error Logs">🗑</button>
+      </div>
       <div id="errorLogs"></div>
-      <button id="clearErrorLogs">Clear Error Logs</button>
 
-      <h2>Export Logs</h2>
-      <button id="exportLogsBtn">Export Logs</button>
+      <!-- Export Logs -->
+      <div class="section-header" style="margin-top: 20px;">
+        <h2>Export Logs</h2>
+        <button id="exportLogsBtn" class="small-btn" title="Export Logs">📦</button>
+      </div>
 
-      <h2>Check for Updates</h2>
-      <button id="checkUpdatesBtn" title="Check for Updates">🔄 Check for Updates</button>
+      <!-- Check for Updates -->
+      <div class="section-header" style="margin-top: 20px;">
+        <h2>Check for Updates</h2>
+        <button id="checkUpdatesBtn" class="small-btn" title="Check for Updates">🔄</button>
+      </div>
     </div>
   </main>
+
   <footer>
     <p>OpenForum © 2025</p>
   </footer>
