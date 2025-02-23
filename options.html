@@ -3,46 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenForum Settings</title>
+  <title>OpenForum Options</title>
   <link rel="stylesheet" href="options.css" />
-  <script src="options.js" defer></script>
+  <script src="lib/options.js" defer></script>
 </head>
 <body>
   <div class="container">
-    <h1>🔧 OpenForum Settings</h1>
-
-    <!-- Auto-Decryption Toggle -->
-    <div class="input-group">
-      <label for="autoDecryptToggle">Enable Auto-Decryption</label>
+    <h1>OpenForum Settings</h1>
+    <label>
       <input type="checkbox" id="autoDecryptToggle" />
-      <span id="autoDecryptIndicator">🔒</span>
-    </div>
-
-    <!-- Default Passphrase -->
-    <div class="input-group">
-      <label for="customPassphrase">Default Decryption Passphrase:</label>
-      <input
-        type="text"
-        id="customPassphrase"
-        placeholder="Leave empty if you prefer a manual passphrase"
-      />
-    </div>
-
-    <!-- Debug Mode Toggle -->
-    <div class="input-group">
-      <label for="debugToggle">Enable Debug Logging</label>
+      Enable Auto-Decryption
+    </label>
+    <div id="autoDecryptIndicator">🔒</div>
+    <label>
+      Default Passphrase:
+      <input type="text" id="customPassphrase" />
+    </label>
+    <label>
       <input type="checkbox" id="debugToggle" />
-    </div>
-
+      Enable Debug Mode
+    </label>
     <button id="saveSettings">Save Settings</button>
     <p id="statusMessage"></p>
-
-    <!-- Error/Log/Debug Section -->
-    <div class="log-container">
-      <h3>🔍 Logs</h3>
-      <pre id="logList"></pre>
-      <button id="clearLogBtn">🗑 Clear Logs</button>
-    </div>
+    <h3>Activity Log</h3>
+    <ul id="logList"></ul>
+    <button id="clearLogBtn">Clear Log</button>
   </div>
 </body>
 </html>

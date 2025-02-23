@@ -15,12 +15,12 @@
     "https://*/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "lib/background.js"
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["content_script.js", "lib/crypto-js.min.js"]
+      "js": ["lib/content_script.js", "lib/crypto-js.min.js"]
     }
   ],
   "action": {
