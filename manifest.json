@@ -22,7 +22,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["lib/content_script.js"]
+      "js": ["lib/content_script.js"],
+      "run_at": "document_end"
     }
   ],
   "action": {
@@ -33,7 +34,6 @@
       "128": "assets/icon-128.png"
     }
   },
-  "options_page": "options/options.html",
   "options_ui": {
     "page": "options/options.html",
     "open_in_tab": true
@@ -41,9 +41,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "assets/*.png",
         "lib/crypto-js.min.js",
-        "options/options.html"
+        "assets/*.png"
       ],
       "matches": ["<all_urls>"]
     }
@@ -54,6 +53,6 @@
     "128": "assets/icon-128.png"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self' 'unsafe-inline'; object-src 'self';"
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
   }
 }
