@@ -3,6 +3,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   initializePopup();
 });
 
+// 📝 Log messages in popup UI
+function logMessage(message) {
+  const logContainer = document.getElementById("logContainer");
+  if (!logContainer) return;
+  
+  const logEntry = document.createElement("div");
+  logEntry.textContent = `📌 ${message}`;
+  logEntry.className = "log-entry";
+  logContainer.appendChild(logEntry);
+  logContainer.scrollTop = logContainer.scrollHeight;
+}
+
 // 🛠 Ensure CryptoJS is loaded before usage
 async function loadCryptoJS() {
   return new Promise((resolve) => {
@@ -82,13 +94,5 @@ function initializePopup() {
       logMessage("❌ Decryption failed.");
       return "❌ Decryption failed.";
     }
-  }
-
-  function logMessage(message) {
-    const logEntry = document.createElement("div");
-    logEntry.textContent = `📌 ${message}`;
-    logEntry.className = "log-entry";
-    logContainer.appendChild(logEntry);
-    logContainer.scrollTop = logContainer.scrollHeight;
   }
 }
