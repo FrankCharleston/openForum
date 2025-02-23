@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const statusMessage = document.getElementById("statusMessage");
   const clearLogBtn = document.getElementById("clearLogBtn");
   const openOptions = document.getElementById("openOptions");
-  const openErrors = document.getElementById("openErrors");
 
   // ✅ Check if CryptoJS is Loaded
   if (typeof CryptoJS === "undefined") {
@@ -51,11 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Open options page
   openOptions.addEventListener("click", () => {
     chrome.runtime.openOptionsPage();
-  });
-
-  // Open errors page
-  openErrors.addEventListener("click", () => {
-    chrome.tabs.create({ url: chrome.runtime.getURL("errors.html") });
   });
 
   // Main logic for encryption/decryption
