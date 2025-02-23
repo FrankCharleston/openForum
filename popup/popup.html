@@ -14,16 +14,21 @@
   </header>
 
   <main>
-    <input type="password" id="passphrase" placeholder="Enter passphrase">
-    <button id="togglePassphrase" class="icon-button">👁️</button>
-
-    <textarea id="textInput" placeholder="Enter text..."></textarea>
-
-    <button id="encryptBtn">🔒 Encrypt</button>
-    <button id="decryptBtn">🔓 Decrypt</button>
-
+    <div class="input-group">
+      <input type="text" id="textInput" placeholder="Enter text...">
+    </div>
+    <input type="password" id="defaultPassphrase">
+    <button id="toggleDefaultPassphrase" class="icon-button">👁️</button>
+    <button id="encryptBtn" class="action-btn">
+      Encrypt <span class="btn-icon">🔒</span>
+    </button>
+    <button id="decryptBtn" class="action-btn">
+      Decrypt <span class="btn-icon">🔓</span>
+    </button>
     <textarea id="output" readonly></textarea>
-    <button id="copyBtn" class="icon-button">📋</button>
+    <button id="copyBtn" class="icon-btn">
+      Copy <span class="btn-icon">📋</span>
+    </button>
   </main>
 
   <footer>

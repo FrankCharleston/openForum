@@ -152,3 +152,23 @@ function initializePopup() {
     }
   }
 }
+
+function logMessage(message) {
+  const logContainer = document.getElementById("logContainer");
+  if (!logContainer) return;
+
+  const logEntry = document.createElement("div");
+  logEntry.textContent = `📌 ${message}`;
+  logEntry.className = "log-entry";
+  logContainer.appendChild(logEntry);
+
+  // Keep the log container scrollable
+  logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+copyBtn.addEventListener("click", () => {
+  if (!output.value.trim()) return;
+  navigator.clipboard.writeText(output.value + "\n\n🔐 Securely encrypted with OpenForum")
+    .then(() => logMessage("📋 Copied to clipboard!"))
+    .catch(() => logMessage("❌ Copy failed."));
+});
