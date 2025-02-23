@@ -114,7 +114,7 @@
       border: none;
       cursor: pointer;
       margin-left: 10px;
-      color: #ffb3ba;
+      color: #333;
     }
     .header {
       display: flex;
@@ -125,7 +125,7 @@
       background: none;
       border: none;
       cursor: pointer;
-      color: #ffb3ba;
+      color: #333;
     }
     .settings-button {
       position: absolute;
@@ -134,7 +134,15 @@
       background: none;
       border: none;
       cursor: pointer;
-      color: #ffb3ba;
+      color: #333;
+    }
+    .clear-log-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #333;
+      padding: 0;
+      margin-left: 10px;
     }
   </style>
 </head>
@@ -147,7 +155,7 @@
     <!-- Text to Encrypt/Decrypt -->
     <textarea 
       id="textInput" 
-      rows="10"
+      rows="12"
       placeholder="Enter text to encrypt or decrypt...">
     </textarea>
 
@@ -159,18 +167,18 @@
 
     <!-- Encrypt/Decrypt Buttons -->
     <div class="button-group">
-      <button id="encryptBtn" style="background-color: #ffb3ba;">Encrypt</button>
-      <button id="decryptBtn" style="background-color: #ffdfba;">Decrypt</button>
+      <button id="encryptBtn" style="background-color: #b3ffba;">Encrypt</button>
+      <button id="decryptBtn" style="background-color: #ffb3ba;">Decrypt</button>
     </div>
 
     <!-- Output & Copy -->
     <textarea 
       id="output" 
-      rows="10"
+      rows="12"
       readonly 
       placeholder="Your result will appear here...">
     </textarea>
-    <button id="copyBtn" title="Copy to Clipboard" style="width: 100%; background-color: #bae1ff;">📋 Copy</button>
+    <button id="copyBtn" title="Copy to Clipboard" style="width: 100%; background-color: #d3d3d3;">📋 Copy</button>
 
     <!-- Loading Spinner -->
     <div id="loadingSpinner" class="spinner hidden"></div>
@@ -180,7 +188,7 @@
     <div id="logContainer">
       <div class="header">
         <h3>🔍 Activity Log</h3>
-        <button id="clearLogBtn" title="Clear Log">🗑</button>
+        <button id="clearLogBtn" class="clear-log-button" title="Clear Log">🗑 Clear Logs</button>
       </div>
       <ul id="logList" style="height: 100px; overflow-y: auto;"></ul>
     </div>
