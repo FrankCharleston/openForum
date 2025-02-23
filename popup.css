@@ -2,8 +2,8 @@
 body {
   font-family: "Arial", sans-serif;
   text-align: center;
-  padding: 0;
-  background: #f9f9f9;
+  padding: 10px;
+  background: #f4f4f4;
   width: 400px; /* Increased width */
   margin: 0; /* Remove default body margin */
   overflow: hidden; /* Prevent scroll bar */
@@ -11,6 +11,16 @@ body {
   flex-direction: column;
   height: 400px; /* Reduced height */
   transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+body.light-mode {
+  background-color: #f4f4f4;
+  color: #000;
 }
 
 header, footer {
@@ -36,6 +46,9 @@ header h1, footer p {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   transition: background 0.3s, color 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* Text & Input Fields */
@@ -51,17 +64,29 @@ input {
   transition: background 0.3s, color 0.3s, border 0.3s;
 }
 
+input[type="text"], input[type="password"], select, textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
 /* Button */
 button {
   width: 100%;
-  padding: 12px;
+  padding: 10px 20px;
   margin: 10px 0;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s ease-in-out;
   font-weight: bold;
+  background-color: #4CAF50;
+  color: white;
+}
+
+button:hover {
+  background-color: #45a049;
 }
 
 /* Save Button */
@@ -138,7 +163,7 @@ button {
 /* Additional Options */
 label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-size: 14px;
   text-align: left;
 }

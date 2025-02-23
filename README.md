@@ -82,6 +82,16 @@ OpenForum is a browser extension that allows users to **encrypt and decrypt text
 - The extension can attempt to **decrypt content automatically** using a saved passphrase or the dynamic user ID of the comment author (Reddit only).
 - **Toggle Auto-Decryption** via **Options Page**.
 
+### **🔹 Error Handling**
+- Errors encountered during decryption are logged locally.
+- View logged errors by clicking the **"🚨 View Errors"** button in the popup.
+- Errors include timestamps and error messages for troubleshooting.
+
+---
+
+## **🔗 Repository**
+- [OpenForum GitHub Repository](https://github.com/FrankCharleston/openForum)
+
 ---
 💡 Future Improvements
 🎨 Better UI/UX for the popup window.
