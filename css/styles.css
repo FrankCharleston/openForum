@@ -1,4 +1,4 @@
-/* ============================= */
+/* ============================= */ 
 /*         CSS VARIABLES         */
 /* ============================= */
 :root {
@@ -12,45 +12,25 @@
   --footer-bg: rgba(0, 64, 128, 0.8);
   --footer-text: #fff;
 
-  /* Pastel Button Colors */
-  --encrypt-btn-bg: #b8e6b8; 
-  --encrypt-btn-hover-bg: #a3daa3;
-
+  /* Button Colors */
+  --encrypt-btn-bg: #b8e6b8;
   --decrypt-btn-bg: #f7b3ad;
-  --decrypt-btn-hover-bg: #f5a8a0;
-
   --copy-btn-bg: #b8daf9;
-  --copy-btn-hover-bg: #a8d1f7;
-
   --toggle-passphrase-btn-bg: #fff7c2;
-  --toggle-passphrase-btn-hover-bg: #fff4b0;
-
   --clear-log-btn-bg: #f1c6c6;
-  --clear-log-btn-hover-bg: #e4a2a2;
-
   --open-options-btn-bg: #ffdaa8;
-  --open-options-btn-hover-bg: #ffd1a3;
+
+  /* Activity / Debug / Error / Export Logs */
+  --activity-log-bg: #c4f1f9;
+  --debug-log-bg: #ffd2e8;
+  --error-log-bg: #ffc2b3;
+  --export-logs-bg: #c4f0c4;
+  --check-updates-bg: #bdf3f3;
 
   --transition-speed: 0.3s;
-
-  /* Activity / Debug / Error / Export / Updates in Pastel */
-  --activity-log-bg: #c4f1f9; 
-  --activity-log-hover-bg: #aaf0f9;
-
-  --debug-log-bg: #ffd2e8; 
-  --debug-log-hover-bg: #ffcce3;
-
-  --error-log-bg: #ffc2b3; 
-  --error-log-hover-bg: #ffb19e;
-
-  --export-logs-bg: #c4f0c4; 
-  --export-logs-hover-bg: #b3e2b3;
-
-  --check-updates-bg: #bdf3f3; 
-  --check-updates-hover-bg: #aaf0f0;
 }
 
-/* Dark Mode overrides */
+/* Dark Mode */
 body.dark-mode {
   --bg-color: #121212;
   --text-color: #e0e0e0;
@@ -60,39 +40,6 @@ body.dark-mode {
   --border-color: #555;
   --footer-bg: rgba(0, 32, 64, 0.8);
   --footer-text: #e0e0e0;
-
-  --encrypt-btn-bg: #b8e6b8; 
-  --encrypt-btn-hover-bg: #a3daa3;
-
-  --decrypt-btn-bg: #f7b3ad;
-  --decrypt-btn-hover-bg: #f5a8a0;
-
-  --copy-btn-bg: #b8daf9;
-  --copy-btn-hover-bg: #a8d1f7;
-
-  --toggle-passphrase-btn-bg: #fff7c2;
-  --toggle-passphrase-btn-hover-bg: #fff4b0;
-
-  --clear-log-btn-bg: #f1c6c6;
-  --clear-log-btn-hover-bg: #e4a2a2;
-
-  --open-options-btn-bg: #ffdaa8;
-  --open-options-btn-hover-bg: #ffd1a3;
-
-  --activity-log-bg: #c4f1f9; 
-  --activity-log-hover-bg: #aaf0f9;
-
-  --debug-log-bg: #ffd2e8; 
-  --debug-log-hover-bg: #ffcce3;
-
-  --error-log-bg: #ffc2b3; 
-  --error-log-hover-bg: #ffb19e;
-
-  --export-logs-bg: #c4f0c4; 
-  --export-logs-hover-bg: #b3e2b3;
-
-  --check-updates-bg: #bdf3f3; 
-  --check-updates-hover-bg: #aaf0f0;
 }
 
 /* ============================= */
@@ -101,8 +48,6 @@ body.dark-mode {
 body {
   font-family: "Arial", sans-serif;
   text-align: center;
-  margin: 0;
-  padding: 0;
   background: var(--bg-color);
   color: var(--text-color);
   width: 400px;
@@ -115,128 +60,82 @@ body {
   transition: background var(--transition-speed), color var(--transition-speed);
 }
 
-body.options-page {
-  min-width: 400px;
-  min-height: 600px;
-}
-
-/* Header / Footer */
-header,
-footer {
+header, footer {
   background: var(--header-bg);
   color: var(--header-text);
   padding: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  transition: background var(--transition-speed), color var(--transition-speed);
 }
 
-header h1,
-footer p {
-  margin: 0;
+header .title {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
-footer {
-  background: var(--footer-bg);
-  color: var(--footer-text);
+.settings-btn {
+  background: var(--open-options-btn-bg);
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background var(--transition-speed);
 }
 
-/* Main Container */
-.container {
-  width: 100%;
-  background: var(--card-bg);
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  transition: background var(--transition-speed), color var(--transition-speed);
-  margin: 0 auto;
-}
-
-.popup-page {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  margin: 0;
-  padding: 0;
-}
-
-body.options-page .container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-body.options-page .column {
-  flex: 1;
-  margin: 10px;
+.settings-btn:hover {
+  background: var(--open-options-btn-hover-bg);
 }
 
 /* ============================= */
 /*         FORM ELEMENTS         */
 /* ============================= */
-textarea,
-input,
-select {
+input, textarea {
   width: calc(100% - 20px);
   padding: 8px;
   margin: 8px 10px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
-  box-sizing: border-box;
   background: var(--card-bg);
   color: var(--text-color);
-  transition: background var(--transition-speed), color var(--transition-speed), border var(--transition-speed);
+  transition: background var(--transition-speed), border var(--transition-speed);
 }
 
-textarea:focus,
-input:focus,
-select:focus {
-  outline: none;
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+input:focus, textarea:focus {
   border-color: #aad4ff;
+  outline: none;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-  text-align: left;
-}
-
-/* Passphrase Container */
+/* Password + Eye Button */
 .passphrase-container {
   display: flex;
   align-items: center;
 }
 
-.passphrase-container input {
-  flex: 1;
+.passphrase-input {
+  flex: 3; /* 3/4 width */
 }
 
-.passphrase-container button {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  margin-left: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
+.eye-button {
+  flex: 1; /* 1/4 width */
+  padding: 10px;
   background: var(--toggle-passphrase-btn-bg);
-  color: #333;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background var(--transition-speed), transform var(--transition-speed);
+  transition: background var(--transition-speed);
 }
 
-.passphrase-container button:hover {
+.eye-button:hover {
   background: var(--toggle-passphrase-btn-hover-bg);
-  transform: scale(1.1);
 }
 
 /* ============================= */
@@ -251,108 +150,62 @@ button {
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-  transition: background var(--transition-speed), transform var(--transition-speed);
+  transition: background var(--transition-speed);
 }
 
 #encryptBtn {
-  background-color: var(--encrypt-btn-bg);
-}
-#encryptBtn:hover {
-  background-color: var(--encrypt-btn-hover-bg);
+  background: var(--encrypt-btn-bg);
 }
 
 #decryptBtn {
-  background-color: var(--decrypt-btn-bg);
-}
-#decryptBtn:hover {
-  background-color: var(--decrypt-btn-hover-bg);
+  background: var(--decrypt-btn-bg);
 }
 
 #copyBtn {
-  background-color: var(--copy-btn-bg);
-}
-#copyBtn:hover {
-  background-color: var(--copy-btn-hover-bg);
+  background: var(--copy-btn-bg);
 }
 
-#clearLogBtn {
-  background: var(--clear-log-btn-bg);
-}
-#clearLogBtn:hover {
-  background: var(--clear-log-btn-hover-bg);
-}
-
-#openOptions {
-  background: var(--open-options-btn-bg);
-}
-#openOptions:hover {
-  background: var(--open-options-btn-hover-bg);
-}
-
-#activityLogBtn {
-  background: var(--activity-log-bg);
-}
-#activityLogBtn:hover {
-  background: var(--activity-log-hover-bg);
-}
-
-#debugLogBtn {
-  background: var(--debug-log-bg);
-}
-#debugLogBtn:hover {
-  background: var(--debug-log-hover-bg);
-}
-
-#errorLogsBtn {
-  background: var(--error-log-bg);
-}
-#errorLogsBtn:hover {
-  background: var(--error-log-hover-bg);
-}
-
-#exportLogsBtn {
-  background: var(--export-logs-bg);
-}
-#exportLogsBtn:hover {
-  background: var(--export-logs-hover-bg);
-}
-
-#checkUpdatesBtn {
-  background: var(--check-updates-bg);
-}
-#checkUpdatesBtn:hover {
-  background: var(--check-updates-hover-bg);
+button:hover {
+  opacity: 0.9;
 }
 
 /* ============================= */
-/*          MISC ELEMENTS        */
+/*       LOG SYSTEM STYLES       */
 /* ============================= */
-#statusMessage {
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-#logList {
+.log-container {
+  width: 100%;
   max-height: 100px;
   overflow-y: auto;
+  background: rgba(0, 0, 0, 0.1);
   padding: 5px;
-  list-style: none;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  background: var(--card-bg);
+  border-radius: 5px;
+  font-size: 12px;
 }
 
-#logContainer {
-  width: 100%;
-  margin-top: 20px;
+.log-entry {
+  padding: 5px 10px;
+  margin: 2px 0;
+  border-radius: 3px;
 }
 
-#logList li {
-  margin-bottom: 5px;
+.log-entry.error {
+  background: var(--error-log-bg);
+  color: #d93025;
 }
 
+.log-entry.success {
+  background: var(--activity-log-bg);
+  color: #2e7d32;
+}
+
+.log-entry.debug {
+  background: var(--debug-log-bg);
+  color: #ff4081;
+}
+
+/* ============================= */
+/*         ANIMATIONS            */
+/* ============================= */
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -366,95 +219,4 @@ button {
 
 .hidden {
   display: none;
-}
-
-.error {
-  color: #d93025;
-}
-.success {
-  color: #2e7d32;
-}
-
-.log-entry.error {
-  color: #d93025;
-}
-.log-entry.success {
-  color: #2e7d32;
-}
-
-.icon-button {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  margin-left: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  background: var(--toggle-passphrase-btn-bg);
-  color: #333;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background var(--transition-speed), transform var(--transition-speed);
-}
-
-.icon-button:hover {
-  background: var(--toggle-passphrase-btn-hover-bg);
-  transform: scale(1.1);
-}
-
-.icon-button.top-right {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.input-group,
-.output-group {
-  display: flex;
-  align-items: center;
-}
-
-.input-group input,
-.output-group textarea {
-  flex: 1;
-}
-
-.action-btn {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 10px;
-}
-
-.btn-icon {
-  flex-basis: 25%;
-  text-align: center;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.icon-button {
-  flex-basis: 25%;
-  text-align: right;
-}
-
-.log-container {
-  width: 100%;
-  max-height: 100px;
-  overflow-y: auto;
-  background: rgba(0, 0, 0, 0.1);
-  padding: 5px;
-  border-radius: 5px;
-}
-.log-entry {
-  font-size: 12px;
-  margin-bottom: 3px;
 }

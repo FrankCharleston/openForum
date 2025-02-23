@@ -8,33 +8,29 @@
   <script src="popup.js"></script>  
 </head>
 <body>
-  <header>
-    <div class="header">
-      <span class="title">OpenForum</span>
-      <button id="settingsBtn" class="icon-button">⚙️</button>
-    </div>    
-  </header>
 
-  <main>
-    <div class="input-group">
-      <input type="text" id="textInput" placeholder="Enter text...">
-    </div>
-    <input type="password" id="defaultPassphrase">
-    <button id="toggleDefaultPassphrase" class="icon-button">👁️</button>
-    <button id="encryptBtn" class="action-btn">
-      Encrypt <span class="btn-icon">🔒</span>
-    </button>
-    <button id="decryptBtn" class="action-btn">
-      Decrypt <span class="btn-icon">🔓</span>
-    </button>
-    <textarea id="output" readonly></textarea>
-    <button id="copyBtn" class="icon-btn">
-      Copy <span class="btn-icon">📋</span>
-    </button>
-    <div id="logContainer" class="log-container">
-      <!-- Logs will appear here -->
-    </div>    
-  </main>
+  
+  <div class="header">
+    <span class="title">OpenForum</span>
+    <button id="settingsBtn" class="settings-btn">⚙️</button>
+  </div>
+  
+  <div class="passphrase-container">
+    <input id="passphrase" class="passphrase-input" type="password" placeholder="Enter passphrase..." />
+    <button id="togglePassphrase" class="eye-button">👁️</button>
+  </div>
+  
+  <input id="textInput" type="text" placeholder="Enter text..." />
+  
+  <button id="encryptBtn">🔒 Encrypt</button>
+  <button id="decryptBtn">🔓 Decrypt</button>
+  
+  <textarea id="output"></textarea>
+  
+  <button id="copyBtn">📋 Copy</button>
+  
+  <div id="logContainer" class="log-container"></div>
+  
 
   <footer>
     <p>🔐 Securely encrypted with OpenForum</p>
