@@ -4,12 +4,11 @@
   <meta charset="UTF-8">
   <title>OpenForum Options</title>
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="../lib/crypto-js.min.js"></script>
 </head>
 <body class="options-page">
   <header>
     <h1>OpenForum Options</h1>
-    <button id="closeOptions" class="icon-button close-button">❌</button>
+    <button id="closeOptions" class="icon-button">❌</button>
   </header>
 
   <main>
@@ -19,8 +18,9 @@
       <option value="true">Enabled</option>
     </select>
 
+    <label for="defaultPassphrase">Default Passphrase:</label>
     <div class="passphrase-container">
-      <input type="password" id="defaultPassphrase" placeholder="Default passphrase...">
+      <input type="password" id="defaultPassphrase" />
       <button id="toggleDefaultPassphrase" class="icon-button">👁️</button>
     </div>
 

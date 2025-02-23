@@ -58,6 +58,6 @@
     "128": "assets/icon-128.png"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self' 'unsafe-inline'; object-src 'self';"
+    "extension_pages": "script-src 'self'; object-src 'self';"
   }
 }

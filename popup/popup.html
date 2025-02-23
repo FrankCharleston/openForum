@@ -4,39 +4,30 @@
   <meta charset="UTF-8">
   <title>OpenForum</title>
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="../lib/crypto-js.min.js"></script>
 </head>
 <body>
 
-  <!-- Header with Settings Button -->
   <div class="header">
     <span class="title">OpenForum</span>
     <button id="settingsBtn" class="icon-button">⚙️</button>
   </div>
 
-  <!-- Passphrase Input -->
   <div class="passphrase-container">
     <input id="passphrase" class="passphrase-input" type="password" placeholder="Enter passphrase..." />
     <button id="togglePassphrase" class="icon-button">👁️</button>
   </div>
 
-  <!-- Text Input -->
   <input id="textInput" type="text" placeholder="Enter text..." />
 
-  <!-- Encrypt & Decrypt Buttons -->
   <button id="encryptBtn">🔒 Encrypt</button>
   <button id="decryptBtn">🔓 Decrypt</button>
 
-  <!-- Output Area -->
   <textarea id="output" readonly></textarea>
 
-  <!-- Copy Button -->
   <button id="copyBtn">📋 Copy</button>
 
-  <!-- Log Container -->
   <div id="logContainer" class="log-container"></div>
 
-  <!-- Footer -->
   <footer>
     <p>🔐 Securely encrypted with OpenForum</p>
   </footer>
