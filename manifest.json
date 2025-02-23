@@ -11,20 +11,17 @@
     "tabs"
   ],
   "host_permissions": [
-    "https://*.example.com/*"
+    "*//*/*"
   ],
-
   "background": {
     "service_worker": "background.js"
   },
-
   "content_scripts": [
     {
-      "matches": ["https://*.example.com/*"],
+      "matches": ["*//*/*"],
       "js": ["content_script.js", "crypto-js.min.js"]
     }
   ],
-
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -33,16 +30,13 @@
       "128": "icon.png"
     }
   },
-
   "options_page": "options.html",
-
   "web_accessible_resources": [
     {
       "resources": ["icon.png"],
-      "matches": ["https://*.example.com/*"]
+      "matches": ["*//*/*"]
     }
   ],
-
   "icons": {
     "16": "icon.png",
     "48": "icon.png",

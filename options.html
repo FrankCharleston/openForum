@@ -15,6 +15,7 @@
     <div class="input-group">
       <label for="autoDecryptToggle">Enable Auto-Decryption</label>
       <input type="checkbox" id="autoDecryptToggle" />
+      <span id="autoDecryptIndicator">🔒</span>
     </div>
 
     <!-- Default Passphrase -->
@@ -35,6 +36,13 @@
 
     <button id="saveSettings">Save Settings</button>
     <p id="statusMessage"></p>
+
+    <!-- Error/Log/Debug Section -->
+    <div class="log-container">
+      <h3>🔍 Logs</h3>
+      <pre id="logList"></pre>
+      <button id="clearLogBtn">🗑 Clear Logs</button>
+    </div>
   </div>
 </body>
 </html>

@@ -149,36 +149,3 @@ async function loadCryptoJS() {
     };
   }
 }
-
-// Example from background.js or content_script.js
-chrome.storage.local.get("decryptionErrors", (data) => {
-  let errors = data.decryptionErrors || [];
-  errors.push({
-    timestamp: new Date().toISOString(),
-    error: error.message || "Unknown error"
-  });
-  chrome.storage.local.set({ decryptionErrors: errors });
-});
-
-
-/**
- * If you prefer local functions instead of window.*:
- * 
- * function encryptText(text, passphrase) {
- *   // ...
- * }
- * 
- * function decryptText(encryptedText, passphrase) {
- *   // ...
- * }
- * 
- * Then inside scanAndDecryptPage(), just call decryptText(...) 
- * with no need for window.decryptText.
- */
-
-/**
- * Alternatively, if you already define a local decryptText above:
- *   function decryptText(encryptedText, passphrase) { ... }
- * You can remove the "window.decryptText" block here. 
- * Just keep your code consistent in how you call it.
- */

@@ -76,9 +76,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (mode === "encrypt") {
       output.value = encryptText(text, passphrase);
       showStatus("🔒 Encrypted text generated.", "success");
+      saveLog(`Encrypted text: ${text}`);
     } else {
       output.value = decryptText(text, passphrase);
       showStatus("🔓 Decryption attempted.", "success");
+      saveLog(`Decrypted text: ${text}`);
     }
   }
 
@@ -104,6 +106,14 @@ document.addEventListener("DOMContentLoaded", function () {
       showStatus("❌ Decryption failed.", "error");
       return "";
     }
+  }
+
+  function saveLog(message) {
+    chrome.storage.local.get("logs", (data) => {
+      const logs = data.logs || [];
+      logs.push(`${new Date().toISOString()}: ${message}`);
+      chrome.storage.local.set({ logs });
+    });
   }
 
   function showStatus(message, type) {
