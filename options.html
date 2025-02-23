@@ -62,10 +62,13 @@
       background-color: #45a049;
     }
   </style>
+  <script src="lib/options.js" defer></script>
 </head>
 <body>
-  <h1>OpenForum Options</h1>
-  <div class="container">
+  <header>
+    <h1>⚙ OpenForum Options</h1>
+  </header>
+  <main class="container">
     <div class="column">
       <h2>General Settings</h2>
       <div class="form-group">
@@ -97,11 +100,24 @@
       <button id="saveSettings">Save Settings</button>
     </div>
     <div class="column">
+      <h2>Activity Log</h2>
+      <div id="activityLog"></div>
+      <button id="clearActivityLog">Clear Activity Log</button>
+
+      <h2>Debug Log</h2>
+      <div id="debugLog"></div>
+      <button id="clearDebugLog">Clear Debug Log</button>
+
       <h2>Error Logs</h2>
       <div id="errorLogs"></div>
-      <button id="clearLogs">Clear Logs</button>
+      <button id="clearErrorLogs">Clear Error Logs</button>
+
+      <h2>Export Logs</h2>
+      <button id="exportLogsBtn">Export Logs</button>
     </div>
-  </div>
-  <script src="lib/options.js" defer></script>
+  </main>
+  <footer>
+    <p>OpenForum © 2025</p>
+  </footer>
 </body>
 </html>

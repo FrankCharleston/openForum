@@ -18,6 +18,7 @@
       margin: 0;
       padding: 10px;
       background-color: #f4f4f4;
+      overflow: hidden; /* Prevent scrolling */
     }
     .container {
       display: flex;
@@ -109,8 +110,8 @@
 
     <!-- Encrypt/Decrypt Buttons -->
     <div class="button-group">
-      <button id="encryptBtn">Encrypt</button>
-      <button id="decryptBtn">Decrypt</button>
+      <button id="encryptBtn" style="background-color: #4CAF50;">Encrypt</button>
+      <button id="decryptBtn" style="background-color: #f44336;">Decrypt</button>
     </div>
 
     <!-- Output & Copy -->
@@ -131,35 +132,11 @@
       <ul id="logList"></ul>
       <div class="button-group">
         <button id="clearLogBtn">🗑 Clear Log</button>
-        <button id="openOptions">⚙ Open Settings</button>
+        <button id="openSettingsBtn">⚙ Open Settings</button>
         <button id="exportLogsBtn">📄 Export Logs</button>
         <button id="checkUpdatesBtn" title="Check for Updates">🔄 Check for Updates</button>
       </div>
     </div>
-    <h2>Settings</h2>
-    <div class="form-group">
-      <label for="autoDecrypt">Auto Decrypt:</label>
-      <select id="autoDecrypt">
-        <option value="true">Enabled</option>
-        <option value="false">Disabled</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="defaultPassphrase">Default Passphrase:</label>
-      <input type="password" id="defaultPassphrase">
-    </div>
-    <div class="form-group">
-      <label for="theme">Theme:</label>
-      <select id="theme">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="system">System</option>
-      </select>
-    </div>
-    <button id="saveSettings">Save Settings</button>
-    <h2>Error Logs</h2>
-    <div id="errorLogs"></div>
-    <button id="clearLogs">Clear Logs</button>
   </main>
   <footer>
     <p>OpenForum © 2025</p>
