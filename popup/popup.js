@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Example: Define the addLog function that uses logList
+  function addLog(message) {
+    const logList = document.getElementById('logList');
+    if (!logList) {
+      console.error("logList element not found");
+      return;
+    }
+    const li = document.createElement('li');
+    li.textContent = message;
+    logList.appendChild(li);
+  }
+
+  // Existing code for toggling password visibility, settings, dark mode, etc.
   const passwordField = document.getElementById('password');
   passwordField.value = ''; // Ensure no preloaded spaces
 
@@ -117,4 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return "❌ Decryption failed. Incorrect passphrase or corrupted data.";
     }
   }
+
+  // Example usage: Try logging a message
+  addLog("Initialization complete.");
 });
