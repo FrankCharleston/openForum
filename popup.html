@@ -90,10 +90,6 @@
 <body>
   <header>
     <h1>🔐 OpenForum</h1>
-    <div class="tooltip">
-      <button id="toggleDarkMode" title="Toggle Dark Mode">🌙</button>
-      <span class="tooltiptext">Toggle between light and dark mode</span>
-    </div>
   </header>
   <main class="container">
     <!-- Text to Encrypt/Decrypt -->
@@ -105,7 +101,7 @@
     <!-- Passphrase + Toggle Visibility -->
     <div class="input-group">
       <input type="password" id="passphrase" placeholder="Enter passphrase" />
-      <button id="togglePassphrase" title="Show/Hide Passphrase">👁</button>
+      <button id="togglePassphrase" title="Show/Hide Passphrase" style="background-color: yellow;">👁</button>
     </div>
 
     <!-- Encrypt/Decrypt Buttons -->
@@ -133,8 +129,6 @@
       <div class="button-group">
         <button id="clearLogBtn">🗑 Clear Log</button>
         <button id="openSettingsBtn">⚙ Open Settings</button>
-        <button id="exportLogsBtn">📄 Export Logs</button>
-        <button id="checkUpdatesBtn" title="Check for Updates">🔄 Check for Updates</button>
       </div>
     </div>
   </main>
