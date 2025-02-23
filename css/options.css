@@ -5,69 +5,69 @@
   /* Light Mode (Default) */
   --bg-color: #f9f9f9;
   --text-color: #333;
-  --header-bg: #007bff;
+  --header-bg: #0056b3; /* Darker Blue */
   --header-text: #fff;
   --card-bg: #fff;
   --border-color: #ccc;
 
-  --button-bg: #007bff; /* Blue */
+  --button-bg: #0056b3; /* Darker Blue */
   --button-text: #fff;
-  --button-hover-bg: #0056b3;
+  --button-hover-bg: #003f7f;
 
-  --danger-bg: #dc3545; /* Red */
-  --danger-hover-bg: #c82333;
+  --danger-bg: #b22222; /* Firebrick */
+  --danger-hover-bg: #8b0000;
 
-  --success-bg: #28a745; /* Green */
-  --success-hover-bg: #218838;
+  --success-bg: #228b22; /* Forest Green */
+  --success-hover-bg: #006400;
 
-  --warning-bg: #ffc107; /* Yellow */
-  --warning-hover-bg: #e0a800;
+  --warning-bg: #ff8c00; /* Dark Orange */
+  --warning-hover-bg: #ff4500;
 
-  --info-bg: #17a2b8; /* Teal */
-  --info-hover-bg: #138496;
+  --info-bg: #4682b4; /* Steel Blue */
+  --info-hover-bg: #4169e1;
 
   --transition-speed: 0.3s;
 
-  --activity-log-bg: #007bff; /* Blue */
-  --activity-log-hover-bg: #0056b3;
+  --activity-log-bg: #0056b3; /* Darker Blue */
+  --activity-log-hover-bg: #003f7f;
 
-  --debug-log-bg: #28a745; /* Green */
-  --debug-log-hover-bg: #218838;
+  --debug-log-bg: #228b22; /* Forest Green */
+  --debug-log-hover-bg: #006400;
 
-  --error-log-bg: #dc3545; /* Red */
-  --error-log-hover-bg: #c82333;
+  --error-log-bg: #b22222; /* Firebrick */
+  --error-log-hover-bg: #8b0000;
 
-  --export-logs-bg: #ffc107; /* Yellow */
-  --export-logs-hover-bg: #e0a800;
+  --export-logs-bg: #ff8c00; /* Dark Orange */
+  --export-logs-hover-bg: #ff4500;
 
-  --check-updates-bg: #17a2b8; /* Teal */
-  --check-updates-hover-bg: #138496;
+  --check-updates-bg: #4682b4; /* Steel Blue */
+  --check-updates-hover-bg: #4169e1;
 }
 
 /* Dark Mode overrides: add .dark-mode to <body> */
 body.dark-mode {
   --bg-color: #121212;
   --text-color: #e0e0e0;
-  --header-bg: #333;
+  --header-bg: #2c3e50; /* Midnight Blue */
   --header-text: #fff;
   --card-bg: #1e1e1e;
   --border-color: #555;
 
-  --button-bg: #007bff; /* Blue */
+  --button-bg: #0056b3; /* Darker Blue */
   --button-text: #e0e0e0;
-  --button-hover-bg: #0056b3;
+  --button-hover-bg: #003f7f;
 
-  --danger-bg: #c82333; /* Red */
-  --danger-hover-bg: #a30f24;
+  --danger-bg: #b22222; /* Firebrick */
+  --danger-hover-bg: #8b0000;
 
-  --success-bg: #218838; /* Green */
-  --success-hover-bg: #19692c;
+  --success-bg: #228b22; /* Forest Green */
+  --success-hover-bg: #006400;
 
-  --warning-bg: #e0a800; /* Yellow */
-  --warning-hover-bg: #c69500;
+  --warning-bg: #ff8c00; /* Dark Orange */
+  --warning-hover-bg: #ff4500;
 
-  --info-bg: #138496; /* Teal */
-  --info-hover-bg: #0f6674;
+  --info-bg: #4682b4; /* Steel Blue */
+  --info-hover-bg: #4169e1;
 }
 
 /* ============================= */
@@ -98,6 +98,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%; /* Ensure header and footer span the full width */
   transition: background var(--transition-speed), color var(--transition-speed);
 }
 

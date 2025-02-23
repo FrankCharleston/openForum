@@ -11,6 +11,8 @@
 
   <!-- Main popup script -->
   <script src="lib/popup.js" defer></script>
+  <!-- Version script -->
+  <script src="lib/version.js" defer></script>
 </head>
 <body class="light-mode">
   <header>
@@ -24,7 +26,7 @@
     <textarea 
       id="textInput"
       placeholder="Enter text to encrypt or decrypt..."
-      style="height: 150px;">
+      class="text-input">
     </textarea>
 
     <!-- Passphrase -->
@@ -33,44 +35,51 @@
         type="password"
         id="passphrase"
         placeholder="Enter passphrase"
+        class="passphrase-input"
       />
       <!-- Show/Hide Passphrase -->
       <button
         id="togglePassphrase"
-        title="Show/Hide Passphrase">
+        title="Show/Hide Passphrase"
+        class="toggle-passphrase-btn">
         👁
       </button>
     </div>
 
     <!-- Encrypt/Decrypt Buttons -->
-    <div class="button-group half-width">
-      <button id="encryptBtn">Encrypt</button>
-      <button id="decryptBtn">Decrypt</button>
+    <div class="button-group">
+      <button id="encryptBtn" class="action-btn">Encrypt</button>
+      <button id="decryptBtn" class="action-btn">Decrypt</button>
     </div>
 
-    <!-- Copy Button -->
-    <button
-      id="copyBtn"
-      title="Copy to Clipboard"
-      class="full-width">
-      📋 Copy
-    </button>
+    <!-- Output & Copy Button -->
+    <div class="output-container">
+      <textarea
+        id="output"
+        readonly
+        placeholder="Your result will appear here..."
+        class="output-textarea">
+      </textarea>
+      <button
+        id="copyBtn"
+        title="Copy to Clipboard"
+        class="copy-btn">
+        📋
+      </button>
+    </div>
 
-    <!-- Output & Activity Log -->
-    <textarea
-      id="output"
-      readonly
-      placeholder="Your result will appear here...">
-    </textarea>
-    <div id="logContainer">
-      <h3>Activity Log</h3>
-      <button id="clearLogBtn">🗑</button>
-      <ul id="logList"></ul>
+    <!-- Activity Log -->
+    <div id="logContainer" class="log-container">
+      <div class="log-header">
+        <h3>Activity Log</h3>
+        <button id="clearLogBtn" title="Clear Log" class="clear-log-btn">🗑</button>
+      </div>
+      <ul id="logList" class="log-list"></ul>
     </div>
   </main>
 
   <footer>
-    <p>OpenForum © 2025</p>
+    <p>OpenForum © 2025 | Version <span id="version"></span> | <a href="https://github.com/FrankCharleston/openForum" target="_blank">GitHub Repo</a></p>
   </footer>
 </body>
 </html>
