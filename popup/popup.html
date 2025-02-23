@@ -4,33 +4,32 @@
   <meta charset="UTF-8">
   <title>OpenForum</title>
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="../lib/crypto-js.min.js"></script>
+  <script src="popup.js"></script>  
 </head>
 <body>
   <header>
-    <h1 class="glitch-text">OpenForum</h1>
-    <button id="settingsBtn" class="icon-button">⚙</button>
+    <h1>OpenForum</h1>
+    <button id="settingsBtn" class="icon-button">⚙️</button>
   </header>
 
   <main>
-    <div class="input-group">
-      <input type="text" id="textInput" placeholder="Enter text..." />
-    </div>
+    <input type="password" id="passphrase" placeholder="Enter passphrase">
+    <button id="togglePassphrase" class="icon-button">👁️</button>
 
-    <div class="input-group">
-      <input type="password" id="passphrase" placeholder="Enter your passphrase" />
-      <button id="togglePassphrase" class="icon-button">👁</button>
-    </div>
+    <textarea id="textInput" placeholder="Enter text..."></textarea>
 
-    <button id="encryptBtn" class="encrypt">🔒 Encrypt</button>
-    <button id="decryptBtn" class="decrypt">🔓 Decrypt</button>
+    <button id="encryptBtn">🔒 Encrypt</button>
+    <button id="decryptBtn">🔓 Decrypt</button>
 
-    <div class="output-group">
-      <textarea id="output" readonly></textarea>
-      <button id="copyBtn" class="icon-button">📋</button>
-    </div>
+    <textarea id="output" readonly></textarea>
+    <button id="copyBtn" class="icon-button">📋</button>
   </main>
 
-  <script src="../lib/crypto-js.min.js"></script>
+  <footer>
+    <p>🔐 Securely encrypted with OpenForum</p>
+  </footer>
+
   <script src="popup.js"></script>
 </body>
 </html>

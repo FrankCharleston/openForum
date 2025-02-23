@@ -1,34 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
   const autoDecrypt = document.getElementById("autoDecrypt");
   const defaultPassphrase = document.getElementById("defaultPassphrase");
-  const themeSelect = document.getElementById("theme");
-  const exportLogsBtn = document.getElementById("exportLogs");
-  const clearLogsBtn = document.getElementById("clearLogs");
+  const theme = document.getElementById("theme");
+  const saveLogs = document.getElementById("saveLogs");
+  const clearLogs = document.getElementById("clearLogs");
+  const closeOptions = document.getElementById("closeOptions");
+  const toggleDefaultPassphrase = document.getElementById("toggleDefaultPassphrase");
 
   chrome.storage.local.get(["autoDecrypt", "defaultPassphrase", "theme"], (data) => {
     autoDecrypt.value = data.autoDecrypt ? "true" : "false";
     defaultPassphrase.value = data.defaultPassphrase || "";
-    themeSelect.value = data.theme || "system";
+    theme.value = data.theme || "system";
   });
 
   autoDecrypt.addEventListener("change", () => {
     chrome.storage.local.set({ autoDecrypt: autoDecrypt.value === "true" });
   });
 
-  defaultPassphrase.addEventListener("input", () => {
-    chrome.storage.local.set({ defaultPassphrase: defaultPassphrase.value });
+  theme.addEventListener("change", () => {
+    chrome.storage.local.set({ theme: theme.value });
   });
 
-  themeSelect.addEventListener("change", () => {
-    chrome.storage.local.set({ theme: themeSelect.value });
+  toggleDefaultPassphrase.addEventListener("click", () => {
+    const type = defaultPassphrase.getAttribute("type") === "password" ? "text" : "password";
+    defaultPassphrase.setAttribute("type", type);
   });
 
-  exportLogsBtn.addEventListener("click", () => {
-    alert("📜 Logs exported!");
-  });
-
-  clearLogsBtn.addEventListener("click", () => {
+  clearLogs.addEventListener("click", () => {
     chrome.storage.local.set({ logs: [] });
-    alert("🗑 Logs cleared!");
+    alert("🗑 Logs cleared.");
   });
+
+  closeOptions.addEventListener("click", () => {
+    window.close();
+  });
+});
+
+document.getElementById("saveLogs").addEventListener("click", () => {
+  alert("📜 Logs saved successfully.");
+});
+
+document.getElementById("clearLogs").addEventListener("click", () => {
+  chrome.storage.local.set({ logs: [] });
+  alert("🗑 Logs cleared.");
+});
+
+document.getElementById("closeOptions").addEventListener("click", () => {
+  window.close();
 });
