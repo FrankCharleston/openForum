@@ -1,105 +1,156 @@
-# OpenForum
+# **OpenForum** 🔐  
+*A browser extension for encrypted communication on public forums.*  
 
-OpenForum is a browser extension designed to facilitate seamless encryption and decryption of messages within public forums. It allows users to encrypt their messages before posting them and decrypt messages from others, ensuring privacy and security.
+## **📜 Overview**  
+OpenForum is a **browser extension** that **encrypts and decrypts messages** directly on webpages, allowing users to communicate **privately** while using public forums.  
 
-## Features
+It supports:  
+✔️ **Inline Encryption & Decryption** (Auto-decrypt or manual)  
+✔️ **Clipboard Integration** (Encrypt/decrypt copied text)  
+✔️ **Context Menu Options** (Right-click to encrypt/decrypt selected text)  
+✔️ **Customizable UI** (Light/Dark/System themes)  
+✔️ **Activity Logs** (Track actions within the extension)  
 
-- **Inline Encryption & Decryption**: Encrypt and decrypt messages directly on web pages.
-- **Clipboard Integration**: Handle encrypted content via clipboard operations.
-- **Context Menu Options**: Access encryption features through the browser's right-click menu.
-- **User-Friendly Interface**: Simplified UI for both encryption and decryption processes.
-- **Theme Support**: Light, dark, and system themes.
-- **Debug Mode**: Enable debug mode for detailed logging.
+---
 
-## Installation
+## **📁 Project Structure**  
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/FrankCharleston/openForum.git
-   cd openForum
-   ```
+```
+OPENFORUM [WSL: UBUNTU]
+│── .github/workflows/          # GitHub Actions & CI/CD automation
+│   ├── dependency-check.yml
+│   ├── dependency.yml
+│   ├── pre-commit.yml
+│   ├── tf-docs.yml
+│
+├── assets/                     # Icons for extension
+│   ├── icon-16.png
+│   ├── icon-48.png
+│   ├── icon-128.png
+│   ├── icon-enabled-16.png
+│   ├── icon-enabled-48.png
+│   ├── icon-enabled-128.png
+│
+├── css/                        # Stylesheets
+│   ├── styles.css
+│
+├── lib/                        # Libraries and scripts
+│   ├── background.js           # Handles background processes
+│   ├── content_script.js       # Runs on webpages for inline decryption
+│   ├── crypto-js.min.js        # Cryptographic functions (AES)
+│   ├── version.js              # Version control
+│
+├── options/                    # Options/settings page
+│   ├── options.html
+│   ├── options.js
+│
+├── popup/                      # Popup window (main UI)
+│   ├── popup.html
+│   ├── popup.js
+│
+├── .gitignore                   # Git ignored files
+├── manifest.json                # Extension manifest
+├── package-lock.json            # NPM dependency lockfile
+├── package.json                 # NPM package info
+├── README.md                    # Project documentation
+```
 
-2. Load the extension in your browser:
-   - Open your browser's extensions page (e.g., `chrome://extensions/`).
-   - Enable "Developer mode".
-   - Click "Load unpacked" and select the `openForum` directory.
+---
 
-## Usage
+## **🚀 Installation (Development Mode)**  
 
-### Encrypting a Message
+### **1️⃣ Clone the Repository**
+```sh
+git clone https://github.com/YourUsername/OpenForum.git
+cd OpenForum
+```
 
-1. Open the extension popup by clicking the OpenForum icon in the browser toolbar.
-2. Enter your message and passphrase.
-3. Click the "Encrypt" button.
-4. The encrypted message will be displayed in the input field, prefixed with `ENC[...]`.
+### **2️⃣ Load the Extension in Your Browser**
+1. Open **Chrome/Edge** and go to:  
+   - `chrome://extensions/` (Chrome)  
+   - `edge://extensions/` (Edge)  
+2. Enable **Developer Mode** (top-right toggle).  
+3. Click **Load Unpacked** and select the **OpenForum** directory.  
+4. **Done!** The extension is now installed.
 
-### Decrypting a Message
+---
 
-1. Open the extension popup by clicking the OpenForum icon in the browser toolbar.
-2. Enter the encrypted message and the passphrase used for encryption.
-3. Click the "Decrypt" button.
-4. The decrypted message will be displayed in the input field.
+## **🔑 How to Use**
+### **🔐 Encrypting a Message**
+1. Open the **OpenForum popup** by clicking the extension icon.  
+2. Enter your **text & passphrase**, then click **Encrypt**.  
+3. The encrypted message (e.g., `ENC[...]`) is **ready to copy**.  
 
-### Settings
+### **🔓 Decrypting a Message**
+1. Paste an **encrypted message (`ENC[...]`)** into the text field.  
+2. Enter the **same passphrase** used for encryption.  
+3. Click **Decrypt** to reveal the original message.
 
-1. Open the options page by clicking the "Options" button in the extension popup or navigating to the extension's options page.
-2. Configure the following settings:
-   - **Auto Decrypt**: Enable or disable automatic decryption of messages on page load.
-   - **Default Passphrase**: Set a default passphrase for encryption and decryption.
-   - **Theme**: Choose between light, dark, and system themes.
-   - **Debug Mode**: Enable or disable debug mode for detailed logging.
+### **📋 Context Menu (Right-Click)**
+- **Encrypt Selected Text**: Right-click on any text → Select **"Encrypt Selected Text"**.  
+- **Decrypt Selected Text**: Right-click on an encrypted message → Select **"Decrypt Selected Text"**.  
 
-### Error Logs
+---
 
-1. View error logs on the options page under the "Error Logs" section.
-2. Clear error logs by clicking the "Clear Logs" button.
+## **⚙️ Settings & Options**
+- **Auto Decrypt**: Automatically decrypts messages on page load.  
+- **Default Passphrase**: Saves a default passphrase for quick decryption.  
+- **Theme**: Light, Dark, or System-based appearance.  
+- **Activity Logs**: View logs of encrypted/decrypted actions.  
+- **Save Logs**: Exports logs to a file.  
+- **Clear Logs**: Deletes all logs.
 
-## Development
+---
 
-### File Structure
+## **🔄 Features & Functionalities**
+✅ **AES-256 Encryption** using `crypto-js` library.  
+✅ **Auto Decryption** for seamless forum browsing.  
+✅ **Clipboard Integration** (Copy encrypted/decrypted messages).  
+✅ **Persistent Settings** stored in `chrome.storage.local`.  
+✅ **Debugging Mode** (View error logs in the options page).  
+✅ **Customizable Themes** (Light, Dark, System).  
 
-- **popup.js**: Handles the extension popup interface and its functionalities.
-- **options.js**: Manages the options page and settings.
-- **content_script.js**: Injects scripts into web pages to enable inline encryption/decryption.
-- **background.js**: Handles background operations, including context menu actions.
-- **crypto-utils.js**: Contains cryptographic functions leveraging the crypto-js library.
+---
 
-### Running Locally
-
-1. Install dependencies (if any):
+## **📌 Development & Contribution**
+### **Running in Development Mode**
+1. Install dependencies:
    ```sh
    npm install
    ```
+2. Run the extension:
+   - Open `chrome://extensions/` → Reload the extension.  
+   - Open the **popup** or **options page** to test UI changes.  
 
-2. Start the development server:
+### **Making Changes**
+1. Create a new feature branch:
    ```sh
-   npm start
+   git checkout -b feature/my-new-feature
    ```
-
-3. Load the extension in your browser as described in the installation section.
-
-### Contributing
-
-1. Fork the repository.
-2. Create a new branch:
+2. Make your changes and commit:
    ```sh
-   git checkout -b feature/your-feature-name
+   git commit -m "Added new encryption feature"
    ```
-3. Make your changes and commit them:
-   ```sh
-   git commit -m "Add your commit message"
-   ```
-4. Push to the branch:
-   ```sh
-   git push origin feature/your-feature-name
-   ```
-5. Open a pull request.
+3. Push and open a **Pull Request**.
 
-## License
+---
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## **🛠 Troubleshooting & Known Issues**
+❌ **Decryption fails on some websites?**  
+   - Check console logs (`F12 → Console`).  
+   - Some sites block **content scripts**, requiring manual decryption.  
 
-## Acknowledgements
+❌ **Theme settings not applying?**  
+   - Ensure the extension is reloaded after changing settings.  
 
-- Thanks to the contributors and the open-source community for their support and contributions.
-- Crediting @bobsteger for identifying the issue [#14](https://github.com/FrankCharleston/openForum/issues/14).
+❌ **"CryptoJS is not defined" error?**  
+   - Ensure `crypto-js.min.js` is correctly loaded in **content scripts**.  
+
+---
+
+## **📜 License**
+This project is licensed under the **MIT License**.  
+
+---
+
+**🎉 Thank you for using OpenForum!** 🚀

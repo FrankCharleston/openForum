@@ -11,26 +11,26 @@
   --border-color: #ccc;
   --footer-bg: rgba(0, 64, 128, 0.8);
   --footer-text: #fff;
+  --button-radius: 8px;
 
-  /* Button Colors */
+  /* Component Backgrounds */
   --encrypt-btn-bg: #b8e6b8;
   --decrypt-btn-bg: #f7b3ad;
   --copy-btn-bg: #b8daf9;
   --toggle-passphrase-btn-bg: #fff7c2;
-  --clear-log-btn-bg: #f1c6c6;
-  --open-options-btn-bg: #ffdaa8;
+  --log-container-bg: #f0f0f0;
 
-  /* Activity / Debug / Error / Export Logs */
-  --activity-log-bg: #c4f1f9;
-  --debug-log-bg: #ffd2e8;
-  --error-log-bg: #ffc2b3;
-  --export-logs-bg: #c4f0c4;
-  --check-updates-bg: #bdf3f3;
+  /* Hover Colors */
+  --encrypt-btn-hover-bg: #a3daa3;
+  --decrypt-btn-hover-bg: #f5a8a0;
+  --copy-btn-hover-bg: #a8d1f7;
+  --toggle-passphrase-btn-hover-bg: #fff4b0;
+  --log-container-hover-bg: #e0e0e0;
 
   --transition-speed: 0.3s;
 }
 
-/* Dark Mode */
+/* Dark Mode Overrides */
 body.dark-mode {
   --bg-color: #121212;
   --text-color: #e0e0e0;
@@ -40,6 +40,8 @@ body.dark-mode {
   --border-color: #555;
   --footer-bg: rgba(0, 32, 64, 0.8);
   --footer-text: #e0e0e0;
+  --log-container-bg: #222;
+  --log-container-hover-bg: #333;
 }
 
 /* ============================= */
@@ -60,7 +62,16 @@ body {
   transition: background var(--transition-speed), color var(--transition-speed);
 }
 
-header, footer {
+body.options-page {
+  min-width: 400px;
+  min-height: 600px;
+}
+
+/* ============================= */
+/*         HEADER / FOOTER       */
+/* ============================= */
+header,
+footer {
   background: var(--header-bg);
   color: var(--header-text);
   padding: 10px;
@@ -68,73 +79,59 @@ header, footer {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  transition: background var(--transition-speed), color var(--transition-speed);
 }
 
-header .title {
-  flex-grow: 1;
-  text-align: left;
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-.settings-btn {
-  background: var(--open-options-btn-bg);
-  padding: 8px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background var(--transition-speed);
-}
-
-.settings-btn:hover {
-  background: var(--open-options-btn-hover-bg);
+footer {
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  text-align: center;
 }
 
 /* ============================= */
 /*         FORM ELEMENTS         */
 /* ============================= */
-input, textarea {
+textarea,
+input,
+select {
   width: calc(100% - 20px);
   padding: 8px;
   margin: 8px 10px;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--button-radius);
   font-size: 14px;
   background: var(--card-bg);
   color: var(--text-color);
-  transition: background var(--transition-speed), border var(--transition-speed);
 }
 
-textarea {
-  resize: none;
-  height: 80px;
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: 14px;
 }
 
-input:focus, textarea:focus {
-  border-color: #aad4ff;
-  outline: none;
-}
-
-/* Password + Eye Button */
+/* Passphrase Input Group */
 .passphrase-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-.passphrase-input {
-  flex: 3; /* 3/4 width */
+.passphrase-container input {
+  flex: 3;
 }
 
-.eye-button {
-  flex: 1; /* 1/4 width */
-  padding: 10px;
+.passphrase-container button {
+  flex: 1;
+  padding: 8px;
+  border-radius: var(--button-radius);
   background: var(--toggle-passphrase-btn-bg);
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background var(--transition-speed);
 }
 
-.eye-button:hover {
+.passphrase-container button:hover {
   background: var(--toggle-passphrase-btn-hover-bg);
 }
 
@@ -146,77 +143,93 @@ button {
   padding: 10px;
   margin: 8px 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--button-radius);
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  transition: background var(--transition-speed);
+  transition: background var(--transition-speed), transform var(--transition-speed);
 }
 
 #encryptBtn {
-  background: var(--encrypt-btn-bg);
+  background-color: var(--encrypt-btn-bg);
+}
+#encryptBtn:hover {
+  background-color: var(--encrypt-btn-hover-bg);
 }
 
 #decryptBtn {
-  background: var(--decrypt-btn-bg);
+  background-color: var(--decrypt-btn-bg);
+}
+#decryptBtn:hover {
+  background-color: var(--decrypt-btn-hover-bg);
 }
 
 #copyBtn {
-  background: var(--copy-btn-bg);
+  background-color: var(--copy-btn-bg);
 }
-
-button:hover {
-  opacity: 0.9;
+#copyBtn:hover {
+  background-color: var(--copy-btn-hover-bg);
 }
 
 /* ============================= */
-/*       LOG SYSTEM STYLES       */
+/*         LOG CONTAINER         */
 /* ============================= */
-.log-container {
+#logContainer {
   width: 100%;
   max-height: 100px;
   overflow-y: auto;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--log-container-bg);
   padding: 5px;
   border-radius: 5px;
-  font-size: 12px;
 }
-
-.log-entry {
-  padding: 5px 10px;
-  margin: 2px 0;
-  border-radius: 3px;
-}
-
-.log-entry.error {
-  background: var(--error-log-bg);
-  color: #d93025;
-}
-
-.log-entry.success {
-  background: var(--activity-log-bg);
-  color: #2e7d32;
-}
-
-.log-entry.debug {
-  background: var(--debug-log-bg);
-  color: #ff4081;
+#logContainer:hover {
+  background: var(--log-container-hover-bg);
 }
 
 /* ============================= */
-/*         ANIMATIONS            */
+/*       ICON BUTTON STYLES      */
 /* ============================= */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.icon-button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background: var(--toggle-passphrase-btn-bg);
+  color: #333;
+  border: none;
+  border-radius: var(--button-radius);
+  cursor: pointer;
 }
 
-.hidden {
-  display: none;
+.icon-button:hover {
+  background: var(--toggle-passphrase-btn-hover-bg);
+}
+
+.icon-button.top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* Close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  height: 40px;
+  background: var(--decrypt-btn-bg);
+  color: white;
+  font-size: 18px;
+  border-radius: var(--button-radius);
+  border: none;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background: var(--decrypt-btn-hover-bg);
 }

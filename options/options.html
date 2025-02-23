@@ -5,32 +5,33 @@
   <title>OpenForum Options</title>
   <link rel="stylesheet" href="../css/styles.css">
   <script src="../lib/crypto-js.min.js"></script>
-  <script src="popup.js"></script>  
 </head>
-<body>
+<body class="options-page">
   <header>
     <h1>OpenForum Options</h1>
-    <button id="closeOptions" class="icon-button">❌</button>
+    <button id="closeOptions" class="icon-button close-button">❌</button>
   </header>
 
   <main>
-    <label>Auto Decrypt:</label>
+    <label for="autoDecrypt">Auto Decrypt:</label>
     <select id="autoDecrypt">
       <option value="false">Disabled</option>
       <option value="true">Enabled</option>
     </select>
 
-    <label>Default Passphrase:</label>
-    <input type="password" id="defaultPassphrase">
-    <button id="toggleDefaultPassphrase" class="icon-button">👁️</button>
+    <div class="passphrase-container">
+      <input type="password" id="defaultPassphrase" placeholder="Default passphrase...">
+      <button id="toggleDefaultPassphrase" class="icon-button">👁️</button>
+    </div>
 
-    <label>Theme:</label>
+    <label for="theme">Theme:</label>
     <select id="theme">
       <option value="light">Light</option>
       <option value="dark">Dark</option>
       <option value="system">System</option>
     </select>
 
+    <button id="saveSettings">💾 Save Settings</button>
     <button id="saveLogs">📜 Save Logs</button>
     <button id="clearLogs">🗑 Clear Logs</button>
   </main>
