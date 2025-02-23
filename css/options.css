@@ -116,6 +116,7 @@ footer p {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   transition: background var(--transition-speed), color var(--transition-speed);
+  margin: 0 auto; /* Center the container */
 }
 
 /* ============================= */
