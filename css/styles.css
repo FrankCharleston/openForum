@@ -5,45 +5,48 @@
   /* Light Mode (Default) */
   --bg-color: #f9f9f9;
   --text-color: #333;
-  --header-bg: #0056b3; /* Darker Blue */
+  /* Keep brand-like header color but lighten if desired */
+  --header-bg: #0056b3; /* "On brand" darker blue */
   --header-text: #fff;
   --card-bg: #fff;
   --border-color: #ccc;
 
-  --encrypt-btn-bg: #4caf50; /* Green */
-  --encrypt-btn-hover-bg: #388e3c;
+  /* Pastel Button Colors */
+  --encrypt-btn-bg: #b8e6b8; 
+  --encrypt-btn-hover-bg: #a3daa3;
 
-  --decrypt-btn-bg: #f44336; /* Red */
-  --decrypt-btn-hover-bg: #d32f2f;
+  --decrypt-btn-bg: #f7b3ad;
+  --decrypt-btn-hover-bg: #f5a8a0;
 
-  --copy-btn-bg: #2196f3; /* Blue */
-  --copy-btn-hover-bg: #1976d2;
+  --copy-btn-bg: #b8daf9;
+  --copy-btn-hover-bg: #a8d1f7;
 
-  --toggle-passphrase-btn-bg: #ffeb3b; /* Yellow */
-  --toggle-passphrase-btn-hover-bg: #fbc02d;
+  --toggle-passphrase-btn-bg: #fff7c2;
+  --toggle-passphrase-btn-hover-bg: #fff4b0;
 
-  --clear-log-btn-bg: #b22222; /* Firebrick */
-  --clear-log-btn-hover-bg: #8b0000;
+  --clear-log-btn-bg: #f1c6c6;
+  --clear-log-btn-hover-bg: #e4a2a2;
 
-  --open-options-btn-bg: #ff8c00; /* Dark Orange */
-  --open-options-btn-hover-bg: #ff4500;
+  --open-options-btn-bg: #ffdaa8;
+  --open-options-btn-hover-bg: #ffd1a3;
 
   --transition-speed: 0.3s;
 
-  --activity-log-bg: #8a2be2; /* Blue Violet */
-  --activity-log-hover-bg: #7a1fa2;
+  /* Activity / Debug / Error / Export / Updates in Pastel */
+  --activity-log-bg: #c4f1f9; 
+  --activity-log-hover-bg: #aaf0f9;
 
-  --debug-log-bg: #ff1493; /* Deep Pink */
-  --debug-log-hover-bg: #c71585;
+  --debug-log-bg: #ffd2e8; 
+  --debug-log-hover-bg: #ffcce3;
 
-  --error-log-bg: #ff4500; /* Orange Red */
-  --error-log-hover-bg: #ff6347;
+  --error-log-bg: #ffc2b3; 
+  --error-log-hover-bg: #ffb19e;
 
-  --export-logs-bg: #32cd32; /* Lime Green */
-  --export-logs-hover-bg: #228b22;
+  --export-logs-bg: #c4f0c4; 
+  --export-logs-hover-bg: #b3e2b3;
 
-  --check-updates-bg: #00ced1; /* Dark Turquoise */
-  --check-updates-hover-bg: #20b2aa;
+  --check-updates-bg: #bdf3f3; 
+  --check-updates-hover-bg: #aaf0f0;
 }
 
 /* Dark Mode overrides: add .dark-mode to <body> */
@@ -55,38 +58,39 @@ body.dark-mode {
   --card-bg: #1e1e1e;
   --border-color: #555;
 
-  --encrypt-btn-bg: #4caf50; /* Green */
-  --encrypt-btn-hover-bg: #388e3c;
+  /* Keep pastel-ish but slightly more saturated for contrast in dark mode */
+  --encrypt-btn-bg: #b8e6b8; 
+  --encrypt-btn-hover-bg: #a3daa3;
 
-  --decrypt-btn-bg: #f44336; /* Red */
-  --decrypt-btn-hover-bg: #d32f2f;
+  --decrypt-btn-bg: #f7b3ad;
+  --decrypt-btn-hover-bg: #f5a8a0;
 
-  --copy-btn-bg: #2196f3; /* Blue */
-  --copy-btn-hover-bg: #1976d2;
+  --copy-btn-bg: #b8daf9;
+  --copy-btn-hover-bg: #a8d1f7;
 
-  --toggle-passphrase-btn-bg: #ffeb3b; /* Yellow */
-  --toggle-passphrase-btn-hover-bg: #fbc02d;
+  --toggle-passphrase-btn-bg: #fff7c2;
+  --toggle-passphrase-btn-hover-bg: #fff4b0;
 
-  --clear-log-btn-bg: #b22222; /* Firebrick */
-  --clear-log-btn-hover-bg: #8b0000;
+  --clear-log-btn-bg: #f1c6c6;
+  --clear-log-btn-hover-bg: #e4a2a2;
 
-  --open-options-btn-bg: #ff8c00; /* Dark Orange */
-  --open-options-btn-hover-bg: #ff4500;
+  --open-options-btn-bg: #ffdaa8;
+  --open-options-btn-hover-bg: #ffd1a3;
 
-  --activity-log-bg: #8a2be2; /* Blue Violet */
-  --activity-log-hover-bg: #7a1fa2;
+  --activity-log-bg: #c4f1f9; 
+  --activity-log-hover-bg: #aaf0f9;
 
-  --debug-log-bg: #ff1493; /* Deep Pink */
-  --debug-log-hover-bg: #c71585;
+  --debug-log-bg: #ffd2e8; 
+  --debug-log-hover-bg: #ffcce3;
 
-  --error-log-bg: #ff4500; /* Orange Red */
-  --error-log-hover-bg: #ff6347;
+  --error-log-bg: #ffc2b3; 
+  --error-log-hover-bg: #ffb19e;
 
-  --export-logs-bg: #32cd32; /* Lime Green */
-  --export-logs-hover-bg: #228b22;
+  --export-logs-bg: #c4f0c4; 
+  --export-logs-hover-bg: #b3e2b3;
 
-  --check-updates-bg: #00ced1; /* Dark Turquoise */
-  --check-updates-hover-bg: #20b2aa;
+  --check-updates-bg: #bdf3f3; 
+  --check-updates-hover-bg: #aaf0f0;
 }
 
 /* ============================= */
@@ -104,7 +108,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Prevent vertical scroll bar in small extension window */
+  overflow: hidden; /* Prevent vertical scrollbar in small extension window */
   transition: background var(--transition-speed), color var(--transition-speed);
 }
 
@@ -174,14 +178,17 @@ select {
   box-sizing: border-box;
   background: var(--card-bg);
   color: var(--text-color);
-  transition: background var(--transition-speed), color var (--transition-speed), border var(--transition-speed);
+  transition: 
+    background var(--transition-speed), 
+    color var(--transition-speed), 
+    border var(--transition-speed);
 }
 
 textarea:focus,
 input:focus,
 select:focus {
   outline: none;
-  border-color: var(--button-bg);
+  border-color: #aad4ff; /* Soft highlight on focus */
 }
 
 /* Labels */
@@ -212,7 +219,8 @@ label {
   align-items: center;
   font-size: 18px;
   background: var(--toggle-passphrase-btn-bg);
-  color: var(--button-text);
+  /* If you want a consistent text color: */
+  color: #333;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -240,6 +248,7 @@ button {
   transition: background var(--transition-speed), transform var(--transition-speed);
 }
 
+/* Encrypt / Decrypt / Copy */
 #encryptBtn {
   background-color: var(--encrypt-btn-bg);
 }
@@ -261,6 +270,7 @@ button {
   background-color: var(--copy-btn-hover-bg);
 }
 
+/* Clear Log / Open Options */
 #clearLogBtn {
   background: var(--clear-log-btn-bg);
 }
@@ -275,7 +285,7 @@ button {
   background: var(--open-options-btn-hover-bg);
 }
 
-/* Specific Buttons */
+/* Activity / Debug / Error / Export / Check Updates */
 #activityLogBtn {
   background: var(--activity-log-bg);
 }
@@ -295,6 +305,20 @@ button {
 }
 #errorLogsBtn:hover {
   background: var(--error-log-hover-bg);
+}
+
+#exportLogsBtn {
+  background: var(--export-logs-bg);
+}
+#exportLogsBtn:hover {
+  background: var(--export-logs-hover-bg);
+}
+
+#checkUpdatesBtn {
+  background: var(--check-updates-bg);
+}
+#checkUpdatesBtn:hover {
+  background: var(--check-updates-hover-bg);
 }
 
 /* ============================= */
@@ -339,4 +363,26 @@ button {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Hide elements with the .hidden class */
+.hidden {
+  display: none;
+}
+
+/* Status message colors (for .error or .success) */
+.error {
+  color: #d93025; /* a slightly muted red for errors */
+  /* You can also do something like a pastel red background, etc. */
+}
+.success {
+  color: #2e7d32; /* a slightly muted green for success */
+}
+
+/* Optional: if you want logs in options page to have color-coded text */
+.log-entry.error {
+  color: #d93025;
+}
+.log-entry.success {
+  color: #2e7d32;
 }
