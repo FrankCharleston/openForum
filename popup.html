@@ -14,9 +14,10 @@
   <script src="lib/popup.js" defer></script>
 </head>
 <body>
-  <div class="container">
+  <header>
     <h1>🔐 OpenForum</h1>
-
+  </header>
+  <main class="container">
     <!-- Text to Encrypt/Decrypt -->
     <textarea 
       id="textInput" 
@@ -26,7 +27,7 @@
     <!-- Passphrase + Toggle Visibility -->
     <div class="input-group">
       <input type="password" id="passphrase" placeholder="Enter passphrase" />
-      <button id="togglePassphrase">👁</button>
+      <button id="togglePassphrase" title="Show/Hide Passphrase">👁</button>
     </div>
 
     <!-- Encrypt/Decrypt Buttons -->
@@ -42,17 +43,23 @@
       placeholder="Your result will appear here...">
     </textarea>
     <button id="copyBtn">📋 Copy</button>
-  </div>
 
-  <!-- Status/Activity Log -->
-  <p id="statusMessage"></p>
-  <div id="logContainer">
-    <h3>🔍 Activity Log</h3>
-    <ul id="logList"></ul>
-    <div class="button-group">
-      <button id="clearLogBtn">🗑 Clear Log</button>
-      <button id="openOptions">⚙ Open Settings</button>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="spinner hidden"></div>
+
+    <!-- Status/Activity Log -->
+    <p id="statusMessage"></p>
+    <div id="logContainer">
+      <h3>🔍 Activity Log</h3>
+      <ul id="logList"></ul>
+      <div class="button-group">
+        <button id="clearLogBtn">🗑 Clear Log</button>
+        <button id="openOptions">⚙ Open Settings</button>
+      </div>
     </div>
-  </div>
+  </main>
+  <footer>
+    <p>OpenForum © 2025</p>
+  </footer>
 </body>
 </html>

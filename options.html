@@ -8,13 +8,19 @@
   <script src="lib/options.js" defer></script>
 </head>
 <body>
-  <div class="container">
+  <header>
     <h1>OpenForum Settings</h1>
+  </header>
+  <main class="container">
     <label>
       <input type="checkbox" id="autoDecryptToggle" />
       Enable Auto-Decryption
     </label>
     <div id="autoDecryptIndicator">🔒</div>
+    <label>
+      <input type="checkbox" id="autoDecryptUserIdToggle" />
+      Use Reddit User ID for Auto-Decryption
+    </label>
     <label>
       Default Passphrase:
       <input type="text" id="customPassphrase" />
@@ -32,6 +38,9 @@
     <h3>Activity Log</h3>
     <ul id="logList"></ul>
     <button id="clearLogBtn">Clear Log</button>
-  </div>
+  </main>
+  <footer>
+    <p>OpenForum © 2025</p>
+  </footer>
 </body>
 </html>

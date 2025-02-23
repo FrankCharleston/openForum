@@ -2,19 +2,34 @@
 body {
   font-family: "Arial", sans-serif;
   text-align: center;
-  padding: 20px;
+  padding: 0;
   background: #f9f9f9;
   width: 320px; /* The default width of your extension options */
   margin: 0; /* Remove default body margin */
   overflow: hidden; /* Prevent scroll bar */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header, footer {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+}
+
+header h1, footer p {
+  margin: 0;
 }
 
 /* Container */
 .container {
+  flex: 1;
   background: white;
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
 /* Text & Input Fields */
@@ -95,4 +110,8 @@ label {
   margin-bottom: 10px;
   font-size: 14px;
   text-align: left;
+}
+
+#autoDecryptUserIdToggle {
+  margin-bottom: 10px;
 }

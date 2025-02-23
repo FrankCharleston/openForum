@@ -1,5 +1,5 @@
 # **🔐 OpenForum - Secure & Seamless Message Encryption**
-**Version:** `1.0.0`  
+**Version:** `1.1.0`  
 **Author:** [FrankCharleston](https://github.com/FrankCharleston/openForum)
 
 ---
@@ -73,14 +73,13 @@ OpenForum is a browser extension that allows users to **encrypt and decrypt text
 - Uses **AES encryption** via **CryptoJS** (`lib/crypto-js.min.js`).  
 - Encrypted messages follow the format: ENC[<encrypted_data>]
 
-
 ### **🔹 Manifest Permissions**
 - **Context Menus** → Adds right-click actions.  
 - **Storage** → Saves settings & error logs.  
 - **Scripting** → Injects decryption scripts into webpages.  
 
 ### **🔹 Auto-Decryption**
-- The extension can attempt to **decrypt content automatically** using a saved passphrase.  
+- The extension can attempt to **decrypt content automatically** using a saved passphrase or the dynamic user ID of the comment author (Reddit only).
 - **Toggle Auto-Decryption** via **Options Page**.
 
 ---
