@@ -12,7 +12,7 @@
 </head>
 <body class="options-page">
   <header>
-    <h1>OpenForum Options</h1>
+    <h1>🔐 OpenForum</h1>
   </header>
 
   <main>
@@ -27,10 +27,12 @@
           <option value="false">Disabled</option>
         </select>
 
-        <label for="defaultPassphrase">Default Passphrase:</label>
-        <div class="passphrase-container">
-          <input type="password" id="defaultPassphrase" placeholder="Enter default passphrase">
-          <button id="toggleDefaultPassphrase" class="icon-button">👁</button>
+        <div id="defaultPassphraseContainer" class="hidden">
+          <label for="defaultPassphrase">Default Passphrase:</label>
+          <div class="passphrase-container">
+            <input type="password" id="defaultPassphrase" placeholder="Enter default passphrase">
+            <button id="toggleDefaultPassphrase" class="icon-button">👁</button>
+          </div>
         </div>
 
         <label for="theme">Theme:</label>

@@ -9,7 +9,7 @@
   --header-text: #fff;
   --card-bg: #fff;
   --border-color: #ccc;
-  --footer-bg: rgba(0, 0, 0, 0.1);
+  --footer-bg: rgba(0, 64, 128, 0.8); /* Translucent header color */
   --footer-text: #fff;
 
   /* Pastel Button Colors */
@@ -58,7 +58,7 @@ body.dark-mode {
   --header-text: #fff;
   --card-bg: #1e1e1e;
   --border-color: #555;
-  --footer-bg: rgba(255, 255, 255, 0.1);
+  --footer-bg: rgba(0, 32, 64, 0.8); /* Translucent header color */
   --footer-text: #e0e0e0;
 
   /* Keep pastel-ish but slightly more saturated for contrast in dark mode */
@@ -189,9 +189,9 @@ body.options-page .column {
 textarea,
 input,
 select {
-  width: 100%;
+  width: calc(100% - 20px); /* Make input fields smaller */
   padding: 8px;
-  margin: 8px 0;
+  margin: 8px 10px; /* Add margin to the right side */
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
@@ -256,9 +256,9 @@ label {
 /*          BUTTON STYLES        */
 /* ============================= */
 button {
-  width: 100%;
+  width: calc(100% - 20px); /* Make buttons smaller */
   padding: 10px;
-  margin: 8px 0;
+  margin: 8px 10px; /* Add margin to the right side */
   border: none;
   border-radius: 8px;
   cursor: pointer;
