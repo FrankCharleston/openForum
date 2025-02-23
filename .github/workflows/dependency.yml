@@ -21,7 +21,7 @@ jobs:
     - name: Cache node_modules
       uses: actions/cache@v3
       with:
-        path: node_modules
+        path: lib/node_modules
         key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node_modules-
@@ -61,7 +61,7 @@ jobs:
     - name: Cache node_modules
       uses: actions/cache@v3
       with:
-        path: node_modules
+        path: lib/node_modules
         key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node_modules-
