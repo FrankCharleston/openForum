@@ -9,6 +9,8 @@
   --header-text: #fff;
   --card-bg: #fff;
   --border-color: #ccc;
+  --footer-bg: rgba(0, 0, 0, 0.1);
+  --footer-text: #fff;
 
   /* Pastel Button Colors */
   --encrypt-btn-bg: #b8e6b8; 
@@ -56,6 +58,8 @@ body.dark-mode {
   --header-text: #fff;
   --card-bg: #1e1e1e;
   --border-color: #555;
+  --footer-bg: rgba(255, 255, 255, 0.1);
+  --footer-text: #e0e0e0;
 
   /* Keep pastel-ish but slightly more saturated for contrast in dark mode */
   --encrypt-btn-bg: #b8e6b8; 
@@ -133,6 +137,11 @@ footer {
 header h1,
 footer p {
   margin: 0;
+}
+
+footer {
+  background: var(--footer-bg);
+  color: var(--footer-text);
 }
 
 /* The main container that holds content */
@@ -418,4 +427,21 @@ button {
 .icon-button:hover {
   background: var(--toggle-passphrase-btn-hover-bg);
   transform: scale(1.1);
+}
+
+.icon-button.top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.input-group,
+.output-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group input,
+.output-group textarea {
+  flex: 1;
 }

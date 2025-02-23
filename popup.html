@@ -16,7 +16,7 @@
 <body class="popup-page">
   <header>
     <h1>🔐 OpenForum</h1>
-    <button id="openOptions" class="icon-button">⚙</button>
+    <button id="openOptions" class="icon-button top-right">⚙</button>
   </header>
   
   <main>
@@ -39,12 +39,14 @@
       </div>
 
       <!-- Output & Copy -->
-      <textarea 
-        id="output" 
-        readonly 
-        placeholder="Your result will appear here...">
-      </textarea>
-      <button id="copyBtn" class="icon-button">📋</button>
+      <div class="output-group">
+        <textarea 
+          id="output" 
+          readonly 
+          placeholder="Your result will appear here...">
+        </textarea>
+        <button id="copyBtn" class="icon-button">📋</button>
+      </div>
 
       <!-- Status/Activity Log and Additional Buttons -->
       <p id="statusMessage"></p>
