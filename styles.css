@@ -11,3 +11,10 @@
 .hidden {
   display: none;
 }
+
+.footer {
+  text-align: center;
+  margin-top: auto; 
+  /* This can push the footer down if using flex and you have a fixed popup height. 
+     If the popup auto-resizes, you might just want margin-top: 20px; */
+}

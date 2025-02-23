@@ -14,6 +14,7 @@
   <script src="lib/popup.js" defer></script>
 </head>
 <body class="popup-page">
+  <!-- Combined into one .container -->
   <div class="container">
     <h1>🔐 OpenForum</h1>
 
@@ -42,25 +43,26 @@
       placeholder="Your result will appear here...">
     </textarea>
     <button id="copyBtn">📋 Copy</button>
-  </div>
 
-  <!-- Status/Activity Log and Additional Buttons -->
-  <div class="container">
+    <!-- Status/Activity Log and Additional Buttons -->
     <p id="statusMessage"></p>
     <div class="button-group">
       <button id="clearLogBtn">🗑 Clear Log</button>
       <button id="openOptions">⚙ Open Settings</button>
     </div>
-  </div>
 
-  <!-- Move logs here -->
-  <div class="logs">
-    <div id="activityLog" class="log hidden">
-      <!-- Activity log content -->
-    </div>
-    <div id="errorLogs" class="log hidden">
-      <!-- Error log content -->
+    <!-- Logs / Footer -->
+    <div class="logs">
+      <div id="activityLog" class="log hidden">
+        <!-- Activity log content -->
+      </div>
+      <div id="errorLogs" class="log hidden">
+        <!-- Error log content -->
+      </div>
     </div>
   </div>
 </body>
+<footer class="footer">
+  <p>OpenForum © 2025 | <a href="https://github.com/FrankCharleston/openForum#readme" target="_blank">README</a></p>
+</footer>
 </html>

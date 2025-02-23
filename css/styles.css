@@ -137,6 +137,7 @@ footer p {
 }
 
 /* The main container that holds content */
+
 .container {
   width: 100%; /* Ensure the container fits within the fixed size */
   height: auto; /* Allow the container to adjust height based on content */
@@ -147,6 +148,16 @@ footer p {
   overflow-y: auto;
   transition: background var(--transition-speed), color var(--transition-speed);
   margin: 0 auto; /* Center the container */
+}
+
+.popup-page {
+  display: flex;
+  flex-direction: column;
+  /* This ensures everything is stacked top to bottom */
+  align-items: stretch;
+  /* If you want them to fill the full width */
+  margin: 0;
+  padding: 0;
 }
 
 /* Ensure the main container in options page takes full height */
