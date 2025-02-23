@@ -36,7 +36,7 @@ function injectAndExecuteScript(tabId, func, args) {
   chrome.scripting.executeScript(
     {
       target: { tabId: tabId },
-      files: ["crypto-js.min.js"]
+      files: ["lib/crypto-js.min.js"]
     },
     () => {
       chrome.scripting.executeScript({

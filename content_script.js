@@ -116,7 +116,7 @@ async function loadCryptoJS() {
   if (typeof CryptoJS === "undefined") {
     if (DEBUG_MODE) console.log("[INFO] Injecting crypto-js.min.js...");
     const script = document.createElement("script");
-    script.src = chrome.runtime.getURL("crypto-js.min.js");
+    script.src = chrome.runtime.getURL("lib/crypto-js.min.js");
     document.head.appendChild(script);
     await new Promise(resolve => (script.onload = resolve));
     if (DEBUG_MODE) console.log("[INFO] crypto-js.min.js loaded.");

@@ -70,7 +70,7 @@ OpenForum is a browser extension that allows users to **encrypt and decrypt text
 
 ## **📖 Technical Details**
 ### **🔹 Encryption Algorithm**
-- Uses **AES encryption** via **CryptoJS** (`crypto-js.min.js`).  
+- Uses **AES encryption** via **CryptoJS** (`lib/crypto-js.min.js`).  
 - Encrypted messages follow the format: ENC[<encrypted_data>]
 
 
