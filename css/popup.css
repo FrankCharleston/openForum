@@ -86,6 +86,9 @@ body {
   flex-direction: column;
   transition: background var(--transition-speed), color var(--transition-speed);
   overflow: hidden; /* Prevent scroll in smaller popups */
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }
 
 /* Header / Footer */
