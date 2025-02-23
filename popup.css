@@ -145,9 +145,8 @@ button {
 }
 
 #clearLogBtn,
-#openOptions,
-#openErrors {
-  width: 32%;
+#openOptions {
+  width: 48%;
   margin: 5px 1% 0 1%;
   font-size: 12px;
   box-sizing: border-box;

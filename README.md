@@ -1,4 +1,4 @@
-### **🔐 OpenForum - Secure & Seamless Message Encryption**
+# **🔐 OpenForum - Secure & Seamless Message Encryption**
 **Version:** `1.0.0`  
 **Author:** [FrankCharleston](https://github.com/FrankCharleston/openForum)
 
@@ -34,28 +34,7 @@ OpenForum is a browser extension that allows users to **encrypt and decrypt text
 ---
 
 ## **📁 File Structure**
-```
-OpenForum/
-│── manifest.json
-│── background.js
-│── popup.html
-│── popup.js
-│── popup.css
-│── options.html
-│── options.js
-│── options.css
-│── errors.html
-│── errors.js
-│── errors.css
-│── assets/
-│   │── icon.png
-│   │── icon-48.png
-│   │── icon-128.png
-│── lib/
-│   │── crypto-js.min.js
-```
 
----
 
 ## **📜 Installation Guide**
 ### **🔹 Load as an Unpacked Extension**
@@ -92,10 +71,8 @@ OpenForum/
 ## **📖 Technical Details**
 ### **🔹 Encryption Algorithm**
 - Uses **AES encryption** via **CryptoJS** (`crypto-js.min.js`).  
-- Encrypted messages follow the format:  
-  ```
-  ENC[<encrypted_data>]
-  ```
+- Encrypted messages follow the format: ENC[<encrypted_data>]
+
 
 ### **🔹 Manifest Permissions**
 - **Context Menus** → Adds right-click actions.  
@@ -107,38 +84,9 @@ OpenForum/
 - **Toggle Auto-Decryption** via **Options Page**.
 
 ---
-
-## **❌ Troubleshooting**
-### **🔹 CryptoJS Not Found Error**
-If `CryptoJS is not defined`, make sure:
-- `crypto-js.min.js` is **included in `manifest.json`** under `web_accessible_resources`.
-- `popup.html` **loads `crypto-js.min.js` before `popup.js`**:
-  ```html
-  <script src="lib/crypto-js.min.js"></script>
-  <script src="popup.js" defer></script>
-  ```
-
-### **🔹 Can't Open Settings/Error Pages in Popup**
-- **Chrome Extensions only allow a single popup UI at a time.**  
-- Use **buttons inside the popup** to open these pages in **a new tab**:
-  ```javascript
-  document.getElementById("openOptions").addEventListener("click", () => {
-      chrome.runtime.openOptionsPage();
-  });
-
-  document.getElementById("openErrors").addEventListener("click", () => {
-      chrome.tabs.create({ url: "errors.html" });
-  });
-  ```
-
----
-
-## **💡 Future Improvements**
-- **🎨 Better UI/UX for the popup window**.  
-- **🌐 Support for cross-browser compatibility**.  
-- **🔑 Secure key storage for passphrases**.  
-
----
-
-## **📄 License**
-**MIT License** - Free to modify, distribute, and use.
+💡 Future Improvements
+🎨 Better UI/UX for the popup window.
+🌐 Support for cross-browser compatibility.
+🔑 Secure key storage for passphrases.
+📄 License
+MIT License - Free to modify, distribute, and use.

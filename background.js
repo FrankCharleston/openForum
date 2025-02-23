@@ -109,3 +109,20 @@ function decryptSelectedText(text) {
     }
   });
 }
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.local.get("autoDecrypt", (data) => {
+    updateIcon(data.autoDecrypt);
+  });
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "local" && changes.autoDecrypt) {
+    updateIcon(changes.autoDecrypt.newValue);
+  }
+});
+
+function updateIcon(autoDecryptEnabled) {
+  const iconPath = autoDecryptEnabled ? "icon-enabled.png" : "icon.png";
+  chrome.action.setIcon({ path: iconPath });
+}

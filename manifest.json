@@ -34,7 +34,7 @@
   "options_page": "options.html",
   "web_accessible_resources": [
     {
-      "resources": ["icon.png"],
+      "resources": ["icon.png", "icon-enabled.png"],
       "matches": ["http://*/*", "https://*/*"]
     }
   ],
