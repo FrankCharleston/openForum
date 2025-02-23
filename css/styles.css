@@ -10,38 +10,40 @@
   --card-bg: #fff;
   --border-color: #ccc;
 
-  --button-bg: #0056b3; /* Darker Blue */
-  --button-text: #fff;
-  --button-hover-bg: #003f7f;
+  --encrypt-btn-bg: #4caf50; /* Green */
+  --encrypt-btn-hover-bg: #388e3c;
 
-  --danger-bg: #b22222; /* Firebrick */
-  --danger-hover-bg: #8b0000;
+  --decrypt-btn-bg: #f44336; /* Red */
+  --decrypt-btn-hover-bg: #d32f2f;
 
-  --success-bg: #228b22; /* Forest Green */
-  --success-hover-bg: #006400;
+  --copy-btn-bg: #2196f3; /* Blue */
+  --copy-btn-hover-bg: #1976d2;
 
-  --warning-bg: #ff8c00; /* Dark Orange */
-  --warning-hover-bg: #ff4500;
+  --toggle-passphrase-btn-bg: #ffeb3b; /* Yellow */
+  --toggle-passphrase-btn-hover-bg: #fbc02d;
 
-  --info-bg: #4682b4; /* Steel Blue */
-  --info-hover-bg: #4169e1;
+  --clear-log-btn-bg: #b22222; /* Firebrick */
+  --clear-log-btn-hover-bg: #8b0000;
+
+  --open-options-btn-bg: #ff8c00; /* Dark Orange */
+  --open-options-btn-hover-bg: #ff4500;
 
   --transition-speed: 0.3s;
 
-  --activity-log-bg: #0056b3; /* Darker Blue */
-  --activity-log-hover-bg: #003f7f;
+  --activity-log-bg: #8a2be2; /* Blue Violet */
+  --activity-log-hover-bg: #7a1fa2;
 
-  --debug-log-bg: #228b22; /* Forest Green */
-  --debug-log-hover-bg: #006400;
+  --debug-log-bg: #ff1493; /* Deep Pink */
+  --debug-log-hover-bg: #c71585;
 
-  --error-log-bg: #b22222; /* Firebrick */
-  --error-log-hover-bg: #8b0000;
+  --error-log-bg: #ff4500; /* Orange Red */
+  --error-log-hover-bg: #ff6347;
 
-  --export-logs-bg: #ff8c00; /* Dark Orange */
-  --export-logs-hover-bg: #ff4500;
+  --export-logs-bg: #32cd32; /* Lime Green */
+  --export-logs-hover-bg: #228b22;
 
-  --check-updates-bg: #4682b4; /* Steel Blue */
-  --check-updates-hover-bg: #4169e1;
+  --check-updates-bg: #00ced1; /* Dark Turquoise */
+  --check-updates-hover-bg: #20b2aa;
 }
 
 /* Dark Mode overrides: add .dark-mode to <body> */
@@ -53,21 +55,38 @@ body.dark-mode {
   --card-bg: #1e1e1e;
   --border-color: #555;
 
-  --button-bg: #0056b3; /* Darker Blue */
-  --button-text: #e0e0e0;
-  --button-hover-bg: #003f7f;
+  --encrypt-btn-bg: #4caf50; /* Green */
+  --encrypt-btn-hover-bg: #388e3c;
 
-  --danger-bg: #b22222; /* Firebrick */
-  --danger-hover-bg: #8b0000;
+  --decrypt-btn-bg: #f44336; /* Red */
+  --decrypt-btn-hover-bg: #d32f2f;
 
-  --success-bg: #228b22; /* Forest Green */
-  --success-hover-bg: #006400;
+  --copy-btn-bg: #2196f3; /* Blue */
+  --copy-btn-hover-bg: #1976d2;
 
-  --warning-bg: #ff8c00; /* Dark Orange */
-  --warning-hover-bg: #ff4500;
+  --toggle-passphrase-btn-bg: #ffeb3b; /* Yellow */
+  --toggle-passphrase-btn-hover-bg: #fbc02d;
 
-  --info-bg: #4682b4; /* Steel Blue */
-  --info-hover-bg: #4169e1;
+  --clear-log-btn-bg: #b22222; /* Firebrick */
+  --clear-log-btn-hover-bg: #8b0000;
+
+  --open-options-btn-bg: #ff8c00; /* Dark Orange */
+  --open-options-btn-hover-bg: #ff4500;
+
+  --activity-log-bg: #8a2be2; /* Blue Violet */
+  --activity-log-hover-bg: #7a1fa2;
+
+  --debug-log-bg: #ff1493; /* Deep Pink */
+  --debug-log-hover-bg: #c71585;
+
+  --error-log-bg: #ff4500; /* Orange Red */
+  --error-log-hover-bg: #ff6347;
+
+  --export-logs-bg: #32cd32; /* Lime Green */
+  --export-logs-hover-bg: #228b22;
+
+  --check-updates-bg: #00ced1; /* Dark Turquoise */
+  --check-updates-hover-bg: #20b2aa;
 }
 
 /* ============================= */
@@ -87,6 +106,12 @@ body {
   align-items: center;
   overflow: hidden; /* Prevent vertical scroll bar in small extension window */
   transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+/* Set minimum size for the options page */
+body.options-page {
+  min-width: 400px;
+  min-height: 600px;
 }
 
 /* Header / Footer */
@@ -110,7 +135,7 @@ footer p {
 /* The main container that holds content */
 .container {
   width: 100%; /* Ensure the container fits within the fixed size */
-  height: 100%; /* Ensure the container fits within the fixed size */
+  height: auto; /* Allow the container to adjust height based on content */
   background: var(--card-bg);
   padding: 15px;
   border-radius: 12px;
@@ -118,6 +143,20 @@ footer p {
   overflow-y: auto;
   transition: background var(--transition-speed), color var(--transition-speed);
   margin: 0 auto; /* Center the container */
+}
+
+/* Ensure the main container in options page takes full height */
+body.options-page .container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Ensure columns in options page are aligned properly */
+body.options-page .column {
+  flex: 1;
+  margin: 10px;
 }
 
 /* ============================= */
@@ -172,7 +211,7 @@ label {
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  background: var(--button-bg);
+  background: var(--toggle-passphrase-btn-bg);
   color: var(--button-text);
   border: none;
   border-radius: 5px;
@@ -181,7 +220,7 @@ label {
 }
 
 .passphrase-container button:hover {
-  background: var(--button-hover-bg);
+  background: var(--toggle-passphrase-btn-hover-bg);
   transform: scale(1.1);
 }
 
@@ -197,47 +236,43 @@ button {
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  background-color: var(--button-bg);
-  color: var(--button-text);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
   transition: background var(--transition-speed), transform var(--transition-speed);
 }
 
-button:hover {
-  background-color: var(--button-hover-bg);
-  transform: scale(1.05);
+#encryptBtn {
+  background-color: var(--encrypt-btn-bg);
+}
+#encryptBtn:hover {
+  background-color: var(--encrypt-btn-hover-bg);
 }
 
-/* Example: Save Button */
-#saveSettings {
-  background: var (--info-bg);
+#decryptBtn {
+  background-color: var(--decrypt-btn-bg);
 }
-#saveSettings:hover {
-  background: var(--info-hover-bg);
+#decryptBtn:hover {
+  background-color: var(--decrypt-btn-hover-bg);
 }
 
-/* Example: Clear Log Button */
+#copyBtn {
+  background-color: var(--copy-btn-bg);
+}
+#copyBtn:hover {
+  background-color: var(--copy-btn-hover-bg);
+}
+
 #clearLogBtn {
-  background: var(--danger-bg);
+  background: var(--clear-log-btn-bg);
 }
 #clearLogBtn:hover {
-  background: var(--danger-hover-bg);
+  background: var(--clear-log-btn-hover-bg);
 }
 
-/* Example: Export Logs Button */
-#exportLogsBtn {
-  background: var(--export-logs-bg);
+#openOptions {
+  background: var(--open-options-btn-bg);
 }
-#exportLogsBtn:hover {
-  background: var(--export-logs-hover-bg);
-}
-
-/* Example: Check Updates Button */
-#checkUpdatesBtn {
-  background: var(--check-updates-bg);
-}
-#checkUpdatesBtn:hover {
-  background: var(--check-updates-hover-bg);
+#openOptions:hover {
+  background: var(--open-options-btn-hover-bg);
 }
 
 /* Specific Buttons */
@@ -281,6 +316,12 @@ button:hover {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   background: var(--card-bg);
+}
+
+/* Ensure the log container is below the functions in popup */
+#logContainer {
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* Each log entry */

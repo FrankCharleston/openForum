@@ -13,7 +13,7 @@
   <!-- Defer loading of our main popup script -->
   <script src="lib/popup.js" defer></script>
 </head>
-<body>
+<body class="popup-page">
   <div class="container">
     <h1>🔐 OpenForum</h1>
 
@@ -44,11 +44,13 @@
     <button id="copyBtn">📋 Copy</button>
   </div>
 
-  <!-- Status/Activity Log -->
-  <p id="statusMessage"></p>
-  <div id="logContainer">
-    <h3>🔍 Activity Log</h3>
-    <ul id="logList"></ul>
+  <!-- Status/Activity Log and Additional Buttons -->
+  <div class="container">
+    <p id="statusMessage"></p>
+    <div id="logContainer">
+      <h3>🔍 Activity Log</h3>
+      <ul id="logList"></ul>
+    </div>
     <div class="button-group">
       <button id="clearLogBtn">🗑 Clear Log</button>
       <button id="openOptions">⚙ Open Settings</button>
