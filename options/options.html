@@ -12,17 +12,23 @@
   <main>
     <label for="autoDecrypt">Auto Decrypt:</label>
     <select id="autoDecrypt">
+      <option value="false" selected>Disabled</option>
       <option value="true">Enabled</option>
-      <option value="false">Disabled</option>
     </select>
 
     <label for="defaultPassphrase">Default Passphrase:</label>
-    <input type="password" id="defaultPassphrase">
-    <button id="toggleDefaultPassphrase">👁</button>
+    <input type="password" id="defaultPassphrase" placeholder="default" />
 
-    <button id="saveSettings">Save Settings</button>
+    <label for="theme">Theme:</label>
+    <select id="theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="system" selected>System</option>
+    </select>
+
+    <button id="exportLogs">📜 Export Logs</button>
+    <button id="clearLogs">🗑 Clear Logs</button>
   </main>
-  <script src="../lib/crypto-js.min.js"></script>
   <script src="options.js"></script>
 </body>
 </html>

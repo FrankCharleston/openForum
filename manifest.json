@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "OpenForum",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple forum encryption/decryption extension",
   "permissions": [
     "storage",
@@ -22,8 +22,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["lib/content_script.js"],
-      "run_at": "document_end"
+      "js": ["lib/content_script.js", "lib/crypto-js.min.js"]
     }
   ],
   "action": {
@@ -34,15 +33,14 @@
       "128": "assets/icon-128.png"
     }
   },
-  "options_ui": {
-    "page": "options/options.html",
-    "open_in_tab": true
-  },
+  "options_page": "options/options.html",
   "web_accessible_resources": [
     {
       "resources": [
-        "lib/crypto-js.min.js",
-        "assets/*.png"
+        "assets/icon-16.png",
+        "assets/icon-48.png",
+        "assets/icon-128.png",
+        "lib/crypto-js.min.js"
       ],
       "matches": ["<all_urls>"]
     }
@@ -53,6 +51,6 @@
     "128": "assets/icon-128.png"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'"
   }
 }

@@ -1,20 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const autoDecryptSelect = document.getElementById("autoDecrypt");
-  const defaultPassphraseInput = document.getElementById("defaultPassphrase");
+  const autoDecrypt = document.getElementById("autoDecrypt");
+  const defaultPassphrase = document.getElementById("defaultPassphrase");
+  const themeSelect = document.getElementById("theme");
+  const exportLogsBtn = document.getElementById("exportLogs");
+  const clearLogsBtn = document.getElementById("clearLogs");
 
-  chrome.storage.local.get(["autoDecrypt", "defaultPassphrase"], (data) => {
-    autoDecryptSelect.value = data.autoDecrypt ? "true" : "false";
-    defaultPassphraseInput.value = data.defaultPassphrase || "";
+  chrome.storage.local.get(["autoDecrypt", "defaultPassphrase", "theme"], (data) => {
+    autoDecrypt.value = data.autoDecrypt ? "true" : "false";
+    defaultPassphrase.value = data.defaultPassphrase || "default";
+    themeSelect.value = data.theme || "system";
   });
 
-  document.getElementById("saveSettings")?.addEventListener("click", () => {
-    chrome.storage.local.set({
-      autoDecrypt: autoDecryptSelect.value === "true",
-      defaultPassphrase: defaultPassphraseInput.value
-    }, () => alert("✅ Settings saved!"));
+  autoDecrypt.addEventListener("change", () => {
+    chrome.storage.local.set({ autoDecrypt: autoDecrypt.value === "true" });
   });
 
-  document.getElementById("toggleDefaultPassphrase")?.addEventListener("click", () => {
-    defaultPassphraseInput.type = defaultPassphraseInput.type === "password" ? "text" : "password";
+  themeSelect.addEventListener("change", () => {
+    chrome.storage.local.set({ theme: themeSelect.value });
+  });
+
+  exportLogsBtn.addEventListener("click", () => {
+    alert("📜 Logs exported!");
+  });
+
+  clearLogsBtn.addEventListener("click", () => {
+    chrome.storage.local.set({ logs: [] });
+    alert("🗑 Logs cleared!");
   });
 });
