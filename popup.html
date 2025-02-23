@@ -1,85 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OpenForum Encryption</title>
-  <!-- Reference your external popup CSS -->
-  <link rel="stylesheet" href="css/popup.css">
+  <!-- Load the CSS for the popup -->
+  <link rel="stylesheet" href="css/styles.css" />
 
-  <!-- CryptoJS (for encryption/decryption) -->
+  <!-- Load CryptoJS first, so it's available to popup.js -->
   <script src="lib/crypto-js.min.js"></script>
 
-  <!-- Main popup script -->
+  <!-- Defer loading of our main popup script -->
   <script src="lib/popup.js" defer></script>
-  <!-- Version script -->
-  <script src="lib/version.js" defer></script>
 </head>
-<body class="light-mode">
-  <header>
+<body>
+  <div class="container">
     <h1>🔐 OpenForum</h1>
-    <!-- Settings button -->
-    <button id="openSettingsBtn" title="Open Settings" class="small-btn">⚙</button>
-  </header>
 
-  <main class="container">
     <!-- Text to Encrypt/Decrypt -->
     <textarea 
-      id="textInput"
-      placeholder="Enter text to encrypt or decrypt..."
-      class="text-input">
+      id="textInput" 
+      placeholder="Enter text to encrypt or decrypt...">
     </textarea>
 
-    <!-- Passphrase -->
-    <div class="passphrase-container">
-      <input
-        type="password"
-        id="passphrase"
-        placeholder="Enter passphrase"
-        class="passphrase-input"
-      />
-      <!-- Show/Hide Passphrase -->
-      <button
-        id="togglePassphrase"
-        title="Show/Hide Passphrase"
-        class="small-btn">
-        👁
-      </button>
+    <!-- Passphrase + Toggle Visibility -->
+    <div class="input-group">
+      <input type="password" id="passphrase" placeholder="Enter passphrase" />
+      <button id="togglePassphrase">👁</button>
     </div>
 
     <!-- Encrypt/Decrypt Buttons -->
     <div class="button-group">
-      <button id="encryptBtn" class="action-btn">Encrypt</button>
-      <button id="decryptBtn" class="action-btn">Decrypt</button>
+      <button id="encryptBtn">Encrypt</button>
+      <button id="decryptBtn">Decrypt</button>
     </div>
 
-    <!-- Output & Copy Button -->
-    <div class="output-container">
-      <textarea
-        id="output"
-        readonly
-        placeholder="Your result will appear here..."
-        class="output-textarea">
-      </textarea>
-      <button
-        id="copyBtn"
-        title="Copy to Clipboard"
-        class="small-btn">
-        📋
-      </button>
-    </div>
+    <!-- Output & Copy -->
+    <textarea 
+      id="output" 
+      readonly 
+      placeholder="Your result will appear here...">
+    </textarea>
+    <button id="copyBtn">📋 Copy</button>
+  </div>
 
-    <!-- Activity Log -->
-    <div id="logContainer" class="log-container">
-      <div class="log-header">
-        <h3>Activity Log</h3>
-        <button id="clearLogBtn" title="Clear Log" class="small-btn">🗑</button>
-      </div>
-      <ul id="logList" class="log-list"></ul>
+  <!-- Status/Activity Log -->
+  <p id="statusMessage"></p>
+  <div id="logContainer">
+    <h3>🔍 Activity Log</h3>
+    <ul id="logList"></ul>
+    <div class="button-group">
+      <button id="clearLogBtn">🗑 Clear Log</button>
+      <button id="openOptions">⚙ Open Settings</button>
     </div>
-  </main>
-
-  <footer>
-    <p>OpenForum © 2025 | Version <span id="version"></span> | <a href="https://github.com/FrankCharleston/openForum" target="_blank">GitHub Repo</a></p>
-  </footer>
+  </div>
 </body>
 </html>
