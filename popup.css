@@ -4,18 +4,23 @@ body {
   text-align: center;
   padding: 0;
   background: #f9f9f9;
-  width: 320px; /* The default width of your extension options */
+  width: 400px; /* Increased width */
   margin: 0; /* Remove default body margin */
   overflow: hidden; /* Prevent scroll bar */
   display: flex;
   flex-direction: column;
-  height: 500px; /* Increased height */
+  height: 400px; /* Reduced height */
+  transition: background 0.3s, color 0.3s;
 }
 
 header, footer {
   background: #007bff;
   color: white;
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s;
 }
 
 header h1, footer p {
@@ -30,6 +35,7 @@ header h1, footer p {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Text & Input Fields */
@@ -42,6 +48,7 @@ input {
   border-radius: 8px;
   font-size: 14px;
   box-sizing: border-box;
+  transition: background 0.3s, color 0.3s, border 0.3s;
 }
 
 /* Button */
@@ -98,6 +105,7 @@ button {
   margin-top: 10px;
   font-size: 14px;
   font-weight: bold;
+  transition: color 0.3s;
 }
 
 /* Activity Log */
@@ -110,10 +118,21 @@ button {
   border-radius: 6px;
   padding: 5px;
   background: #fff;
+  transition: background 0.3s, border 0.3s;
 }
 
 #logList li {
   margin-bottom: 5px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Additional Options */
@@ -171,4 +190,48 @@ button[title]::after {
 
 button[title]:hover::after {
   opacity: 1;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .container {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.dark-mode textarea,
+body.dark-mode input {
+  background: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+}
+
+body.dark-mode button {
+  background: #333;
+  color: #e0e0e0;
+}
+
+body.dark-mode #saveSettings {
+  background: #0056b3;
+}
+
+body.dark-mode #clearLogBtn {
+  background: #c82333;
+}
+
+body.dark-mode #exportLogsBtn {
+  background: #218838;
+}
+
+body.dark-mode #statusMessage {
+  color: #e0e0e0;
+}
+
+body.dark-mode #logList {
+  background: #333;
+  border: 1px solid #555;
 }
