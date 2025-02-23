@@ -95,6 +95,9 @@ footer {
   background: var(--header-bg);
   color: var(--header-text);
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: background var(--transition-speed), color var(--transition-speed);
 }
 

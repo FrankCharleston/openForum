@@ -245,6 +245,7 @@ button:hover {
   width: 30px;
   height: 30px;
   padding: 0;
+  margin-right: 10px; /* Increase right side margin */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -260,6 +261,43 @@ button:hover {
 .settings-btn:hover {
   background: var(--settings-hover-bg);
   transform: scale(1.1);
+}
+
+/* Passphrase Container */
+.passphrase-container {
+  display: flex;
+  align-items: center;
+}
+
+.passphrase-container input {
+  flex: 1;
+}
+
+.passphrase-container button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background var(--transition-speed), transform var(--transition-speed);
+}
+
+.passphrase-container button:hover {
+  background: var(--button-hover-bg);
+  transform: scale(1.1);
+}
+
+/* Full Width Button */
+.full-width {
+  width: 100%;
 }
 
 /* ============================= */

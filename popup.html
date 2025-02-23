@@ -23,7 +23,8 @@
     <!-- Text to Encrypt/Decrypt -->
     <textarea 
       id="textInput"
-      placeholder="Enter text to encrypt or decrypt...">
+      placeholder="Enter text to encrypt or decrypt..."
+      style="height: 150px;">
     </textarea>
 
     <!-- Passphrase -->
@@ -47,22 +48,20 @@
       <button id="decryptBtn">Decrypt</button>
     </div>
 
-    <!-- Output & Copy -->
+    <!-- Copy Button -->
+    <button
+      id="copyBtn"
+      title="Copy to Clipboard"
+      class="full-width">
+      📋 Copy
+    </button>
+
+    <!-- Output & Activity Log -->
     <textarea
       id="output"
       readonly
       placeholder="Your result will appear here...">
     </textarea>
-    <button
-      id="copyBtn"
-      title="Copy to Clipboard">
-      📋 Copy
-    </button>
-
-    <!-- Loading Spinner (hidden by default) -->
-    <div id="loadingSpinner" class="spinner hidden"></div>
-
-    <!-- Status/Activity Log -->
     <p id="statusMessage"></p>
     <div id="logContainer">
       <h3>Activity Log</h3>
