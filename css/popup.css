@@ -89,10 +89,11 @@ body {
   overflow: hidden; /* Prevent scroll in smaller popups */
 }
 
+/* Header / Footer */
 header,
 footer {
-  background: var(--header-bg);
-  color: var(--header-text);
+  background: #343a40; /* Different cohesive color */
+  color: #f8f9fa;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -245,7 +246,7 @@ button:hover {
   width: 30px;
   height: 30px;
   padding: 0;
-  margin-right: 10px; /* Increase right side margin */
+  margin-right: 20px; /* Increase right side margin */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -295,6 +296,16 @@ button:hover {
   transform: scale(1.1);
 }
 
+/* Button Group */
+.button-group.half-width {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-group.half-width button {
+  width: 48%;
+}
+
 /* Full Width Button */
 .full-width {
   width: 100%;
@@ -308,6 +319,10 @@ button:hover {
   font-size: 14px;
   font-weight: bold;
   transition: color var(--transition-speed);
+}
+
+#logContainer {
+  margin-top: 0; /* Remove whitespace above Activity Log */
 }
 
 #logList {
