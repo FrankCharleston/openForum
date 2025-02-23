@@ -47,13 +47,19 @@
   <!-- Status/Activity Log and Additional Buttons -->
   <div class="container">
     <p id="statusMessage"></p>
-    <div id="logContainer">
-      <h3>🔍 Activity Log</h3>
-      <ul id="logList"></ul>
-    </div>
     <div class="button-group">
       <button id="clearLogBtn">🗑 Clear Log</button>
       <button id="openOptions">⚙ Open Settings</button>
+    </div>
+  </div>
+
+  <!-- Move logs here -->
+  <div class="logs">
+    <div id="activityLog" class="log hidden">
+      <!-- Activity log content -->
+    </div>
+    <div id="errorLogs" class="log hidden">
+      <!-- Error log content -->
     </div>
   </div>
 </body>

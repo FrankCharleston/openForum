@@ -1,0 +1,13 @@
+.logs {
+  margin: 20px 0;
+}
+
+.log {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
