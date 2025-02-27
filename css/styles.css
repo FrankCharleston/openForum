@@ -89,7 +89,38 @@ body {
   width: 100%;
 }
 
+.half-width {
+  width: 48%;
+}
+
+.quarter-width {
+  width: 24%;
+}
+
 .stretch {
   display: block;
-  margin: 10px 0;
+  margin: 5px 0;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.passphrase-container {
+  display: flex;
+  align-items: center;
+}
+
+.passphrase-input {
+  flex: 3;
+}
+
+.eye-button {
+  flex: 1;
+}
+
+.log-container {
+  max-height: 200px;
+  overflow-y: auto;
 }

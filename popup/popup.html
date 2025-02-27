@@ -6,17 +6,6 @@
   <link rel="stylesheet" href="../css/styles.css">
   <script src="../lib/crypto-js.min.js"></script>
   <script defer src="popup.js"></script>
-  <style>
-    .log-container {
-      max-height: 200px;
-      overflow-y: auto;
-    }
-    /* Set default width and height for the popup */
-    body {
-      width: 400px;
-      height: 600px;
-    }
-  </style>
 </head>
 <body class="centered-ui">
   <!-- Header: Centered title and settings button -->
@@ -34,8 +23,8 @@
     </div>
 
     <div class="button-row">
-      <button id="encryptBtn" class="action-btn">🔒 Encrypt</button>
-      <button id="decryptBtn" class="action-btn">🔓 Decrypt</button>
+      <button id="encryptBtn" class="action-btn half-width">🔒 Encrypt</button>
+      <button id="decryptBtn" class="action-btn half-width">🔓 Decrypt</button>
     </div>
 
     <textarea id="output" class="full-width stretch" placeholder="Encrypted/Decrypted text will appear here"></textarea>

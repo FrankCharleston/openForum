@@ -1,3 +1,4 @@
+// Listener for when the popup is loaded
 document.addEventListener("DOMContentLoaded", async () => {
   await loadCryptoJS();
   initializePopup();
@@ -70,6 +71,7 @@ function initializePopup() {
     return;
   }
 
+  // Event listener for settings button
   settingsBtn.addEventListener("click", () => {
     chrome.runtime.openOptionsPage().catch((error) => {
       console.error("❌ Could not create an options page.", error);
@@ -78,22 +80,26 @@ function initializePopup() {
     logAction("Settings button clicked");
   });
 
-  // Fix passphrase visibility toggle
+  // Event listener for passphrase visibility toggle
   togglePassphraseBtn.addEventListener("click", () => {
     passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
     togglePassphraseBtn.textContent = passphraseInput.type === "password" ? "👁️" : "🙈";
     logAction("Toggle passphrase button clicked");
   });
 
+  // Event listener for encrypt button
   encryptBtn.addEventListener("click", () => {
     processText("encrypt");
     logAction("Encrypt button clicked");
   });
+
+  // Event listener for decrypt button
   decryptBtn.addEventListener("click", () => {
     processText("decrypt");
     logAction("Decrypt button clicked");
   });
 
+  // Event listener for copy button
   copyBtn.addEventListener("click", async () => {
     const output = document.getElementById("output");
     if (!output.value.trim()) return;
@@ -155,6 +161,7 @@ function initializePopup() {
     }, 2000);
   }
   
+  // Function to process text for encryption or decryption
   function processText(mode) {
     if (!textInput.value.trim() || !passphraseInput.value.trim()) {
       console.log("⚠️ Enter text & passphrase.");
@@ -172,6 +179,7 @@ function initializePopup() {
     }
   }
 
+  // Function to decrypt text
   function decryptText(text, passphrase) {
     try {
       const encryptedData = text.replace("ENC[", "").replace("]", "").trim();
@@ -202,6 +210,7 @@ function logAction(action) {
   });
 }
 
+// Function to save encrypted text to history
 function saveToHistory(encrypted) {
   const history = JSON.parse(localStorage.getItem("encryptedHistory")) || [];
   history.push(encrypted);
@@ -209,6 +218,7 @@ function saveToHistory(encrypted) {
   loadHistory();
 }
 
+// Function to load history of encrypted texts
 function loadHistory() {
   const history = JSON.parse(localStorage.getItem("encryptedHistory")) || [];
   const logContainer = document.getElementById("logContainer");
@@ -224,8 +234,15 @@ function loadHistory() {
   });
 }
 
+// Function to update options output
 function updateOptionsOutput(value) {
-  chrome.runtime.sendMessage({ action: "updateOptionsOutput", value });
+  chrome.runtime.sendMessage({ action: "updateOptionsOutput", value }, (response) => {
+    if (response && response.status === "success") {
+      console.log("✅ Options output updated.");
+    } else {
+      console.error("❌ Failed to update options output.");
+    }
+  });
 }
 
 /**
@@ -257,3 +274,10 @@ function loadSettings() {
     }
   });
 }
+
+// Listener for messages from other parts of the extension
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "updateOptionsOutput") {
+    document.getElementById("output").value = message.value;
+  }
+});

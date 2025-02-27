@@ -15,9 +15,8 @@
   </header>
 
   <main class="options-container">
-    
     <label for="autoDecrypt">🔓 Auto Decrypt:</label>
-    <select id="autoDecrypt">
+    <select id="autoDecrypt" class="full-width stretch">
       <option value="false" selected>Disabled</option>
       <option value="true">Enabled</option>
     </select>
@@ -28,8 +27,6 @@
       <button id="toggleDefaultPassphrase" class="eye-button">👁️</button>
     </div>
 
-    <!-- Removed theme selection -->
-    
     <div>
       <label for="debug">Enable Debug</label>
       <input type="checkbox" id="debug" />
@@ -37,10 +34,11 @@
 
     <textarea id="output" class="full-width stretch" placeholder="Encrypted/Decrypted text will appear here"></textarea>
 
-    <button id="saveOptions" class="action-btn">💾 Save Settings</button>
-    <button id="exportLogs" class="action-btn">📜 Export Logs</button>
-    <button id="clearLogs" class="action-btn">🗑 Clear Logs</button>
-
+    <div class="button-row">
+      <button id="saveOptions" class="action-btn half-width">💾 Save Settings</button>
+      <button id="exportLogs" class="action-btn half-width">📜 Export Logs</button>
+    </div>
+    <button id="clearLogs" class="action-btn full-width stretch">🗑 Clear Logs</button>
   </main>
 
   <footer class="footer">
