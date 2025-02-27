@@ -28,29 +28,21 @@
   },
   "options_page": "options/options.html",
   "web_accessible_resources": [
-    {
-      "resources": [
-        "assets/icon-16.png",
-        "assets/icon-48.png",
-        "assets/icon-128.png",
-        "assets/icon-enabled-16.png",
-        "assets/icon-enabled-48.png",
-        "assets/icon-enabled-128.png",
-        "assets/icon-green-16.png",
-        "assets/icon-green-48.png",
-        "assets/icon-green-128.png",
-        "lib/crypto-js.min.js",
-        "css/styles.css"
-      ],
-      "matches": ["<all_urls>"]
-    }
+    "assets/icon-16.png",
+    "assets/icon-48.png",
+    "assets/icon-128.png",
+    "assets/icon-enabled-16.png",
+    "assets/icon-enabled-48.png",
+    "assets/icon-enabled-128.png",
+    "assets/icon-green-16.png",
+    "assets/icon-green-48.png",
+    "assets/icon-green-128.png",
+    "lib/crypto-js.min.js",
+    "css/styles.css"
   ],
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
-  },
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self';"
   }
 }
