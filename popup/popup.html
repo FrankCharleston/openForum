@@ -6,35 +6,48 @@
   <link rel="stylesheet" href="../css/styles.css">
   <script src="../lib/crypto-js.min.js"></script>
   <script defer src="popup.js"></script>
+  <style>
+    .log-container {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    /* Set default width and height for the popup */
+    body {
+      width: 400px;
+      height: 600px;
+    }
+  </style>
 </head>
-<body>
-
-  <div class="header">
-    <span class="title">OpenForum</span>
+<body class="centered-ui">
+  <!-- Header: Centered title and settings button -->
+  <header class="header">
+    <span class="title">OpenForum 🔐</span>
     <button id="settingsBtn" class="icon-button">⚙️</button>
+  </header>
+
+  <div class="container">
+    <input id="textInput" type="text" placeholder="Enter text..." class="full-width stretch" />
+    
+    <div class="passphrase-container">
+      <input id="passphrase" class="passphrase-input" type="password" placeholder="Enter passphrase..." />
+      <button id="togglePassphrase" class="eye-button">👁️</button>
+    </div>
+
+    <div class="button-row">
+      <button id="encryptBtn" class="action-btn">🔒 Encrypt</button>
+      <button id="decryptBtn" class="action-btn">🔓 Decrypt</button>
+    </div>
+
+    <textarea id="output" class="full-width stretch" placeholder="Encrypted/Decrypted text will appear here"></textarea>
+
+    <button id="copyBtn" class="action-btn full-width stretch">📋 Copy</button>
+
+    <div id="logContainer" class="log-container"></div>
   </div>
 
-  <div class="input-group">
-    <input id="textInput" type="text" placeholder="Enter text..." />
-  </div>
-
-  <div class="passphrase-container">
-    <input id="passphrase" class="passphrase-input" type="password" placeholder="Enter passphrase..." />
-    <button id="togglePassphrase" class="eye-button">👁️</button>
-  </div>
-
-  <button id="encryptBtn" class="action-btn">🔒 Encrypt</button>
-  <button id="decryptBtn" class="action-btn">🔓 Decrypt</button>
-
-  <textarea id="output" placeholder="Encrypted/Decrypted text will appear here"></textarea>
-
-  <button id="copyBtn" class="action-btn">📋 Copy</button>
-
-  <div id="logContainer" class="log-container"></div>
-
-  <footer>
-    <p>🔐 Securely encrypted with OpenForum</p>
+  <footer class="footer">
+    <a href="https://github.com/FrankCharleston/openForum" target="_blank">🔗 GitHub Repo</a> |
+    <span>© 2025 OpenForum</span>
   </footer>
-
 </body>
 </html>

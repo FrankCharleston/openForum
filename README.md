@@ -135,19 +135,6 @@ cd OpenForum
 
 ---
 
-## **🛠 Troubleshooting & Known Issues**
-❌ **Decryption fails on some websites?**  
-   - Check console logs (`F12 → Console`).  
-   - Some sites block **content scripts**, requiring manual decryption.  
-
-❌ **Theme settings not applying?**  
-   - Ensure the extension is reloaded after changing settings.  
-
-❌ **"CryptoJS is not defined" error?**  
-   - Ensure `crypto-js.min.js` is correctly loaded in **content scripts**.  
-
----
-
 ## **📜 License**
 This project is licensed under the **MIT License**.  
 
