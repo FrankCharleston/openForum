@@ -14,7 +14,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["http://*/*", "https://*/*"],
       "js": ["lib/content_script.js"],
       "css": ["css/styles.css"],
       "run_at": "document_end"
@@ -42,6 +42,8 @@
         "assets/icon-green-48.png",
         "assets/icon-green-128.png",
         "lib/crypto-js.min.js",
+        "lib/content_script.js",
+        "lib/background.js",
         "css/styles.css"
       ],
       "matches": ["<all_urls>"]

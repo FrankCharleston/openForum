@@ -1,23 +1,44 @@
-// Listener for when the options page is loaded
 document.addEventListener("DOMContentLoaded", () => {
+  applySystemTheme();
   loadOptions();
+  addEventListeners();
+});
+
+/**
+ * Applies system theme.
+ */
+function applySystemTheme() {
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'cyberpunk-dark' : 'cyberpunk-light';
+  document.body.classList.add(systemTheme);
+  document.body.classList.add('cyberpunk-theme');
+}
+
+/**
+ * Adds event listeners for buttons.
+ */
+function addEventListeners() {
   document.getElementById("saveOptions").addEventListener("click", saveOptions);
   document.getElementById("exportLogs").addEventListener("click", exportLogs);
   document.getElementById("clearLogs").addEventListener("click", clearLogs);
   document.getElementById("toggleDefaultPassphrase").addEventListener("click", togglePassphraseVisibility);
   document.getElementById("closeOptions").addEventListener("click", () => window.close());
-});
+}
 
-// Function to load options from storage
+/**
+ * Loads options from Chrome storage.
+ */
 function loadOptions() {
-  chrome.storage.local.get(["autoDecrypt", "defaultPassphrase", "debug"], (data) => {
+  chrome.storage.local.get(["autoDecrypt", "defaultPassphrase", "debug", "logs"], (data) => {
     document.getElementById("autoDecrypt").value = data.autoDecrypt ? "true" : "false";
     document.getElementById("defaultPassphrase").value = data.defaultPassphrase || "";
     document.getElementById("debug").checked = data.debug || false;
+    displayLogs(data.logs || []);
   });
 }
 
-// Function to save options to storage
+/**
+ * Saves options to Chrome storage.
+ */
 function saveOptions() {
   const autoDecrypt = document.getElementById("autoDecrypt").value === "true";
   const defaultPassphrase = document.getElementById("defaultPassphrase").value;
@@ -28,10 +49,14 @@ function saveOptions() {
   });
 }
 
-// Function to export logs to a file
+/**
+ * Exports logs as a .txt file.
+ */
 function exportLogs() {
   chrome.storage.local.get("logs", (data) => {
     const logs = data.logs || [];
+    if (logs.length === 0) return alert("⚠️ No logs to export.");
+
     const blob = new Blob([logs.join("\n")], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -42,17 +67,29 @@ function exportLogs() {
   });
 }
 
-// Function to clear logs from storage
+/**
+ * Clears logs from storage.
+ */
 function clearLogs() {
   chrome.storage.local.set({ logs: [] }, () => {
+    document.getElementById("output").value = "";
     alert("🗑 Logs cleared.");
   });
 }
 
-// Function to toggle passphrase visibility
+/**
+ * Toggles visibility of the default passphrase input.
+ */
 function togglePassphraseVisibility() {
   const passphraseInput = document.getElementById("defaultPassphrase");
   const toggleButton = document.getElementById("toggleDefaultPassphrase");
   passphraseInput.type = passphraseInput.type === "password" ? "text" : "password";
   toggleButton.textContent = passphraseInput.type === "password" ? "👁️" : "🙈";
+}
+
+/**
+ * Displays logs in the textarea.
+ */
+function displayLogs(logs) {
+  document.getElementById("output").value = logs.length ? logs.join("\n") : "No logs available.";
 }

@@ -5,10 +5,10 @@
   <title>OpenForum Options</title>
   <link rel="stylesheet" href="../css/styles.css">
   <script defer src="options.js"></script>
+  <script defer src="../lib/version.js"></script>
 </head>
 <body class="centered-ui">
 
-  <!-- Header: Centered -->
   <header class="header">
     <span class="title">OpenForum 🔐 Options</span>
     <button id="closeOptions" class="close-button">❌</button>
@@ -17,33 +17,87 @@
   <main class="options-container">
     <label for="autoDecrypt">🔓 Auto Decrypt:</label>
     <select id="autoDecrypt" class="full-width stretch">
-      <option value="false" selected>Disabled</option>
+      <option value="false">Disabled</option>
       <option value="true">Enabled</option>
     </select>
 
     <label for="defaultPassphrase">🔑 Default Passphrase:</label>
-    <div class="passphrase-container" id="defaultPassphraseField">
+    <div class="passphrase-container">
       <input type="password" id="defaultPassphrase" class="passphrase-input">
       <button id="toggleDefaultPassphrase" class="eye-button">👁️</button>
     </div>
 
-    <div>
+    <div class="checkbox-container">
+      <input type="checkbox" id="debug">
       <label for="debug">Enable Debug</label>
-      <input type="checkbox" id="debug" />
     </div>
 
-    <textarea id="output" class="full-width stretch" placeholder="Encrypted/Decrypted text will appear here"></textarea>
+    <textarea id="output" class="full-width stretch" placeholder="Logs will appear here" readonly></textarea>
 
     <div class="button-row">
       <button id="saveOptions" class="action-btn half-width">💾 Save Settings</button>
       <button id="exportLogs" class="action-btn half-width">📜 Export Logs</button>
     </div>
+
     <button id="clearLogs" class="action-btn full-width stretch">🗑 Clear Logs</button>
   </main>
 
   <footer class="footer">
     <a href="https://github.com/FrankCharleston/openForum" target="_blank">🔗 GitHub Repo</a> |
-    <span>© 2025 OpenForum</span>
+    <span>© 2025 OpenForum</span> |
+    <span id="version"></span>
+  </footer>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OpenForum Options</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <script defer src="options.js"></script>
+  <script defer src="../lib/version.js"></script>
+</head>
+<body class="centered-ui">
+
+  <header class="header">
+    <span class="title">OpenForum 🔐 Options</span>
+    <button id="closeOptions" class="close-button">❌</button>
+  </header>
+
+  <main class="options-container">
+    <label for="autoDecrypt">🔓 Auto Decrypt:</label>
+    <select id="autoDecrypt" class="full-width stretch">
+      <option value="false">Disabled</option>
+      <option value="true">Enabled</option>
+    </select>
+
+    <label for="defaultPassphrase">🔑 Default Passphrase:</label>
+    <div class="passphrase-container">
+      <input type="password" id="defaultPassphrase" class="passphrase-input">
+      <button id="toggleDefaultPassphrase" class="eye-button">👁️</button>
+    </div>
+
+    <div class="checkbox-container">
+      <input type="checkbox" id="debug">
+      <label for="debug">Enable Debug</label>
+    </div>
+
+    <textarea id="output" class="full-width stretch" placeholder="Logs will appear here" readonly></textarea>
+
+    <div class="button-row">
+      <button id="saveOptions" class="action-btn half-width">💾 Save Settings</button>
+      <button id="exportLogs" class="action-btn half-width">📜 Export Logs</button>
+    </div>
+
+    <button id="clearLogs" class="action-btn full-width stretch">🗑 Clear Logs</button>
+  </main>
+
+  <footer class="footer">
+    <a href="https://github.com/FrankCharleston/openForum" target="_blank">🔗 GitHub Repo</a> |
+    <span>© 2025 OpenForum</span> |
+    <span id="version"></span>
   </footer>
 
 </body>
