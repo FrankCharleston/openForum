@@ -1,0 +1,187 @@
+/* ============================= */
+/*        CYBERPUNK THEMES       */
+/* ============================= */
+
+/* General Theme */
+.cyberpunk-theme {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Light Theme */
+.cyberpunk-light {
+  --bg-color: #e0e0e0;
+  --text-color: #1a1a1a;
+  --header-bg: #ffcc00;
+  --button-bg: #ff5500;
+  --button-hover: #d43f00;
+  --input-bg: #ffffff;
+}
+
+/* Dark Theme */
+.cyberpunk-dark {
+  --bg-color: #121212;
+  --text-color: #ffcc00;
+  --header-bg: #ff165d;
+  --button-bg: #ff9f1c;
+  --button-hover: #ff5500;
+  --input-bg: #1a1a2e;
+}
+
+/* ============================= */
+/*        GENERAL STYLES         */
+/* ============================= */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  width: 400px;
+  padding: 20px;
+}
+
+/* Centered UI for Popup & Options */
+.centered-ui {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================= */
+/*       HEADER & FOOTER         */
+/* ============================= */
+
+.header {
+  width: 100%;
+  background-color: var(--header-bg);
+  padding: 10px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  flex-grow: 1;
+  text-align: center;
+}
+
+/* Close Button (Options Page) */
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Footer */
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+/* ============================= */
+/*        FORM ELEMENTS          */
+/* ============================= */
+
+input, select, textarea, button {
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--text-color);
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  width: 100%;
+}
+
+textarea {
+  height: 120px;
+  resize: none;
+  overflow-y: auto;
+}
+
+/* Buttons */
+button {
+  background-color: var(--button-bg);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 5px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Row of buttons */
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.half-width {
+  width: 48%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Passphrase Input and Toggle */
+.passphrase-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.passphrase-input {
+  flex-grow: 1;
+  padding-right: 40px;
+}
+
+.eye-button {
+  margin-left: 5px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* ============================= */
+/*        LOG OUTPUT BOX         */
+/* ============================= */
+
+.log-container {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid var(--text-color);
+  padding: 5px;
+  margin-top: 10px;
+}
+
+/* ============================= */
+/*       CHECKBOX STYLE          */
+/* ============================= */
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.checkbox-container input {
+  transform: scale(1.2);
+}

@@ -1,18 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "OpenForum",
-  "version": "1.1.0",
-  "description": "A simple forum encryption/decryption extension",
+  "name": "Open Forum",
+  "version": "1.0",
+  "description": "An open forum extension",
   "permissions": [
     "storage",
-    "contextMenus",
-    "scripting",
     "activeTab",
-    "tabs"
-  ],
-  "host_permissions": [
-    "http://*/*",
-    "https://*/*"
+    "contextMenus",
+    "scripting"
   ],
   "background": {
     "service_worker": "lib/background.js"
@@ -20,18 +15,20 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["lib/content_script.js", "lib/crypto-js.min.js"]
+      "js": ["lib/content_script.js"],
+      "css": ["css/styles.css"],
+      "run_at": "document_end"
     }
   ],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "assets/icon-16.png",
       "48": "assets/icon-48.png",
       "128": "assets/icon-128.png"
     }
   },
-  "options_page": "options.html",
+  "options_page": "options/options.html",
   "web_accessible_resources": [
     {
       "resources": [
@@ -43,9 +40,13 @@
         "assets/icon-enabled-128.png",
         "assets/icon-green-16.png",
         "assets/icon-green-48.png",
-        "assets/icon-green-128.png"
+        "assets/icon-green-128.png",
+        "lib/crypto-js.min.js",
+        "lib/content_script.js",
+        "lib/background.js",
+        "css/styles.css"
       ],
-      "matches": ["http://*/*", "https://*/*"]
+      "matches": ["<all_urls>"]
     }
   ],
   "icons": {
